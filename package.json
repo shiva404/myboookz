@@ -1,0 +1,24 @@
+{
+  "name": "myboookz",
+  "version": "0.0.1",
+  "private": "true",
+  "main" : "express.js",
+  "dependencies": {
+      "express": "3.0.0alpha4",
+      "nib": "^1.0.4",
+      "stylus": "^0.49.1",
+      "jade": "^1.7.0",
+      "node-regexp": "0.1.1",
+      "request": "2.53.0",
+	  "passport": "*",
+	  "passport-facebook": "*",
+      "node-rest-client": "*",
+      "body-parser" : "~1.4.2",
+      "method-override" : "~2.0.2",
+      "passport-goodreads" : "*",
+	"goodreads" : "*",
+      "xml2js": "*",
+      "oauth" : "*"
+      
+  }
+}

@@ -1,0 +1,29 @@
+extends layout
+block content
+    div(class="container")
+        include ./includes/navbar.jade
+        div(class="row clearfix")
+            div(class="col-md-2")
+                include ./includes/leftmenu.jade
+            div(class="col-md-6")
+                button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-example-modal-lg")
+                    |Import from good reads
+                div(class="modal fade bs-example-modal-lg", id="goodreadsimportmodal", tabindex="-1", role="dialog", aria-labelledby="myLargeModalLabel", aria-hidden="true")
+                    div(class="modal-dialog modal-lg")
+                        div(class="modal-content")
+                            div(class="modal-header")
+                                button(type="button", class="close", data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true")
+                                        |×
+                                h4(class="modal-title" id="myLargeModalLabel")
+                                    |Import data from Good reads!!</h4>
+                                div(class="modal-body")
+                                    |Do you want to import from good reads?
+                                div(class="modal-footer")
+                                    button(class="btn", data-dismiss="modal", aria-hidden="true")
+                                        |Cancel
+                                    button(class="btn btn-primary", id="grim-modalbtnrmdLater")
+                                        |Remind me later
+                                    button(class="btn btn-primary", id="grimportmodalbtnYes")
+                                        |Import
+            div(class="col-md-4")
