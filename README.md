@@ -9,7 +9,7 @@ This is a repo for a starter appliation for a Single Page MEAN Stack application
 4. If you are facing issue with connecting git run
     git config --global url."https://".insteadOf "git://"
 5. Start up the server: `node express.js`
-6. View in browser at http://localhost:8080
+6. View in browser at http://localhost:3000
 
 Use this starter kit to build any MEAN stack application you like.
 

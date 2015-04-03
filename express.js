@@ -60,14 +60,14 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
 
         neo4jclient.getUserFromFbId(profile._json.id, function(error, resultUser){
-
+            console.log("user\nfrom : " + JSON.stringify(profile));
             if (!error && resultUser != null) {
                 done(null, resultUser)
             } else {
-                if(error.code = "NOT_FOUND"){
+                if(error.code == "NOT_FOUND"){
                     var user = {fbId: profile.id, name:profile.displayName, email: profile._json.email};
-                    console.log("Creating user:" + JSON.stringify(user));
-                    neo4jclient.createUser(user, function(error, createdUser){
+                    console.log("Creating user:" + JSON.stringify(user) + "\nfrom : " + profile._json);
+                    neo4jclient.createUser(user, accessToken, function(error, createdUser){
                         if(error && createdUser == null){
                             alert("User creation failed");
                         }
@@ -81,17 +81,6 @@ passport.use(new FacebookStrategy({
         });
     }
 ));
-
-//passport.use(new GoodreadsStrategy({
-//        consumerKey: config.goodreads.clientID,
-//        consumerSecret: config.goodreads.clientSecret,
-//        callbackURL: "http://127.0.0.1:8080/auth/goodreads/callback"
-//    },
-//    function(token, tokenSecret, profile, done) {
-//        console.log("Gooooot aaaacccc ((((((((((" + token);
-//        done(null, profile)
-//    }
-//));
 
 app.get('/', ensureAuthenticated, function(req, resp){
     neo4jclient.getUserFromId(req.session.passport.user, function(err, user){
@@ -111,21 +100,35 @@ app.get('/account', ensureAuthenticated, function(req, res){
     })
 });
 
+app.get('/profile/edit', ensureAuthenticated, function(req, res){
+    res.render('user/edit_profile');
+});
+
+app.get('/goodreads/sync', ensureAuthenticated, function(req, resp){
+    var fields = {"fields":[{"name":"goodreadsAuthStatus","value":req.query.status}]}
+    neo4jclient.updateFields(fields, req.session.passport.user, function(error, data){
+        if(error != null){
+            resp.error
+        }
+        resp.ok;
+    });    
+});
+
 app.get('/auth/fb/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }),
     function (req, res) {
         res.redirect('/account');
 });
 
-app.get('/auth/goodreads/callback', function(req, res) {
+app.get('/auth/goodreads/callback', ensureAuthenticated, function(req, res) {
     var oauthToken = fakeSession.oauthToken;
     var oauthTokenSecret = fakeSession.oauthTokenSecret;
     console.log(req + "oauthToken: " + oauthToken + "oauthTokenSecret" + oauthTokenSecret);
     var params = url.parse(req.url, true);
     return gr.processCallback(oauthToken, oauthTokenSecret, params.query.authorize, function(callback) {
-        //res.write(JSON.stringify(callback));
-        //to-do call neo4j to collect data for the user
-        var fields = {goodreadsId: callback.userid, goodreadsAccessToken: callback.accessToken }
+        var fields = {"fields":[{"name":"goodreadsId","value":callback.userid}, {"name":"goodreadsAuthStatus","value":"yes"},
+            {"name":"goodreadsAccessToken","value":callback.accessToken}, {"name":"goodreadsAccessTokenSecret", "value":callback.accessTokenSecret}]};
+        console.log(JSON.stringify("Data" + req.session.passport))
         neo4jclient.updateFields(fields, req.session.passport.user, function(error, data){
             if(error != null){
                 //todo: toast message saying error occurred
@@ -135,7 +138,7 @@ app.get('/auth/goodreads/callback', function(req, res) {
     });
 });
 
-app.get('/auth/goodreads',function(req, resp){
+app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
     return gr.requestToken(function(callback) {
         fakeSession.oauthToken = callback.oauthToken;
         fakeSession.oauthTokenSecret = callback.oauthTokenSecret;
@@ -159,4 +162,4 @@ function ensureAuthenticated(req, res, next) {
     res.render('index', { title: "Start Bootstrap"});
 }
 
-app.listen(8080);
+app.listen(3000);

@@ -122,50 +122,136 @@ header {
   border-bottom: 1px solid #df1806;
   text-shadow: 0px -1px 0px #df1806;
 }
-.container {
-  width: 500px;
-  margin: 50px auto;
-  overflow: hidden;
-}
-.main-content {
-  float: left;
-  width: 300px;
-}
-.main-content p {
-  margin-bottom: 20px;
-}
+
 .sidebar {
-  float: left;
-  width: 200px;
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
 }
-.sidebar .widget {
-/*
-     * Note the lack of vendor
-     * prefixes here. Nib will
-     * add them for us
-     */
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  margin-left: 20px;
-  background-color: #faf9f0;
-  -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
-  box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
+.nav-sidebar {
+    width: 100%;
 }
-.sidebar .widget h1 {
-  font-family: 'Quicksand';
-  margin: 13px 10px 4px;
-  padding-bottom: 10px;
-  border-bottom: 1px dotted #ddd;
-  -webkit-border-radius: 2px 2px 0px 0px;
-  border-radius: 2px 2px 0px 0px;
-  margin-bottom: 10px;
+
+#profile {
+    float: left;
+    width: 646px;
+    word-wrap: break-word;
 }
-.sidebar .widget p {
-  font-size: 13px;
-  padding: 0px 10px;
-  margin-bottom: 10px;
+
+#top-card {
+    margin-bottom: 10px;
 }
+
+.profile-card .profile-picture {
+    position: relative;
+    z-index: 1;
+    background: #f4f4f4;
+    float: left;
+    width: 200px;
+    height: 200px;
+    line-height: 198px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.profile-card .profile-overview {
+    position: relative;
+    z-index: 6;
+    float: right;
+    width: 405px;
+    word-wrap: break-word;
+    padding: 0 20px 20px;
+}
+
+.profile-card .profile-overview-content {
+    min-height: 149px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.top-card .editable-item {
+    position: relative;
+}
+
+.masthead .editable-item {
+    display: table;
+}
+#profile .profile-card h1 {
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #000;
+}
+.field {
+    position: relative;
+    display: table;
+    cursor: pointer;
+    margin-bottom: 4px;
+}
+
+.top-card #name .edit-field-button {
+    height: 32px;
+    width: 32px;
+    line-height: 26px;
+}
+
+.edit-field {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 5px;
+}
+
+.ally-text {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    word-wrap: normal;
+}
+
+.edit-field .edit-field-icon {
+    -webkit-transition: color 0.2s;
+    -moz-transition: color 0.2s;
+    -o-transition: color 0.2s;
+    transition: color 0.2s;
+}
+
+.edit-field-button {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 8px;
+    height: 19px;
+    width: 19px;
+    line-height: 15px;
+    color: #505e69;
+
+    background: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    z-index: 1;
+    background-color: #ebebeb;
+    border: 1px solid #cccfd3;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    -webkit-transition: opacity 0.2s,background-color 0.2s;
+    -moz-transition: opacity 0.2s,background-color 0.2s;
+    -o-transition: opacity 0.2s,background-color 0.2s;
+    transition: opacity 0.2s,background-color 0.2s;
+}
+
 p {
   line-height: 1.8;
 }

@@ -1,7 +1,11 @@
 
 $( document ).ready(function() {
     $('#grimportmodalbtnYes').click(function() {
-        window.location.replace = "/auth/goodreads";
+        alert("data import called");
+        window.location = "/auth/goodreads";
     });
-    $('#goodreadsimportmodal').modal('show');
+    
+    $('#').click(function() {
+
+    })
 });

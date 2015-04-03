@@ -12,16 +12,16 @@ function getArguments() {
     };
 }
 
-
 client.registerMethod("createUser", "http://localhost:8389/neo4j/v1/users", "POST");
 client.registerMethod("updateFields", "http://localhost:8389/neo4j/v1/users/${id}/fields", "PUT");
 client.registerMethod("getUserFromFbId", "http://localhost:8389/neo4j/v1/users/fbId/${id}", "GET");
 client.registerMethod("getUserFromId", "http://localhost:8389/neo4j/v1/users/${id}", "GET");
 
 
-exports.createUser = function(user, cb){
+exports.createUser = function(user, accessToken, cb){
     var args = getArguments();
     args.data = user;
+    args.parameters = {"accessToken": accessToken};
     client.methods.createUser(args,function(data,response){
         if(response.statusCode != 201){
             cb(data, null)    
@@ -47,7 +47,9 @@ exports.updateFields = function(fields, userId, cb) {
     var args = getArguments();
     args.path = {id: userId};
     args.data = fields;
+    console.log("calling to save the fields with args:" + JSON.stringify(args));
     client.methods.updateFields(args, function(data, response){
+        console.log(data);
         if(response.statusCode != 200){
             cb(data, null);
         } else {
