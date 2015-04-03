@@ -141,9 +141,10 @@ header {
 }
 
 #profile {
-    float: left;
     width: 646px;
     word-wrap: break-word;
+    margin: auto;
+    
 }
 
 #top-card {
@@ -162,6 +163,7 @@ header {
     margin-top: 20px;
     margin-bottom: 20px;
     overflow: hidden;
+    clear: both;
 }
 
 .profile-card .profile-overview {
@@ -173,25 +175,32 @@ header {
     padding: 0 20px 20px;
 }
 
+#profile #top-card .entity {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#profile .entity {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.entity {
+    position: relative;
+}
+.is-focusable, .section, .entity, div[tabindex="-1"], ol[tabindex="-1"] {
+    outline: 0;
+}
+
+
 .profile-card .profile-overview-content {
     min-height: 149px;
     padding-top: 20px;
     padding-bottom: 15px;
 }
 
-.top-card .editable-item {
-    position: relative;
-}
-
-.masthead .editable-item {
-    display: table;
-}
-#profile .profile-card h1 {
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 30px;
-    color: #000;
-}
 .field {
     position: relative;
     display: table;
@@ -199,11 +208,6 @@ header {
     margin-bottom: 4px;
 }
 
-.top-card #name .edit-field-button {
-    height: 32px;
-    width: 32px;
-    line-height: 26px;
-}
 
 .edit-field {
     position: absolute;
@@ -226,6 +230,22 @@ header {
     -moz-transition: color 0.2s;
     -o-transition: color 0.2s;
     transition: color 0.2s;
+}
+
+.recommended-sections-container {
+    margin-bottom: 10px;
+}
+
+.top-card {
+    background: #fff;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+    position: relative;
+    font-size: 13px;
+    line-height: 17px;
+    color: #333;
+    font-weight: normal;
 }
 
 .edit-field-button {
@@ -251,6 +271,141 @@ header {
     -o-transition: opacity 0.2s,background-color 0.2s;
     transition: opacity 0.2s,background-color 0.2s;
 }
+
+#profile .entity {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #fff;
+}
+
+.top-card #name .edit-field-button {
+    height: 32px;
+    width: 32px;
+    line-height: 26px;
+}
+
+.top-card .editable-item {
+    position: relative;
+}
+
+.recommended-sections-headline {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 16px;
+    color: #434649;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #696c6f;
+}
+
+.masthead .editable-item {
+    display: table;
+}
+#profile .profile-card h1 {
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #000;
+}
+
+#top-card .entity {
+    padding: 0;
+    margin: 0;
+}
+
+.profile-card:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+.section-container {
+    background: #fff;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
+}
+
+.section-container .section {
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 17px;
+    color: #333;
+    font-weight: normal;
+}
+
+ol, li {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+#background-additional-info .personal-header {
+    padding-right: 30px;
+    color: #66696a;
+}
+
+
+#background-additional-info .section-item {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.is-focusable, .section, .entity, div[tabindex="-1"], ol[tabindex="-1"] {
+    outline: 0;
+}
+
+.section-container .header {
+    position: relative;
+    font-size: 26px;
+    line-height: 30px;
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom: 25px;
+    color: #afb2b5;
+    font-weight: lighter;
+}
+
+.field .field-text {
+    display: inline-block;
+    border: 1px solid transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: -5px;
+    margin-right: -5px;
+    max-width: 576px;
+}
+
+#background-additional-info .section-item {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+
+#profile .section-container .header {
+    margin-bottom: 0;
+}
+
+
 
 p {
   line-height: 1.8;

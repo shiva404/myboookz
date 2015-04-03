@@ -101,7 +101,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/profile/edit', ensureAuthenticated, function(req, res){
-    res.render('user/edit_profile');
+    res.render('user/profile');
 });
 
 app.get('/goodreads/sync', ensureAuthenticated, function(req, resp){
