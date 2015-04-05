@@ -1,0 +1,20 @@
+div(id="personal-info-edit", class="profile-blank-form")
+    div(class="profile-blank-form-clone")
+        form(class="standard-form stacked", name="editPersonalInfoForm", method="POST", action="#")
+            ul
+                li
+                    label
+                        |Phone No.
+                    input(type="text", name="phoneNumber", value="#{user.phone}")
+                li
+                    label
+                        |email
+                    input(type="text", name="phoneNumber", value=#{user.email})
+
+                p
+                    input(class="btn-primary", type="submit", name="submit", value="Save")
+                    button(class="btn-secondary btn-cancel", type="button", data-trk="nprofile-edit-position-cancel")
+                        |Cancel
+                        
+                        
+    

@@ -138,6 +138,15 @@ app.get('/auth/goodreads/callback', ensureAuthenticated, function(req, res) {
     });
 });
 
+app.get('/profile', ensureAuthenticated, function(req, res){
+        neo4jclient.getUserFromId(req.session.passport.user, function(err, user){
+            if(err)
+                console.log(err);
+            else
+                res.render('user/profile', {user: user});
+        })
+});
+
 app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
     return gr.requestToken(function(callback) {
         fakeSession.oauthToken = callback.oauthToken;
