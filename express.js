@@ -1,6 +1,6 @@
 var express = require('express'), stylus = require('stylus'), nib = require('nib');
 var app = express();
-var config = require('./oauth.js');
+var config = require('./config');
 var routes = require('./routes');
 var passport = require('passport'), 
     FacebookStrategy = require('passport-facebook').Strategy;

@@ -1,0 +1,77 @@
+div(id="background-address-info-container", class="section-container background-section  draggable li-ig-profile", data-li-template="education_section")
+    div(id="background-address-info", class="section background-education", tabindex="0")
+        div(class="addressInfo-head-part")
+            div(class="row")
+                div(class="col-md-8 column")
+                    h3
+                        |Addresses
+                div(class="col-md-4 column")
+                    button(type="button" class="btn btn-default", id="address-info-add-button")
+                        |Add(+)
+        div(id="address-info-display")
+            ol(class="no-list")
+                each val, index in ['Home', 'Work']
+                    li(class="inner-section entity section-item editable-item")
+                        div(class="row clearfix")
+                            div(class="col-md-12 column")
+                                div(class="row clearfix")
+                                    div(class="col-md-6 column")
+                                        h3 #{val}
+                                    div(class="col-md-6 column")
+                                        button(type="button", class="btn btn-default", id="address-info-edit#{index}-button")
+                                            |Edit
+                                div(id="address-info-display#{index}")
+                                    fieldset(class="gllpLatlonPicker")
+                                        div(class="gllpMap")
+                                            | Google Maps
+                                        input(type="text", class="gllpLatitude", value="12.97463381854107", style="display:none")
+                                        input(type="text", class="gllpLongitude", value="77.59234657922366", style="display:none")
+                                        input(type="text", class="gllpZoom", value="13", style="display:none")
+                                div(id="address-info-edit#{index}", class="address-info-edit", style="display:none;")
+                                    form(class="standard-form stacked", name="editPersonalInfoForm", method="POST", action="#", role="form")
+                                        fieldset(class="gllpLatlonPicker")
+                                            input(type="text", class="gllpSearchField")
+                                            input(type="button", class="gllpSearchButton", value="search")
+                                            br
+                                            div(class="gllpMap")
+                                                | Google Maps
+                                            p
+                                            | lat/lon:
+                                            input(type="text", class="gllpLatitude", value="12.97463381854107")
+                                            | /
+                                            input(type="text", class="gllpLongitude", value="77.59234657922366")
+                                            | ,zoom:
+                                            input(type="text", class="gllpZoom", value="13")
+                                            input(type="button", class="gllpUpdateButton", value="update map")
+                                        button(type="submit", class="btn btn-default")
+                                            |Update
+                                        button(type="button", id="address-info-edit-cancel-button#{index}", class="btn btn-default")
+                                            |Cancel
+                    script
+                        $("#address-info-edit#{index}-button").click(function(){$("#address-info-display#{index}").animate({height: 'toggle'});$("#address-info-edit#{index}").animate({height: 'toggle'});});
+                        $("#address-info-edit-cancel-button#{index}").click(function(){$("#address-info-edit#{index}").animate({height: 'toggle'});$("#address-info-display#{index}").animate({height: 'toggle'});});
+
+        div(id="address-info-add", class="profile-blank-form", style="display:none;")
+            div(class="profile-blank-form-clone")
+                form(class="standard-form stacked", name="editPersonalInfoForm", method="POST", action="#", role="form")
+                    fieldset(class="gllpLatlonPicker")
+                        input(type="text", class="gllpSearchField")
+                        input(type="button", class="gllpSearchButton", value="search")
+                        br
+                        div(class="gllpMap")
+                            | Google Maps
+                        p
+                        | lat/lon:
+                        input(type="text", class="gllpLatitude", value="12.97463381854107")
+                        | /
+                        input(type="text", class="gllpLongitude", value="77.59234657922366")
+                        | ,zoom:
+                        input(type="text", class="gllpZoom", value="13")
+                        input(type="button", class="gllpUpdateButton", value="update map")
+                    button(type="submit", class="btn btn-default")
+                        |Add
+                    button(type="button", id="address-info-add-cancel-button" + index, class="btn btn-default")
+                        |Cancel
+                    script
+                        $("#address-info-add-button").click(function(){$("#address-info-add").animate({height: 'toggle'});});
+                        $("#address-info-add-cancel-button").click(function(){$("#address-info-add").animate({height: 'toggle'});});

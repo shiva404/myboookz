@@ -52,5 +52,12 @@ block content
                                                         i(class="edit-field-icon")
                                                     p(class="title field-text")
                                                         | Work: Intuit, Building #8, Bellandur, Bangalore - 560103
-                include personal_data
-                include address_data
+                div(id="recommended-sections")
+                    div(class="recommended-sections-container", data-li-template="recommended_sections")
+                        p(div="recommended-sections-headline")
+                            em
+                                |Add a section to your profile
+                            | – get better recomendations for you best reads
+                            div(id="background", class="profile-background my-profile")
+                                include personal_data
+                                include address_data

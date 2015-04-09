@@ -1,4 +1,5 @@
 var exports = module.exports = {};
+var config = require('./config');
 var Client = require('node-rest-client').Client;
 
 client = new Client();
@@ -12,10 +13,12 @@ function getArguments() {
     };
 }
 
-client.registerMethod("createUser", "http://localhost:8389/neo4j/v1/users", "POST");
-client.registerMethod("updateFields", "http://localhost:8389/neo4j/v1/users/${id}/fields", "PUT");
-client.registerMethod("getUserFromFbId", "http://localhost:8389/neo4j/v1/users/fbId/${id}", "GET");
-client.registerMethod("getUserFromId", "http://localhost:8389/neo4j/v1/users/${id}", "GET");
+var baseUrl = config.neo4jservice.baseurl;
+
+client.registerMethod("createUser",  baseUrl + "/users", "POST");
+client.registerMethod("updateFields", baseUrl + "/users/${id}/fields", "PUT");
+client.registerMethod("getUserFromFbId", baseUrl + "/users/fbId/${id}", "GET");
+client.registerMethod("getUserFromId", baseUrl + "/users/${id}", "GET");
 
 
 exports.createUser = function(user, accessToken, cb){

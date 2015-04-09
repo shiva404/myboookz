@@ -405,7 +405,9 @@ caption, th, td {
     margin-bottom: 0;
 }
 
+.gllpMap	{ width: 500px; height: 250px; }
 
+.gllpLatlonPicker	{ margin: 20px 0; }
 
 p {
   line-height: 1.8;
