@@ -2,6 +2,7 @@ var express = require('express'), stylus = require('stylus'), nib = require('nib
 var app = express();
 var config = require('./config');
 var routes = require('./routes');
+var user_api = require('./routes/user_apis');
 var passport = require('passport'), 
     FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -19,6 +20,7 @@ function compile(str, path) {
         .set('filename', path)
         .use(nib())
 }
+
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -159,7 +161,13 @@ app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
 app.get('/auth/facebook',
     passport.authenticate('facebook'),
     function(req, res){
-    });
+});
+
+app.post("/api/address", ensureAuthenticated, user_api.addAddress);
+
+app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
+
+
 
 app.get('/logout', function(req, res){
     req.logout();

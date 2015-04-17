@@ -15,11 +15,67 @@ function getArguments() {
 
 var baseUrl = config.neo4jservice.baseurl;
 
-client.registerMethod("createUser",  baseUrl + "/users", "POST");
+client.registerMethod("createUser",  baseUrl + "/users", "POST"); //?accessToken=xyz
 client.registerMethod("updateFields", baseUrl + "/users/${id}/fields", "PUT");
 client.registerMethod("getUserFromFbId", baseUrl + "/users/fbId/${id}", "GET");
 client.registerMethod("getUserFromId", baseUrl + "/users/${id}", "GET");
+client.registerMethod("updateUser", baseUrl + "/users/${id}", "PUT");
+client.registerMethod("addAddress", baseUrl + "/users/${userId}/addresses", "POST");
+client.registerMethod("updateAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "PUT");
 
+client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST");
+client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
+client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
+client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned
+client.registerMethod("getAvailableBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=available
+client.registerMethod("getLentBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=lent
+client.registerMethod("getBorrowedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=borrowed
+
+client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
+client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
+
+client.registerMethod("followUser", baseUrl + "/users/${userId}/follow/${followUserId}", "POST");
+client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${followUserId}", "DELETE");
+
+client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
+
+//Book
+//client.registerMethod("createBook", baseUrl + "/books", "POST");  --> Don't use this api
+client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
+client.registerMethod("getBookByGoodreadsId", baseUrl + "/books/goodreadsId/${goodreadsId}", "GET");
+client.registerMethod("getBookByIsbn", baseUrl + "/books/isbn/${isbn}", "GET");
+
+client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST"); // -POST borrow request object
+
+client.registerMethod("updateStatusToAgreed", baseUrl + "/books/${bookId}/user/${userId}", ""); // ?status=agreed&borrowerId=xyz - Which will lock the book for the exchange
+client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/user/${userId}", ""); // ?status=success&borrowerId=xyz
+
+exports.addAddress = function(address, userId, cb) {
+    var args = getArguments();
+    console.log("Neo4jClient -" + JSON.stringify(address)  + "UserId:" + userId);
+    args.data = address;
+    args.path = {userId: userId};
+    client.methods.addAddress(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.updateAddress = function(addressId, address, userId, cb) {
+    var args = getArguments();
+    args.data = address;
+    args.path = {addressId: addressId, userId: userId};
+    client.methods.updateAddress(args,function(data,response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
 
 exports.createUser = function(user, accessToken, cb){
     var args = getArguments();

@@ -6,7 +6,7 @@ div(id="background-address-info-container", class="section-container background-
                     h3
                         |Addresses
                 div(class="col-md-4 column")
-                    button(type="button" class="btn btn-default", id="address-info-add-button")
+                    button(type="button" class="btn btn-primary scrollClick", id="address-info-add-button", scroll-to-id="#address-info-add")
                         |Add(+)
         div(id="address-info-display")
             ol(class="no-list")
@@ -50,28 +50,4 @@ div(id="background-address-info-container", class="section-container background-
                     script
                         $("#address-info-edit#{index}-button").click(function(){$("#address-info-display#{index}").animate({height: 'toggle'});$("#address-info-edit#{index}").animate({height: 'toggle'});});
                         $("#address-info-edit-cancel-button#{index}").click(function(){$("#address-info-edit#{index}").animate({height: 'toggle'});$("#address-info-display#{index}").animate({height: 'toggle'});});
-
-        div(id="address-info-add", class="profile-blank-form", style="display:none;")
-            div(class="profile-blank-form-clone")
-                form(class="standard-form stacked", name="editPersonalInfoForm", method="POST", action="#", role="form")
-                    fieldset(class="gllpLatlonPicker")
-                        input(type="text", class="gllpSearchField")
-                        input(type="button", class="gllpSearchButton", value="search")
-                        br
-                        div(class="gllpMap")
-                            | Google Maps
-                        p
-                        | lat/lon:
-                        input(type="text", class="gllpLatitude", value="12.97463381854107")
-                        | /
-                        input(type="text", class="gllpLongitude", value="77.59234657922366")
-                        | ,zoom:
-                        input(type="text", class="gllpZoom", value="13")
-                        input(type="button", class="gllpUpdateButton", value="update map")
-                    button(type="submit", class="btn btn-default")
-                        |Add
-                    button(type="button", id="address-info-add-cancel-button" + index, class="btn btn-default")
-                        |Cancel
-                    script
-                        $("#address-info-add-button").click(function(){$("#address-info-add").animate({height: 'toggle'});});
-                        $("#address-info-add-cancel-button").click(function(){$("#address-info-add").animate({height: 'toggle'});});
+        include ./add_address
