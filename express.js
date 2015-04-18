@@ -174,6 +174,7 @@ app.get('/auth/facebook',
 
 app.post("/api/address", ensureAuthenticated, user_api.addAddress);
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
+app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
 app.get("/mybooks", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getOwnedBooks(req.session.passport.user, function(err, books){

@@ -22,6 +22,7 @@ client.registerMethod("getUserFromId", baseUrl + "/users/${id}", "GET");
 client.registerMethod("updateUser", baseUrl + "/users/${id}", "PUT");
 client.registerMethod("addAddress", baseUrl + "/users/${userId}/addresses", "POST");
 client.registerMethod("updateAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "PUT");
+client.registerMethod("deleteAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "DELETE");
 
 client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST");
 client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
@@ -76,6 +77,18 @@ exports.updateAddress = function(addressId, address, userId, cb) {
         }
     });
 };
+
+exports.deleteAddress = function(addressId, userId, cb) {
+    var args = getArguments();
+    args.path = {addressId: addressId, userId: userId};
+    client.methods.deleteAddress(args,function(data,response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });        
+}
 
 exports.createUser = function(user, accessToken, cb){
     var args = getArguments();

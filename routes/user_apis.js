@@ -24,3 +24,16 @@ exports.updateAddress = function (req, res) {
         }
     })
 };
+
+exports.deleteAddress = function (req, res) {
+    var addressId = req.params.id;
+    var userId = req.session.passport.user;
+    neo4jclient.deleteAddress(addressId, userId, function(error, data){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.json(data)
+        }
+    })
+};
