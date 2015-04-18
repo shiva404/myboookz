@@ -129,3 +129,32 @@ exports.getUserFromId = function(id, cb) {
     });
 };
 
+exports.getAvailableBooks = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "owned"};
+    client.methods.getAvailableBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+exports.getOwnedBooks = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "owned"};
+    client.methods.getOwnedBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+
+
+
+

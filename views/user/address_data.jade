@@ -47,7 +47,4 @@ div(id="background-address-info-container", class="section-container background-
                                             |Update
                                         button(type="button", id="address-info-edit-cancel-button#{index}", class="btn btn-default")
                                             |Cancel
-                    script
-                        $("#address-info-edit#{index}-button").click(function(){$("#address-info-display#{index}").animate({height: 'toggle'});$("#address-info-edit#{index}").animate({height: 'toggle'});});
-                        $("#address-info-edit-cancel-button#{index}").click(function(){$("#address-info-edit#{index}").animate({height: 'toggle'});$("#address-info-display#{index}").animate({height: 'toggle'});});
-        include ./add_address
+    include ./add_address

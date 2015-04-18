@@ -14,6 +14,16 @@ $(document).ready(function() {
         $('html,body').animate({
             scrollTop: $(el).offset().top
         }, speed);
-    }
-});
+    };
 
+    $("#address-add-save").on("click", function(event) {
+        event.preventDefault();
+        var params = {address: {type: $('#address-add-type').val(), latitude: $('#address-add-lat').val(), longitude: $('#address-add-long').val(), landmark: $('#address-add-landmark').val()}};
+        var str = jQuery.param( params );
+        console.log(str);
+        var posting = $.post('api/address', str,"application/json");
+        posting.done(function(data){
+            //add the stuff back to
+        })
+    });
+});

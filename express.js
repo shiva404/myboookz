@@ -5,6 +5,8 @@ var routes = require('./routes');
 var user_api = require('./routes/user_apis');
 var passport = require('passport'), 
     FacebookStrategy = require('passport-facebook').Strategy;
+var NodeCache = require( "node-cache"),
+    myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 
 url = require('url');
 
@@ -40,7 +42,6 @@ app.configure(function() {
     app.use(app.router);
 });
 
-
 passport.serializeUser(function(user, done) {
     console.log('serializeUser: ' + user.id);
     done(null, user.id);
@@ -49,7 +50,16 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     neo4jclient.getUserFromId(id, function(error, resultUser){
         console.log("deserializing user:" + resultUser);
-        if(!error) done(null, resultUser);
+        if(!error) {
+            myCache.set(id, resultUser, function( err, success ){
+                if( !err && success ){
+                    console.log(success);
+                } else{
+                    console.log( value );
+                }
+            });
+            done(null, resultUser);
+        }
         else done(error, null)
     })
 });
@@ -60,7 +70,6 @@ passport.use(new FacebookStrategy({
         callbackURL: config.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-
         neo4jclient.getUserFromFbId(profile._json.id, function(error, resultUser){
             console.log("user\nfrom : " + JSON.stringify(profile));
             if (!error && resultUser != null) {
@@ -164,10 +173,16 @@ app.get('/auth/facebook',
 });
 
 app.post("/api/address", ensureAuthenticated, user_api.addAddress);
-
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
-
-
+app.get("/mybooks", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getOwnedBooks(req.session.passport.user, function(err, books){
+        if(err)
+            console.log(err);
+        else
+            res.render('mybooks', {user: cachedUser, books: books});
+    })
+});
 
 app.get('/logout', function(req, res){
     req.logout();

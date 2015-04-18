@@ -18,7 +18,7 @@
       "passport-goodreads" : "*",
 	"goodreads" : "*",
       "xml2js": "*",
-      "oauth" : "*"
-      
+      "oauth" : "*",
+	"node-cache" : "*"	      
   }
 }

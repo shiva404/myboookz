@@ -15,7 +15,7 @@ section(id="my-books", class="box-border")
                         li(class="")
                             section(class="type-a")
                                 h3 Want to get more of these?
-            - var n = 10
+            - var n = books.ownedBooks.length
             - var i = 0
             - while(n > 0){
                 - i = 0
@@ -23,29 +23,32 @@ section(id="my-books", class="box-border")
                     - while(i < 2){
                         - i = i+1
                         - n = n-1
-                        div(class="col-md-6 column")
-                            div(class="engagement-card")
-                                div(class="engagement-body-left")
-                                    a(href="#")
-                                        img(src="https://d.gr-assets.com/books/1307368184m/11554729.jpg", class="book-image")
-                                div(class="engagement-body-right")
-                                    a(href="#", class="book-name") Kanooru Heggadathi(2007)
-                                    br
-                                    p by
-                                        b(class="book-author-name") Kuvempu
-                                    p Description #{n}
-                                div(class="engagement-action-container")
-                                    div(class="row")
-                                        div(class="col-md-7 column")
-                                            p Other details
-                                        div(class="col-md-5 column")
-                                            select(class="form-control book-status")
-                                                option
-                                                    |Available
-                                                option
-                                                    |Lent
-                                                option
-                                                    |Locked
+                        - if(n >= 0) {
+                            - var book = books.ownedBooks[n]
+                            div(class="col-md-6 column") 
+                                div(class="engagement-card")
+                                    div(class="engagement-body-left")
+                                        a(href="#")
+                                            img(src="#{book.imageUrl}", class="book-image")
+                                    div(class="engagement-body-right")
+                                        a(href="#", class="book-name") #{book.name}
+                                        br
+                                        p by
+                                            b(class="book-author-name") #{book.authorName}
+                                        p Description #{n}
+                                    div(class="engagement-action-container")
+                                        div(class="row")
+                                            div(class="col-md-7 column")
+                                                p Other details
+                                            div(class="col-md-5 column")
+                                                select(class="form-control book-status")
+                                                    option
+                                                        |Available
+                                                    option
+                                                        |Lent
+                                                    option
+                                                        |Locked
+                        - }
                     - }
             - }
             
