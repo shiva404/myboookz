@@ -5,7 +5,7 @@ section(id="my-books", class="box-border")
                 div(class="input-group")
                     input(type="text", class="form-control", placeholder="Search for...")
                     span(class="input-group-btn")
-                        button(class="btn btn-default", type="button") 
+                        button(class="btn btn-default", type="button")
                             |Search
     div(class="row books-list")
         div(class="col-md-12 column")
@@ -15,7 +15,7 @@ section(id="my-books", class="box-border")
                         li(class="")
                             section(class="type-a")
                                 h3 Want to get more of these?
-            - var n = books.ownedBooks.length
+            - var n = books.wishListBooks.length
             - var i = 0
             - while(n > 0){
                 - i = 0
@@ -24,8 +24,8 @@ section(id="my-books", class="box-border")
                         - i = i+1
                         - n = n-1
                         - if(n >= 0) {
-                            - var book = books.ownedBooks[n]
-                            div(class="col-md-6 column") 
+                            - var book = books.wishListBooks[n]
+                            div(class="col-md-6 column")
                                 div(class="engagement-card")
                                     div(class="engagement-body-left")
                                         a(href="/books/#{book.id}")
@@ -38,19 +38,9 @@ section(id="my-books", class="box-border")
                                         p Description #{n}
                                     div(class="engagement-action-container")
                                         div(class="row")
-                                            div(class="col-md-7 column")
-                                                p Other details
-                                            div(class="col-md-5 column")
-                                                select(class="form-control book-status")
-                                                    option
-                                                        |Available
-                                                    option
-                                                        |Lent
-                                                    option
-                                                        |Locked
+                                            div(class="col-md-12 column")
+                                                p 3 - Friends might ready to share
+
                         - }
                     - }
             - }
-            
-        
-        

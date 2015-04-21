@@ -1,59 +1,18 @@
 var exports = module.exports = {};
 var neo4jclient = require("../neo4jclient.js");
+var moment = require('moment');
 
-exports.booksForUser = function (req, res) {
-    
-};
-
-exports.bookById = function (req, res) {
-    var id = req.params.id;
-    if (id >= 0 && id < data.posts.length) {
-        res.json({
-            post: data.posts[id]
-        });
-    } else {
-        res.json(false);
-    }
-};
-
-exports.bookByGoodReadsId = function (req, res) {
-    var id = req.params.id;
-    if (id >= 0 && id < data.posts.length) {
-        res.json({
-            post: data.posts[id]
-        });
-    } else {
-        res.json(false);
-    }
-};
-
-// POST
-exports.addBookToUser = function (req, res) {
-    data.posts.push(req.body);
-    res.json(req.body);
-};
-
-// PUT
-exports.borrowReq = function (req, res) {
-    var id = req.params.id;
-
-    if (id >= 0 && id < data.posts.length) {
-        data.posts[id] = req.body;
-        res.json(true);
-    } else {
-        res.json(false);
-    }
-};
-
-// DELETE
-
-exports.removeBookFromUser = function (req, res) {
-    var id = req.params.id;
-
-    if (id >= 0 && id < data.posts.length) {
-        data.posts.splice(id, 1);
-        res.json(true);
-    } else {
-        res.json(false);
-    }
+exports.showBook = function (req, res) {
+    var bookId = req.params.id;
+    var userId = req.session.passport.user;
+    neo4jclient.getBookById(bookId, userId, function(error, book){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            var borrowedDateFromNow = moment(1429551207130).fromNow();
+            var borrowedDate = moment(1429551207130).format("MMM Do YYYY");
+            res.render('show_book', { book: book, borrowedDate: borrowedDate, borrowedDateFromNow: borrowedDateFromNow});
+        }
+    })
 };

@@ -1,9 +1,11 @@
 var express = require('express'), stylus = require('stylus'), nib = require('nib');
 var app = express();
+var moment = require('moment');
 var config = require('./config');
 var routes = require('./routes');
 var user_api = require('./routes/user_apis');
-var passport = require('passport'), 
+var book_api = require('./routes/books_api');
+var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
 var NodeCache = require( "node-cache"),
     myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
@@ -184,6 +186,18 @@ app.get("/mybooks", ensureAuthenticated, function(req, res) {
             res.render('mybooks', {user: cachedUser, books: books});
     })
 });
+
+app.get("/mywishlist", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getWishListBooks(req.session.passport.user, function(err, books){
+        if(err)
+            console.log(err);
+        else
+            res.render('my_wishlist_books', {user: cachedUser, books: books});
+    })
+});
+
+app.get("/books/:id", book_api.showBook)
 
 app.get('/logout', function(req, res){
     req.logout();

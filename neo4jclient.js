@@ -154,6 +154,20 @@ exports.getAvailableBooks = function(id, cb) {
         }
     });
 };
+
+exports.getBookById = function (bookId, userId, cb) {
+    var args = getArguments();
+    args.path = {bookId: bookId};
+    args.parameters = {"userId": userId};
+    client.methods.getBookById(args, function (data, response) {
+        if (response.statusCode != 200) {
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+}
+
 exports.getOwnedBooks = function(id, cb) {
     var args = getArguments();
     args.path = {userId: id};
@@ -167,7 +181,15 @@ exports.getOwnedBooks = function(id, cb) {
     });
 };
 
-
-
-
-
+exports.getWishListBooks = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {"filter": "wishList"};
+    client.methods.getOwnedBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+}

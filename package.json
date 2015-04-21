@@ -19,6 +19,7 @@
 	"goodreads" : "*",
       "xml2js": "*",
       "oauth" : "*",
-	"node-cache" : "*"	      
+	"node-cache" : "*",
+      "moment" :"2.10.2"
   }
 }
