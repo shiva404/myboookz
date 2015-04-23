@@ -24,6 +24,13 @@ client.registerMethod("addAddress", baseUrl + "/users/${userId}/addresses", "POS
 client.registerMethod("updateAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "PUT");
 client.registerMethod("deleteAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "DELETE");
 
+
+client.registerMethod("createReminder", baseUrl + "/users/${userId}/reminders", "POST");
+client.registerMethod("getReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "GET");
+client.registerMethod("listReminders", baseUrl + "/users/${userId}/reminders", "GET");
+client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "PUT");
+client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");
+
 client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST");
 client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
 client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
@@ -89,6 +96,59 @@ exports.deleteAddress = function(addressId, userId, cb) {
         }
     });        
 }
+
+exports.addReminderForTargetUser = function(targetUserId, reminder, createdBy, reminderType,cb) {
+    var args = getArguments();
+    console.log("Neo4jClient -" + JSON.stringify(reminder)  + "UserId:" + userId);
+    args.data = reminder;
+    args.path = {userId: targetUserId};
+    args.parameters = {createdBy:createdBy, reminderType: reminderType}
+    client.methods.createReminder(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.updateReminder = function(targetUserId, reminder, reminderId, cb) {
+    var args = getArguments();
+    args.data = reminder;
+    args.path = {reminderId: reminderId, userId: targetUserId};
+    client.methods.updateReminder(args,function(data,response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.deleteReminder = function(userId, reminderId, cb) {
+    var args = getArguments();
+    args.path = {reminderId: reminderId, userId: userId};
+    client.methods.deleteReminder(args,function(data,response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });        
+}
+
+exports.listRemindersForUser = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    client.methods.listReminders(args,function(data,response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+}
+
 
 exports.createUser = function(user, accessToken, cb){
     var args = getArguments();

@@ -4,8 +4,8 @@ config.env = 'dev';
 config.hostname = 'dev.example.com';
 
 config.facebook = {}
-config.facebook.clientID = '1388491331468994'
-config.facebook.clientSecret = '48fa75bb950bce707f1ac31d078d9569'
+config.facebook.clientID = '635482949856311'
+config.facebook.clientSecret = 'eac0b0051d188ce6cb5f88e54eebde64'
 config.facebook.callbackURL = 'http://localhost:3000/auth/fb/callback'
 
 config.goodreads = {}
