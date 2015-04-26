@@ -104,12 +104,12 @@ passport.use(new GoogleStrategy({
         passReqToCallback   : true
     },
     function(request, accessToken, refreshToken, profile, done) {
-        neo4jclient.getUserFromGoogleId(profile._json.id, function(error, resultUser){
+        neo4jclient.getUserFromGoogleId(profile._json.id, function(error, statusCode, resultUser){
             console.log("user\nfrom google : " + JSON.stringify(profile));
             if (!error && resultUser != null) {
                 done(null, resultUser)
             } else {
-                if(error.code == "NOT_FOUND"){
+                if(error.code == "NOT_FOUND" || statusCode == 404){
                     var profileImageUrl = profile._json.image.url.split("?")[0];
                     var user = {googleId: profile._json.id, name: profile._json.displayName, email: profile._json.emails[0].value, profileImageUrl: profileImageUrl};
                     console.log("Creating user:" + JSON.stringify(user) + "\nfrom : " + profile._json);

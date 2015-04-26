@@ -181,9 +181,9 @@ exports.getUserFromGoogleId = function(googleId, cb) {
     args.path = {googleId: googleId};
     client.methods.getUserFromGoogleId(args, function(data, response){
         if(response.statusCode != 200){
-            cb(data, null);
+            cb(data, response.statusCode, null);
         } else {
-            cb(null, data);
+            cb(null, null, data);
         }
     });
 };
