@@ -13,5 +13,9 @@ config.goodreads.clientID = 'QLM3lL2nqXe4LujHQt12A'
 config.goodreads.clientSecret = 'Aegcm52QdTinBh6g5fZe81S5cVYdKk9P6IDVS38pDOw'
 config.goodreads.callbackURL = 'http://bookforborrow.com/auth/goodreads/callback'
 
+config.google = {}
+config.google.clientID = '1092366374672-4ohe2j389jfh5ch0ms4atcu0pl74a6j3.apps.googleusercontent.com'
+config.google.clientSecret = 't68A7Y7kADrOC-G3blXfbjEC'
+
 config.neo4jservice = {}
 config.neo4jservice.baseurl = 'http://54.251.185.219:8080/neo4j/v1'

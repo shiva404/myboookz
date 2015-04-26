@@ -6,7 +6,8 @@ var routes = require('./routes');
 var user_api = require('./routes/user_apis');
 var book_api = require('./routes/books_api');
 var passport = require('passport'),
-    FacebookStrategy = require('passport-facebook').Strategy;
+    FacebookStrategy = require('passport-facebook').Strategy,
+    GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var NodeCache = require( "node-cache"),
     myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 
@@ -69,7 +70,8 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
         clientID: config.facebook.clientID,
         clientSecret: config.facebook.clientSecret,
-        callbackURL: config.facebook.callbackURL
+        callbackURL: config.facebook.callbackURL,
+        profileFields: ['id', 'displayName', 'link', 'photos', 'email', 'name']
     },
     function(accessToken, refreshToken, profile, done) {
         neo4jclient.getUserFromFbId(profile._json.id, function(error, resultUser){
@@ -78,7 +80,7 @@ passport.use(new FacebookStrategy({
                 done(null, resultUser)
             } else {
                 if(error.code == "NOT_FOUND"){
-                    var user = {fbId: profile.id, name:profile.displayName, email: profile._json.email};
+                    var user = {fbId: profile.id, name: profile.displayName, email: profile._json.email};
                     console.log("Creating user:" + JSON.stringify(user) + "\nfrom : " + profile._json);
                     neo4jclient.createUser(user, accessToken, function(error, createdUser){
                         if(error && createdUser == null){
@@ -89,6 +91,36 @@ passport.use(new FacebookStrategy({
                 } else {
                     console.log(error);
                     alert("Internal server occurred!!");
+                }
+            }
+        });
+    }
+));
+
+passport.use(new GoogleStrategy({
+        clientID:     config.google.clientID,
+        clientSecret: config.google.clientSecret,
+        callbackURL: config.google.callbackURL,
+        passReqToCallback   : true
+    },
+    function(request, accessToken, refreshToken, profile, done) {
+        neo4jclient.getUserFromGoogleId(profile._json.id, function(error, resultUser){
+            console.log("user\nfrom google : " + JSON.stringify(profile));
+            if (!error && resultUser != null) {
+                done(null, resultUser)
+            } else {
+                if(error.code == "NOT_FOUND"){
+                    var profileImageUrl = profile._json.image.url.split("?")[0];
+                    var user = {googleId: profile._json.id, name: profile._json.displayName, email: profile._json.emails[0].value, profileImageUrl: profileImageUrl};
+                    console.log("Creating user:" + JSON.stringify(user) + "\nfrom : " + profile._json);
+                    neo4jclient.createUser(user, accessToken, function(error, createdUser){
+                        if(error && createdUser == null){
+                            console.log("User creation failed");
+                        }
+                        done(null, createdUser);
+                    });
+                } else {
+                    console.log(error);
                 }
             }
         });
@@ -127,8 +159,34 @@ app.get('/goodreads/sync', ensureAuthenticated, function(req, resp){
     });    
 });
 
+app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
+    return gr.requestToken(function(callback) {
+        fakeSession.oauthToken = callback.oauthToken;
+        fakeSession.oauthTokenSecret = callback.oauthTokenSecret;
+        console.log("redirecting yo" + callback.url);
+        resp.redirect(callback.url)
+    });
+});
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook'),
+    function(req, res){
+});
+
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read']}),
+    function(req, res){
+});
+
+
 app.get('/auth/fb/callback',
-    passport.authenticate('facebook', { failureRedirect: '/' }),
+    passport.authenticate('facebook', {scope: "email", failureRedirect: '/' }),
+    function (req, res) {
+        res.redirect('/account');
+});
+
+app.get('/auth/google/callback',
+    passport.authenticate('google',{ failureRedirect: '/' }),
     function (req, res) {
         res.redirect('/account');
 });
@@ -160,24 +218,20 @@ app.get('/profile', ensureAuthenticated, function(req, res){
         })
 });
 
-app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
-    return gr.requestToken(function(callback) {
-        fakeSession.oauthToken = callback.oauthToken;
-        fakeSession.oauthTokenSecret = callback.oauthTokenSecret;
-        console.log("redirecting yo" + callback.url);
-        resp.redirect(callback.url)
-    });
-});
-
-app.get('/auth/facebook',
-    passport.authenticate('facebook'),
-    function(req, res){
-});
-
 app.post("/api/address", ensureAuthenticated, user_api.addAddress);
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
 app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
-app.get("/mybooks", ensureAuthenticated, function(req, res) {
+app.get("/readbooks", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getReadBooks(req.session.passport.user, function(err, books){
+        if(err)
+            console.log(err);
+        else
+            res.render('mybooks', {user: cachedUser, books: books.books});
+    })
+});
+
+app.get("/owned", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getOwnedBooks(req.session.passport.user, function(err, books){
         if(err)
@@ -187,7 +241,17 @@ app.get("/mybooks", ensureAuthenticated, function(req, res) {
     })
 });
 
-app.get("/mywishlist", ensureAuthenticated, function(req, res) {
+app.get("/borrowed", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getBorrowedBooks(req.session.passport.user, function(err, books){
+        if(err)
+            console.log(err);
+        else
+            res.render('mybooks', {user: cachedUser, books: books});
+    })
+});
+
+app.get("/wishlist", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getWishListBooks(req.session.passport.user, function(err, books){
         if(err)
@@ -197,7 +261,17 @@ app.get("/mywishlist", ensureAuthenticated, function(req, res) {
     })
 });
 
-app.get("/books/:id", book_api.showBook)
+app.get("/reminders", ensureAuthenticated, function(req, res){
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.listRemindersForUser(req.session.passport.user, function(err, reminders){
+        if(err)
+            console.log(err);
+        else
+            res.render('my_wishlist_books', {user: cachedUser, books: reminders});
+    })
+});
+
+app.get("/books/:id", book_api.showBook);
 
 app.get('/logout', function(req, res){
     req.logout();

@@ -5,7 +5,7 @@ var moment = require('moment');
 exports.showBook = function (req, res) {
     var bookId = req.params.id;
     var userId = req.session.passport.user;
-    neo4jclient.getBookById(bookId, userId, function(error, book){
+    neo4jclient.getBookRelatedToUser(bookId, userId, function(error, book){
         if(error) {
             res.errorCode = 500;
             res.json(error)

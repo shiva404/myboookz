@@ -15,29 +15,30 @@ function getArguments() {
 
 var baseUrl = config.neo4jservice.baseurl;
 
-client.registerMethod("createUser",  baseUrl + "/users", "POST"); //?accessToken=xyz
-client.registerMethod("updateFields", baseUrl + "/users/${id}/fields", "PUT");
-client.registerMethod("getUserFromFbId", baseUrl + "/users/fbId/${id}", "GET");
-client.registerMethod("getUserFromId", baseUrl + "/users/${id}", "GET");
+client.registerMethod("createUser",  baseUrl + "/users", "POST"); //?accessToken=xyz    //done
+client.registerMethod("updateFields", baseUrl + "/users/${id}/fields", "PUT");          //done
+client.registerMethod("getUserFromFbId", baseUrl + "/users/fbId/${id}", "GET");         //done
+client.registerMethod("getUserFromId", baseUrl + "/users/${id}", "GET");                //done
+client.registerMethod("getUserFromGoogleId", baseUrl + "/users/${googleId}/googleId", "GET");//done
 client.registerMethod("updateUser", baseUrl + "/users/${id}", "PUT");
-client.registerMethod("addAddress", baseUrl + "/users/${userId}/addresses", "POST");
-client.registerMethod("updateAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "PUT");
-client.registerMethod("deleteAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "DELETE");
+client.registerMethod("addAddress", baseUrl + "/users/${userId}/addresses", "POST");    //done
+client.registerMethod("updateAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "PUT"); //done
+client.registerMethod("deleteAddress", baseUrl + "/users/${userId}/addresses/${addressId}", "DELETE");//done
 
-
-client.registerMethod("createReminder", baseUrl + "/users/${userId}/reminders", "POST");
-client.registerMethod("getReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "GET");
-client.registerMethod("listReminders", baseUrl + "/users/${userId}/reminders", "GET");
-client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "PUT");
-client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");
+client.registerMethod("createReminder", baseUrl + "/users/${userId}/reminders", "POST");                    //done
+client.registerMethod("getReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "GET");          //done
+client.registerMethod("listReminders", baseUrl + "/users/${userId}/reminders", "GET");                      //done
+client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "PUT");       //done
+client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");    //done
 
 client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST");
 client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
 client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
-client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned
+client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned         //done
 client.registerMethod("getAvailableBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=available
 client.registerMethod("getLentBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=lent
 client.registerMethod("getBorrowedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=borrowed
+client.registerMethod("getReadBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=read
 
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
@@ -52,6 +53,7 @@ client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites",
 client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
 client.registerMethod("getBookByGoodreadsId", baseUrl + "/books/goodreadsId/${goodreadsId}", "GET");
 client.registerMethod("getBookByIsbn", baseUrl + "/books/isbn/${isbn}", "GET");
+client.registerMethod("getBookRelatedToUser", baseUrl + "/books/${bookId}/users/${userId}", "GET");
 
 client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST"); // -POST borrow request object
 
@@ -174,6 +176,17 @@ exports.getUserFromFbId = function(fbId, cb) {
         }       
     });
 };
+exports.getUserFromGoogleId = function(googleId, cb) {
+    var args = getArguments();
+    args.path = {googleId: googleId};
+    client.methods.getUserFromGoogleId(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
 
 exports.updateFields = function(fields, userId, cb) {
     var args = getArguments();
@@ -215,10 +228,9 @@ exports.getAvailableBooks = function(id, cb) {
     });
 };
 
-exports.getBookById = function (bookId, userId, cb) {
+exports.getBookById = function (bookId, cb) {
     var args = getArguments();
     args.path = {bookId: bookId};
-    args.parameters = {"userId": userId};
     client.methods.getBookById(args, function (data, response) {
         if (response.statusCode != 200) {
             cb(data, null);
@@ -241,6 +253,32 @@ exports.getOwnedBooks = function(id, cb) {
     });
 };
 
+exports.getBorrowedBooks = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "borrowed"};
+    client.methods.getBorrowedBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.getReadBooks = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "read"};
+    client.methods.getReadBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
 exports.getWishListBooks = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
@@ -252,4 +290,16 @@ exports.getWishListBooks = function(userId, cb) {
             cb(null, data);
         }
     });
-}
+};
+
+exports.getBookRelatedToUser = function(bookId, userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, bookId: bookId}
+    client.methods.getBookRelatedToUser(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};

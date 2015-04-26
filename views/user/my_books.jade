@@ -15,7 +15,7 @@ section(id="my-books", class="box-border")
                         li(class="")
                             section(class="type-a")
                                 h3 Want to get more of these?
-            - var n = books.ownedBooks.length
+            - var n = books.length
             - var i = 0
             - while(n > 0){
                 - i = 0
@@ -24,7 +24,7 @@ section(id="my-books", class="box-border")
                         - i = i+1
                         - n = n-1
                         - if(n >= 0) {
-                            - var book = books.ownedBooks[n]
+                            - var book = books[n]
                             div(class="col-md-6 column") 
                                 div(class="engagement-card")
                                     div(class="engagement-body-left")
@@ -35,7 +35,6 @@ section(id="my-books", class="box-border")
                                         br
                                         p by
                                             b(class="book-author-name") #{book.authorName}
-                                        p Description #{n}
                                     div(class="engagement-action-container")
                                         div(class="row")
                                             div(class="col-md-7 column")
