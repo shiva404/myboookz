@@ -159,6 +159,8 @@ app.get('/goodreads/sync', ensureAuthenticated, function(req, resp){
     });    
 });
 
+
+
 app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
     return gr.requestToken(function(callback) {
         fakeSession.oauthToken = callback.oauthToken;
@@ -183,6 +185,10 @@ app.get('/auth/fb/callback',
     passport.authenticate('facebook', {scope: "email", failureRedirect: '/' }),
     function (req, res) {
         res.redirect('/account');
+});
+
+app.get('/test',function (req, res) {
+        res.render('my_books_with_tabs');
 });
 
 app.get('/auth/google/callback',
