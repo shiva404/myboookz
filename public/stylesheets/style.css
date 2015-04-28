@@ -52,7 +52,6 @@
     
 }
 
-
 #profile {
     width: 646px;
     word-wrap: break-word;
@@ -410,6 +409,10 @@ a:link {
     margin-right: 10px;
     margin-bottom: 10px;
     margin-left: 1px;
+}
+
+.engagement-card p {
+    font-size:100%;
 }
 
 p {

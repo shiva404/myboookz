@@ -8,8 +8,6 @@ $('#address-info-#{addresses[i].id}-edit-save-button').click(function(){
         console.log(str);
         var posting = $.put('api/address', str,"application/json");
         posting.done(function(data){
-
-            
         })
     });
 });

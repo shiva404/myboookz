@@ -39,6 +39,7 @@ client.registerMethod("getAvailableBooks", baseUrl + "/users/${userId}/books", "
 client.registerMethod("getLentBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=lent
 client.registerMethod("getBorrowedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=borrowed
 client.registerMethod("getReadBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=read
+client.registerMethod("getWishListBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=wishList
 
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
@@ -283,7 +284,7 @@ exports.getWishListBooks = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
     args.parameters = {"filter": "wishList"};
-    client.methods.getOwnedBooks(args, function(data, response){
+    client.methods.getWishListBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
         } else {
