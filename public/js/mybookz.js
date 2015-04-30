@@ -43,4 +43,9 @@ $(document).ready(function() {
             $("#")
         })
     });
+    
+    $(".fbLikePopUp").on("click", function(event){
+        event.preventDefault();
+        alert("recommend him fb page")
+    })
 });

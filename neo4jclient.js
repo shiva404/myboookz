@@ -75,6 +75,19 @@ exports.addAddress = function(address, userId, cb) {
     });
 };
 
+exports.initiateBorrowBookReq = function(borrowerId, ownerId, bookId, cb) {
+    var args = getArguments();
+    args.data = {ownerUserId: ownerId, borrowerUserId: borrowerId}
+    args.path = {bookId: bookId}
+    client.methods.addAddress(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
 exports.updateAddress = function(addressId, address, userId, cb) {
     var args = getArguments();
     args.data = address;

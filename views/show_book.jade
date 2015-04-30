@@ -9,45 +9,94 @@ block content
                         div(class="mainImage")
                             img(src="#{book.imageUrl}")
                     div(class="col-md-9 column")
-                            div(class="row clearfix")
-                                div(class="col-md-12 column")
-                                    h3 #{book.name}
-                            div(class="row clearfix")
-                                div(class="col-md-6 column")
-                                    div
-                                        strong Author-
-                                        |#{book.authorName}
-                                    div
-                                        strong Publisher-
-                                        |#{book.publisher}
-                                    div
-                                        strong Year-
-                                        |#{book.publishedYear}
-                                    div
-                                        strong ISBN -
-                                        |#{book.isbn}
-                                    div
-                                        strong ISBN13 -
-                                        |#{book.isbn13}
-                                div(class="col-md-6 column")
-                                    - if(book.bookType && (book.bookType === "WISH")) {
-                                        - if(book.additionalProperties != null && book.additionalProperties.recommendations.length > 0) {
-                                            - var grRecommendations = book.additionalProperties.recommendations
-                                            - console.log(JSON.stringify(grRecommendations) + "of length" + grRecommendations.length)
-                                            - var n = grRecommendations.length - 1;
-
-                                                div(class="engagement-card")
+                        div(class="row clearfix")
+                            div(class="col-md-12 column")
+                                h3 #{book.name}
+                        div(class="row clearfix")
+                            div(class="col-md-6 column")
+                                div
+                                    strong Author-
+                                    |#{book.authorName}
+                                div
+                                    strong Publisher-
+                                    |#{book.publisher}
+                                div
+                                    strong Year-
+                                    |#{book.publishedYear}
+                                div
+                                    strong ISBN -
+                                    |#{book.isbn}
+                                div
+                                    strong ISBN13 -
+                                    |#{book.isbn13}
+                            include ./includes/fb_page_rec
+                            div(class="col-md-6 column")
+                                - if(book.bookType && (book.bookType === "WISH")) {
+                                    - if(book.additionalProperties != null && book.additionalProperties.recommendations.length > 0) {
+                                        - var grRecommendations = book.additionalProperties.recommendations
+                                        - console.log(JSON.stringify(grRecommendations) + "of length" + grRecommendations.length)
+                                        - var n = grRecommendations.length - 1;
+                                        - if(n >= 0) {
+                                            div(class="engagement-card")
+                                                - var isFriendExists = grRecommendations[n].friendId
                                                     div(class="engagement-body-left")
                                                         a(href="#")
-                                                            img(src="#{grRecommendations[n].friendImageUrl}", class="book-image")
+                                                            img(src="#{grRecommendations[n].friendImageUrl}", class="book-image", id="rec-friend-img-#{grRecommendations[n].friendGoodreadsId}")
                                                     div(class="engagement-body-right")
-                                                        a(href="#", class="book-name") 
+                                                        a(href="#", class="book-name")
                                                             h3 #{grRecommendations[n].friendName}
                                                         br
-                                                        button(class="btn-primary btn")
-                                                            |Ask for borrowing
+                                                        - if(!isFriendExists) {
+                                                            button(class="btn-primary btn fbLikePopUp", data-friend-grId="#{grRecommendations[n].friendGoodreadsId}", data-toggle="modal", data-target=".bs-fbpage-modal-lg")
+                                                                |Ask for borrowing
+                                                        - } else {
+                                                            button(class="btn-primary btn",  data-friend-id="#{grRecommendations[n].friendId}", data-toggle="modal", data-target="#borrow-book-#{grRecommendations[n].friendId}")
+                                                                |Ask for borrowing
+                                                            div(class="modal fade bs-fbpage-modal-lg", id="borrow-book-#{grRecommendations[n].friendId}", tabindex="-1", role="dialog", aria-labelledby="myLargeModalLabel", aria-hidden="true")
+                                                                div(class="modal-dialog modal-lg")
+                                                                    div(class="modal-content")
+                                                                        div(class="modal-header")
+                                                                            button(type="button", class="close", data-dismiss="modal", aria-label="Close")
+                                                                                span(aria-hidden="true")
+                                                                                    |×
+                                                                            h4(class="modal-title" id="myLargeModalLabel")
+                                                                                |Borrow Book
+                                                                        div(class="modal-body")
+                                                                            div( class="row clearfix")
+                                                                                div( class="col-md-12 column")
+                                                                                    div( class="row clearfix")
+                                                                                        div( class="col-md-6 column")
+                                                                                            div( class="row clearfix")
+                                                                                                div( class="col-md-8 column")
+                                                                                                    div(class="row clearfix")
+                                                                                                        div(class="col-md-12 column")
+                                                                                                            h3 #{grRecommendations[n].friendName}
+                                                                                                div( class="col-md-4 column")
+                                                                                                    div(class="row clearfix")
+                                                                                                        div(class="col-md-12 column")
+                                                                                                            img(src="#{grRecommendations[n].friendImageUrl}", class="mainImage")
+                                                                                        div( class="col-md-6 column")
+                                                                                            div( class="row clearfix")
+                                                                                                div( class="col-md-4 column")
+                                                                                                    div(class="row clearfix")
+                                                                                                        div(class="col-md-12 column mainImage")
+                                                                                                            img(src="#{book.imageUrl}")
+                                                                                                div( class="col-md-8 column")
+                                                                                                    div(class="row clearfix")
+                                                                                                        div(class="col-md-12 column")
+                                                                                                            h3 #{book.name}
+                                                                                    div( class="row clearfix")
+                                                                                        div( class="col-md-12 column")
+                                                                                            form(role="form")
+                                                                                                div( class="form-group")
+                                                                                                    label(for="exampleInputEmail1") Email address
+                                                                                                    input(type="email", class="form-control", id="exampleInputEmail1")
+                                                                                                    button(type="submit", class="btn btn-default") Submit
+
+                                                        - }
                                         - }
-                                    -}    
+                                    - }
+                                -}
 
                 div(class="row clearfix")
                     div(class="col-md-12 column")
@@ -61,21 +110,25 @@ block content
                                 h3 Recommendations
                                 - while(n >= 0) {
                                     div(class="engagement-card")
-                                        div(class="engagement-body-left")
-                                            a(href="#")
-                                                img(src="#{grRecommendations[n].friendImageUrl}", class="book-image")
-                                        div(class="engagement-body-right")
-                                            a(href="#", class="book-name")
-                                                h3 #{grRecommendations[n].friendName}
-                                            br
-                                            button(class="btn-primary btn")
-                                                | Ask for borrowing
+                                        - var isFriendExists = grRecommendations[n].friendId
+                                            div(class="engagement-body-left")
+                                                a(href="#")
+                                                    img(src="#{grRecommendations[n].friendImageUrl}", class="book-image", id="rec-friend-img-#{grRecommendations[n].friendGoodreadsId}")
+                                            div(class="engagement-body-right")
+                                                a(href="#", class="book-name")
+                                                    h3 #{grRecommendations[n].friendName}
+                                                br
+                                                - if(!isFriendExists) {
+                                                    button(class="btn-primary btn fbLikePopUp", data-friend-grId="#{grRecommendations[n].friendGoodreadsId}", data-toggle="modal", data-target=".bs-fbpage-modal-lg")
+                                                        |Ask for borrowing
+                                                - } else {
+                                                    button(class="btn-primary btn", data-friend-grId="#{grRecommendations[n].friendId}")
+                                                        |Ask for borrowing
+                                                - }
                                     - n--;
                                 - }
                             - }
                             -}    
-                        
-                    
             div(class="col-md-4 column")
                         
                 

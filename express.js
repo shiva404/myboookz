@@ -237,6 +237,8 @@ app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
 app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 
+app.get("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, user_api.initiateBorrowBookReq);
+
 app.get("/readbooks", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getReadBooks(req.session.passport.user, function(err, books){
