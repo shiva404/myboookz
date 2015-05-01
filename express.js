@@ -233,11 +233,9 @@ app.get('/profile', ensureAuthenticated, function(req, res){
 app.post("/api/address", ensureAuthenticated, user_api.addAddress);
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
 app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
-
 app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
-
-app.get("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, user_api.initiateBorrowBookReq);
+app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 
 app.get("/readbooks", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);

@@ -79,7 +79,7 @@ exports.initiateBorrowBookReq = function(borrowerId, ownerId, bookId, cb) {
     var args = getArguments();
     args.data = {ownerUserId: ownerId, borrowerUserId: borrowerId}
     args.path = {bookId: bookId}
-    client.methods.addAddress(args, function(data, response){
+    client.methods.borrowBook(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
         } else {

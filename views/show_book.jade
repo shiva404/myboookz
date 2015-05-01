@@ -15,10 +15,10 @@ block content
                         div(class="row clearfix")
                             div(class="col-md-6 column")
                                 div
-                                    strong Author-
+                                    strong Author -
                                     |#{book.authorName}
                                 div
-                                    strong Publisher-
+                                    strong Publisher -
                                     |#{book.publisher}
                                 div
                                     strong Year-
@@ -87,17 +87,19 @@ block content
                                                                                                             h3 #{book.name}
                                                                                     div( class="row clearfix")
                                                                                         div( class="col-md-12 column")
-                                                                                            form(role="form")
+                                                                                            form(role="form", action="#", )
                                                                                                 div( class="form-group")
-                                                                                                    label(for="exampleInputEmail1") Email address
-                                                                                                    input(type="email", class="form-control", id="exampleInputEmail1")
-                                                                                                    button(type="submit", class="btn btn-default") Submit
+                                                                                                    input(type="hidden", id="book-borrow-id-#{grRecommendations[n].friendId}",value="#{book.id}")
+                                                                                                    input(type="hidden", id="book-borrow-owner-id-#{grRecommendations[n].friendId}",value="#{grRecommendations[n].friendId}")
 
+                                                                                                    input(type="text", class="form-control", id="book-borrow-no-days-#{grRecommendations[n].friendId}")
+                                                                                                    button(type="submit", class="btn btn-default", id="book-borrow-init-#{grRecommendations[n].friendId}") Submit
+                                                                                                script
+                                                                                                    $('#book-borrow-init-#{grRecommendations[n].friendId}').click(function(event){ event.preventDefault();var posting = $.post('/api/books/#{book.id}/owner/#{grRecommendations[n].friendId}/initBorrow',"application/json");posting.done(function(data){$('#borrow-book-#{grRecommendations[n].friendId}').modal('hide'); $().toastmessage('showSuccessToast', 'Borrow req sent successfully.');})});
                                                         - }
                                         - }
                                     - }
                                 -}
-
                 div(class="row clearfix")
                     div(class="col-md-12 column")
                         p #{book.description}
