@@ -26,9 +26,42 @@ exports.initiateBorrowBookReq = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            var borrowedDateFromNow = moment(1429551207130).fromNow();
-            var borrowedDate = moment(1429551207130).format("MMM Do YYYY");
-            res.render('show_book', { book: book, borrowedDate: borrowedDate, borrowedDateFromNow: borrowedDateFromNow});
+           res.ok()
+        }
+    })
+};
+
+
+exports.acceptBorrowed = function (req, res) {
+    var shareContact = req.body.shareContact;
+    var comment = req.body.comment
+    var borrowerId = req.body.borrowerId
+    var ownerId = req.body.ownerId
+    var bookId = req.body.bookId
+     neo4jclient.updateStatusToAgreed(borrowerId, ownerId, bookId, shareContact, comment, function(error, book){
+         if(error){
+             //todo: error page
+         } else {
+             res.render("process_borrowbook_init", {process: 0})
+         }
+     })
+};
+
+exports.processBorrowBookInit = function (req, res) {
+    var bookId = req.params.bookId;
+    var ownerUserId = req.params.ownerId;
+    var borrowerId = req.params.borrowerId;
+    neo4jclient.getUserFromId(borrowerId, function(error, user){
+        if(error) {
+            //todo: display error message
+        } else {
+            neo4jclient.getBookById(bookId, function(error, book){
+                if(error){
+                    //todo: error page
+                } else {
+                    res.render("process_borrowbook_init", {book :book, borrower: user, userId: ownerUserId, process: 1})
+                }
+            })
         }
     })
 };

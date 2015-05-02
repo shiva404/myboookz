@@ -237,6 +237,10 @@ app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 
+app.post("/process/borrowInit/accept", book_api.acceptBorrowed);
+
+app.get("/process/books/:bookId/owner/:ownerId/borrower/:borrowerId/borrowBookInit", book_api.processBorrowBookInit);
+
 app.get("/readbooks", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getReadBooks(req.session.passport.user, function(err, books){
