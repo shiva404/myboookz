@@ -6,7 +6,23 @@ block content
             div(class="dashboard dashboard-left")
                 include includes/dashboard
             div(class="content-main")
-                button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
-                    |Import from good reads                  `  1
-                include ./includes/goodreads_import
+                div(id="my-books", class="box-border")
+                    header(class="my-books-header")
+                        nav(id="my-books-navigation")
+                            ul(id="my-books-search")
+                                div(class="input-group")
+                                    input(type="text", class="form-control", placeholder="Search for...")
+                                    span(class="input-group-btn")
+                                        button(class="btn btn-default", type="button")
+                                            |Search
+                    div(class="row books-list")
+                        div(class="col-md-12 column")
+                            div(class="row clearfix")
+                                - var n = books.length
+                                - var i = 0
+                                - while(i < n){
+                                - var book = books[i]
+                                    include ./book/search_result_book
+                                -i++
+                                -}
             div(class="dashboard dashboard-right")

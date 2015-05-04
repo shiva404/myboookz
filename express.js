@@ -237,6 +237,17 @@ app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 
+app.get("/search", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    var searchString = req.query.q;
+    neo4jclient.bookSearch(searchString, function(err, searchResult){
+        if(err)
+            console.log(err);
+        else
+            res.render('search', {user: cachedUser, books: searchResult.books});
+    })
+})
+
 app.post("/process/borrowInit/accept", book_api.acceptBorrowed);
 
 app.get("/process/books/:bookId/owner/:ownerId/borrower/:borrowerId/borrowBookInit", book_api.processBorrowBookInit);

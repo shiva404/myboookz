@@ -1,0 +1,45 @@
+div(class="list-unit")
+    div(class="row clearfix")
+        div(class="col-md-3 lu-image-wrapper")
+            div(class="lu-image")
+                a(href="#")
+                    img(src="#{book.imageUrl}")
+        div(class="col-md-9")
+            div(class="row clearfix")
+                div(class="col-md-12")
+                    div(class="book-name")
+                        a(href="#")
+                            h3 #{book.name}
+            div(class="row clearfix")
+                div(class="col-md-6")
+                    div
+                        |Author - #{book.authorName}
+                div(class="col-md-6")
+                    div(class="btn-group")
+                        button(class="btn btn-success dropdown-toggle", data-toggle="dropdown", aria-expanded="false") Mark as read
+                            span(class="caret")
+                        ul(class="dropdown-menu", role="menu")
+                            li
+                                a(href="#")
+                                    |I have book with me
+                            li
+                                a(href="#")
+                                    |I have but dont want to share
+
+                            li
+                                a(href="#")
+                                    |Something else here
+
+                            li(class="divider")
+                            li
+                                a(href="#")
+                                    |Separated link
+
+
+
+                    br
+                    div
+                        button(class="btn btn-warning") Add to wishlist
+                        
+                
+            

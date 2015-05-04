@@ -48,6 +48,7 @@ client.registerMethod("followUser", baseUrl + "/users/${userId}/follow/${followU
 client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${followUserId}", "DELETE");
 
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
+client.registerMethod("search", baseUrl + "/books/search", "GET");
 
 //Book
 //client.registerMethod("createBook", baseUrl + "/books", "POST");  --> Don't use this api
@@ -71,6 +72,18 @@ exports.addAddress = function(address, userId, cb) {
             cb(data, null);
         } else {
             cb(null, data);
+        }
+    });
+};
+
+exports.bookSearch = function(searchString, cb) {
+    var args = getArguments();
+    args.parameters = {q: searchString}
+    client.methods.search(args, function(books, response){
+        if(response.statusCode != 200){
+            cb(books, null);
+        } else {
+            cb(null, books);
         }
     });
 };

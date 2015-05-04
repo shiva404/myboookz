@@ -414,6 +414,29 @@ a:link {
     font-size:100%;
 }
 
+
+
+.list-unit {
+    padding: 20px 7px;
+    color: #848484;
+    border: 2px solid transparent;
+}
+
+.list-unit .lu-image-wrapper .lu-image {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.list-unit .lu-title-wrapper {
+    padding: 0 20px 10px 0;
+}
+
+
+.align-right{
+float: right;
+    
+}
+
 p {
   line-height: 1.8;
 }

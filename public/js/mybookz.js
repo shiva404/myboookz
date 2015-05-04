@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $('#grimportmodalbtnYes').click(function() {
-        alert("data import called!!!");
         window.location = "/auth/goodreads";
     });
 
@@ -15,9 +14,17 @@ $(document).ready(function() {
             scrollTop: $(el).offset().top
         }, speed);
     };
+    
+    $('#search-button').click(function(e){
+        var searchText = $('#search-text').val();
+        if(searchText) {
+            $(location).attr('href',"/search?q=" + searchText);
+        }
+    })
 
     $("#address-add-save").on("click", function(event) {
         event.preventDefault();
+        
         var params = {address: {type: $('#address-add-type').val(), latitude: $('#address-add-lat').val(), longitude: $('#address-add-long').val(), landmark: $('#address-add-landmark').val()}};
         var str = jQuery.param( params );
         console.log(str);
