@@ -137,11 +137,12 @@ app.get('/', ensureAuthenticated, function(req, resp){
 });
 app.get('/ping', routes.ping);
 app.get('/account', ensureAuthenticated, function(req, res){
+    var checkGoodreads = req.query.check_goodreads;
     neo4jclient.getUserFromId(req.session.passport.user, function(err, user){
         if(err)
             console.log(err);
         else
-            res.render('account', {user: user});
+            res.render('account', {user: user, checkGoodreads: checkGoodreads});
     })
 });
 
@@ -149,13 +150,13 @@ app.get('/profile/edit', ensureAuthenticated, function(req, res){
     res.render('user/profile');
 });
 
-app.get('/goodreads/sync', ensureAuthenticated, function(req, resp){
+app.post('/api/goodreads/sync', ensureAuthenticated, function(req, resp){
     var fields = {"fields":[{"name":"goodreadsAuthStatus","value":req.query.status}]}
     neo4jclient.updateFields(fields, req.session.passport.user, function(error, data){
         if(error != null){
             resp.error
         }
-        resp.ok;
+        resp.send("Ok");
     });    
 });
 
@@ -184,7 +185,7 @@ app.get('/auth/google',
 app.get('/auth/fb/callback',
     passport.authenticate('facebook', {scope: "email", failureRedirect: '/' }),
     function (req, res) {
-        res.redirect('/account');
+        res.redirect('/account?check_goodreads=true');
 });
 
 app.get('/test', ensureAuthenticated ,function (req, res) {
@@ -200,7 +201,7 @@ app.get('/test', ensureAuthenticated ,function (req, res) {
 app.get('/auth/google/callback',
     passport.authenticate('google',{ failureRedirect: '/' }),
     function (req, res) {
-        res.redirect('/account');
+        res.redirect('/account?check_goodreads=true');
 });
 
 app.get('/auth/goodreads/callback', ensureAuthenticated, function(req, res) {
@@ -209,7 +210,7 @@ app.get('/auth/goodreads/callback', ensureAuthenticated, function(req, res) {
     console.log(req + "oauthToken: " + oauthToken + "oauthTokenSecret" + oauthTokenSecret);
     var params = url.parse(req.url, true);
     return gr.processCallback(oauthToken, oauthTokenSecret, params.query.authorize, function(callback) {
-        var fields = {"fields":[{"name":"goodreadsId","value":callback.userid}, {"name":"goodreadsAuthStatus","value":"yes"},
+        var fields = {"fields":[{"name":"goodreadsId","value":callback.userid}, {"name":"goodreadsAuthStatus","value":"DONE"},
             {"name":"goodreadsAccessToken","value":callback.accessToken}, {"name":"goodreadsAccessTokenSecret", "value":callback.accessTokenSecret}]};
         console.log(JSON.stringify("Data" + req.session.passport))
         neo4jclient.updateFields(fields, req.session.passport.user, function(error, data){

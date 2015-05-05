@@ -2,6 +2,22 @@ $(document).ready(function() {
     $('#grimportmodalbtnYes').click(function() {
         window.location = "/auth/goodreads";
     });
+    
+    $('#grim-modalbtn-cancel').click(function(){
+        var posting = $.post('/api/goodreads/sync?status=NO',"application/json");
+        posting.done(function(data){
+            $('#goodreadsimportmodal').modal('hide');
+        })
+    })
+    
+    $('#grim-modalbtnrmd-later').click(function(){
+        var posting = $.post('/api/goodreads/sync?status=YES',"application/json");
+        posting.done(function(data){
+            $('#goodreadsimportmodal').modal('hide');
+        })
+    })
+
+    
 
     $('.scrollClick').click(function(e){
         e.preventDefault();
@@ -53,6 +69,5 @@ $(document).ready(function() {
     
     $(".fbLikePopUp").on("click", function(event){
         event.preventDefault();
-        alert("recommend him fb page")
     })
 });

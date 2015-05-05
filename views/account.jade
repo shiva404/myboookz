@@ -6,7 +6,14 @@ block content
             div(class="dashboard dashboard-left")
                 include includes/dashboard
             div(class="content-main")
+                include ./includes/goodreads_import
+                - console.log(checkGoodreads + "authStatus =" + user.goodreadsAuthStatus);
+                - if(checkGoodreads && ((user.goodreadsAuthStatus === "NONE") || (user.goodreadsAuthStatus === "YES"))) {
+                    script
+                        $('#goodreadsimportmodal').modal('show');
+                -}
+                h3 main content comes here!!
+            div(class="dashboard dashboard-right")
                 button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
                     |Import from good reads
-                include ./includes/goodreads_import
-            div(class="dashboard dashboard-right")
+                
