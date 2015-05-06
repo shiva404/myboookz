@@ -146,6 +146,20 @@ app.get('/account', ensureAuthenticated, function(req, res){
     })
 });
 
+app.get("/reminders", ensureAuthenticated, function(req, res){
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.listRemindersForUser(req.session.passport.user, function(error, reminders){
+        if(error){
+            //todo display error page
+        } else {
+            res.render("reminders", {remindersPage:reminders, user: cachedUser})
+        }
+    })
+    
+
+    
+})
+
 app.get('/profile/edit', ensureAuthenticated, function(req, res){
     res.render('user/profile');
 });
