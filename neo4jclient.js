@@ -50,6 +50,10 @@ client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${follo
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
 client.registerMethod("search", baseUrl + "/books/search", "GET");
 
+//timeline and activity log
+client.registerMethod("getUserTimeLineFeed", baseUrl + "/users/${userId}/timeline/feed", "GET");
+client.registerMethod("getUserActityFeed", baseUrl + "/users/${userId}/timeline/events", "GET");
+
 //Book
 //client.registerMethod("createBook", baseUrl + "/books", "POST");  --> Don't use this api
 client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
@@ -61,6 +65,39 @@ client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST")
 
 client.registerMethod("updateStatusToAgreed", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=agreed&borrowerId=xyz&sharephone=? - Which will lock the book for the exchange
 client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=success&borrowerId=xyz
+
+exports.followUser = function(currentUser, followUserId, cb) {
+    var args = getArguments();
+    console.log("getting data")
+    
+}
+
+exports.getUserTimeLineFeed = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId:userId};
+    client.methods.getUserTimeLineFeed(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+            console.log("Error !!! while fetching feed")
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.getUserActityFeed = function(userId, cb) {
+    var args = getArguments();
+    console.log("Neo4jClient -" + JSON.stringify(address)  + "UserId:" + userId);
+    args.data = address;
+    args.path = {userId: userId};
+    client.methods.getUserActityFeed(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
 
 exports.addAddress = function(address, userId, cb) {
     var args = getArguments();

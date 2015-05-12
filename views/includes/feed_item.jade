@@ -1,0 +1,5 @@
+div(class="feed-item")
+	div(class="row clearfix")
+		div(class="column col-md-12")
+			- console.log("redering feedItem --- > " + JSON.stringify(feedItem)
+			p #{feedItem.subject.displayString} #{feedItem.auditEventType} #{feedItem.target.displayStrig}

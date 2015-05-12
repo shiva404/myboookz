@@ -128,21 +128,25 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/', ensureAuthenticated, function(req, resp){
-    neo4jclient.getUserFromId(req.session.passport.user, function(err, user){
+    var checkGoodreads = req.query.check_goodreads;
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
         if(err)
             console.log(err);
         else
-            resp.render('account', {user: user});
+            resp.render('account', {user: cachedUser, checkGoodreads: checkGoodreads, feed:feed});
     })
 });
+
 app.get('/ping', routes.ping);
 app.get('/account', ensureAuthenticated, function(req, res){
     var checkGoodreads = req.query.check_goodreads;
-    neo4jclient.getUserFromId(req.session.passport.user, function(err, user){
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
         if(err)
             console.log(err);
         else
-            res.render('account', {user: user, checkGoodreads: checkGoodreads});
+            res.render('account', {user: cachedUser, checkGoodreads: checkGoodreads, feed:feed});
     })
 });
 
