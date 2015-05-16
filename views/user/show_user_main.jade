@@ -1,0 +1,42 @@
+div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
+    div(class="ProfileCanopy-header u-bgUserColor")
+        div(class="ProfileCanopy-headerBg")
+        div(class="AppContainer")
+            div(class="ProfileCanopy-avatar")
+                div(class="ProfileAvatar")
+                    img(class="ProfileAvatar-image", src="#{ruser.profileImageUrl}")
+    div(class="ProfileCanopy-navBar")
+        div(class="AppContainer")
+            div(class="row")
+                div(class="col-md-2 column")
+                div(class="col-md-10 column")
+                    div(class="ProfileCanopy-nav")
+                        div(class="ProfileNav", role="navigation")
+                            ul(class="nav nav-tabs")
+                                li(class="ProfileNav-item ProfileNav-item--tweets is-active")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
+                                        span(class="ProfileNav-label") Timeline
+                                li(class="ProfileNav-item ProfileNav-item--tweets")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
+                                        span(class="ProfileNav-label") About
+                                li(class="ProfileNav-item ProfileNav-item--tweets")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
+                                        span(class="ProfileNav-label") Friends      
+
+div(class="AppContainer clearfix")
+    div(class="AppContent-main u-cf margin60px", role="main")
+        div(class="row clearfix")
+            div(class="dashboard dashboard-left Grid-cell")
+                div(class="Grid Grid--withGutter")
+                    div(class="Grid-cell")
+                        div(class="ProfileSidebar ProfileSidebar--withLeftAlignment")
+                            div(class="ProfileHeaderCard")
+                                h1(class="ProfileHeaderCard-name")
+                                    a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{ruser.name}
+            div(class="content-main")
+                - if(action === "timeline") {
+                include show_user_timeline
+                - } else if(action === "followers") {
+
+                -}
+            div(class="dashboard dashboard-right")

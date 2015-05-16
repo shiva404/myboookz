@@ -1,24 +1,7 @@
 div(class="feed-items")
-	- const count = feed.size
-	- for(var i =0; i < count; i++) {
-		- var feedItem = feed.userEvent[i];
-		- console.log("redering feedItem --- > " + JSON.stringify(feedItem))
-		div(class="feed-item")
-			div(class="row clearfix")
-				div(class="column col-md-12")
-					- var targetString = null
-					- if(feedItem.target) {
-						- targetString = feedItem.target.displayString
-					- } else {
-						- targetString = ""
-					- }
-					p 
-						a(href="feedItem.subject.url") #{feedItem.subject.displayString} 
-						|#{feedItem.auditEventType} 
-						-if(feedItem.target){
-						a(href="feedItem.target.url") #{feedItem.target.displayString} 
-						-}
-						
-					
-	-}
-
+    - const count = feed.size
+    - for(var i =0; i < count; i++) {
+        - var feedItem = feed.userEvent[i];
+        - console.log("redering feedItem --- > " + JSON.stringify(feedItem))
+        include ./feed_item
+    -}

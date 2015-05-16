@@ -87,8 +87,6 @@ exports.getUserTimeLineFeed = function(userId, cb) {
 
 exports.getUserActityFeed = function(userId, cb) {
     var args = getArguments();
-    console.log("Neo4jClient -" + JSON.stringify(address)  + "UserId:" + userId);
-    args.data = address;
     args.path = {userId: userId};
     client.methods.getUserActityFeed(args, function(data, response){
         if(response.statusCode != 200){

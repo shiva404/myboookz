@@ -196,3 +196,220 @@ ol, ul {
     border-radius: 6px;
 }
 
+.feed-item, .unfocusable-feed-item {
+  background: #fff;
+  border-left: 1px solid #e1e8ed;
+  border-right: 1px solid #e1e8ed;
+  background-clip: padding-box;
+}
+
+.account, .interest-category, .saved-search, .event, .app, .discover-item {
+  position: relative;
+  min-height: 51px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.feed-item .content, .permalink-event .content {
+  margin-left: 58px;
+}
+
+.feed-item-header .avatar, .permalink-header .avatar {
+  float: left;
+  margin-top: 3px;
+  margin-left: -58px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 5px;
+  -moz-force-broken-image-icon: 1;
+}
+
+.fullname {
+  font-weight: bold;
+  color: #292f33;
+}
+
+.ProfilePage {
+  background-image: none!important;
+  background-color: #f5f8fa!important;
+  line-height: 1.375;
+  min-width: 936px;
+}
+
+.ProfileCanopy--large, .ProfileCanopy--large .ProfileCanopy-header {
+  height: 175px;
+}
+
+.ProfileCanopy-inner {
+  position: relative;
+  width: 100%;
+  z-index: 4;
+}
+
+.ProfileCanopy-header {
+  max-width: 2560px;
+  position: relative;
+  z-index: 3;
+  background-color: #63aeee;
+}
+
+.AppContainer {
+    margin: 0 auto;
+    max-width: 890px;
+}
+
+.AppContainer {
+  max-width: 1190px;
+}
+
+
+
+.ProfileCanopy-avatar {
+  bottom: -87px;
+  left: 10px;
+  position: absolute;
+  transition: bottom .3s;
+  z-index: 3;
+}
+
+.ProfileAvatar {
+  background: #fff;
+  border: 5px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+  height: 200px;
+  position: relative;
+  width: 200px;
+}
+
+.ProfileAvatar-image, .ProfileAvatar-placeholderImage {
+  -moz-force-broken-image-icon: 1;
+  border-radius: 8px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.ProfileCanopy-navBar {
+  background-color: #fff;
+  border-bottom: 1px solid #e1e8ed;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 60px;
+  margin-bottom: 60px;
+}
+
+.Grid {
+  display: block;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.Grid--withGutter {
+  margin: 0 -5px;
+}
+
+.ProfileCanopy-nav .ProfileNav {
+  margin-bottom: -1px;
+}
+
+.ProfileNav {
+  height: 60px;
+  position: relative;
+}
+
+.ProfileNav-item.is-active, .ProfileNav-item.is-active:hover {
+  border-color: #66757f;
+  color: #66757f;
+  cursor: default;
+}
+
+.ProfileNav-item {
+  display: inline-block;
+}
+
+.ProfileNav-item.is-active .ProfileNav-stat, .ProfileNav-stat:hover, .ProfileNav-stat:focus {
+  border-bottom-width: 4px;
+}
+
+.ProfileCanopy-navBar {
+    background-color: #fff;
+    border-bottom: 1px solid #e1e8ed;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 60px;
+}
+
+.ProfileNav-stat {
+  height: 60px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-bottom: 0 solid;
+  display: block;
+  line-height: 1;
+  padding: 14px 15px 7px;
+  transition: all .15s ease-in-out;
+}
+
+.u-textCenter {
+  text-align: center!important;
+}
+
+.ProfileCanopy--withNav {
+    padding-bottom: 60px;
+}
+
+.ProfileNav-item.is-active .ProfileNav-label, .ProfileNav-item.is-active:hover .ProfileNav-label {
+  color: #66757f;
+}
+
+
+.ProfileNav-label {
+  color: #66757f;
+  font-size: 11px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  transition: color .15s ease-in-out;
+}
+
+.ProfileSidebar .ProfileHeaderCard, .ProfileSidebar .ProfileUserList, .ProfileSidebar .PhotoRail {
+    margin-bottom: 25px;
+}
+
+.ProfileSidebar .ProfileHeaderCard, .ProfileSidebar .ProfileTweetbox, .ProfileSidebar .ProfileLifelineInfo, .ProfileSidebar .ProfileUserList, .ProfileSidebar .PhotoRail, .ProfileSidebar .EventFollowAll {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.ProfileHeaderCard {
+    margin-top: 37px;
+}
+
+.ProfileHeaderCard-name {
+    line-height: 1;
+}
+
+.ProfileHeaderCard-nameLink {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    word-wrap: break-word;
+}
+
+.margin60px {
+    margin-top: 60px;
+    
+}
+
+
+
+
+
+
