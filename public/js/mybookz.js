@@ -10,14 +10,20 @@ $(document).ready(function() {
         })
     })
     
+    $('#add-group-save').click(function(){
+        var posting = $.post('api/groups', {group: {name: $('#add-group-name').val()}},"application/json");
+        posting.done(function(data){
+            $('#add-group-modal').modal('hide');
+        })
+        
+    });
+    
     $('#grim-modalbtnrmd-later').click(function(){
         var posting = $.post('/api/goodreads/sync?status=YES',"application/json");
         posting.done(function(data){
             $('#goodreadsimportmodal').modal('hide');
         })
     })
-
-    
 
     $('.scrollClick').click(function(e){
         e.preventDefault();

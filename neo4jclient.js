@@ -31,7 +31,7 @@ client.registerMethod("listReminders", baseUrl + "/users/${userId}/reminders", "
 client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "PUT");       //done
 client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");    //done
 
-client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST");
+client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST"); //mark as book as owned
 client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
 client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
 client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned         //done
@@ -66,19 +66,95 @@ client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST")
 client.registerMethod("updateStatusToAgreed", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=agreed&borrowerId=xyz&sharephone=? - Which will lock the book for the exchange
 client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=success&borrowerId=xyz
 
+//Groups
+client.registerMethod("addGroup", baseUrl + "/groups", "POST");
+client.registerMethod("getGroup", baseUrl + "/groups/${groupId}", "GET")
+client.registerMethod("getGroupWithMembers", baseUrl + "/groups/${groupId}", "GET"); //?includeMembers=true
+client.registerMethod("addMemberToGroup", baseUrl + "/groups/${groupId}/users/${userId}", "GET"); //?createdBy=xyz
+client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "GET");
+
+exports.getGroupsOfUser = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+
+    client.methods.getGroupsOfUser(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while getting groups of user")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+exports.addMemberToGroup = function(groupId, userId, currentUserId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, groupId: groupId};
+    args.parameters = {createdBy: currentUserId}
+
+    client.methods.addMemberToGroup(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while creating group")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
+exports.addGroup = function(group, userId, cb) {
+    var args = getArguments();
+    args.parameters = {userId:userId};
+    args.data = group;
+    client.methods.addGroup(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while creating group")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.getGroupWithMembers = function(groupId, userId, cb) {
+    var args = getArguments();
+    args.parameters = {includeMembers:true};
+    args.path = {groupId: groupId};
+    client.methods.getGroupWithMembers(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.getGroup = function(groupId, userId, cb) {
+    var args = getArguments();
+    args.path = {groupId: groupId};
+    client.methods.getGroupWithMembers(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
 exports.followUser = function(currentUser, followUserId, cb) {
     var args = getArguments();
     console.log("getting data")
-    
-}
+
+};
 
 exports.getUserTimeLineFeed = function(userId, cb) {
     var args = getArguments();
     args.path = {userId:userId};
     client.methods.getUserTimeLineFeed(args, function(data, response){
         if(response.statusCode != 200){
-            cb(data, null);
             console.log("Error !!! while fetching feed")
+            cb(data, null);
         } else {
             cb(null, data);
         }
@@ -379,4 +455,4 @@ exports.getBookRelatedToUser = function(bookId, userId, cb) {
             cb(null, data);
         }
     })
-};
+}

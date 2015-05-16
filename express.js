@@ -5,6 +5,7 @@ var config = require('./config');
 var routes = require('./routes');
 var user_api = require('./routes/user_apis');
 var book_api = require('./routes/books_api');
+var group_api = require('./routes/groups_api')
 var user_profile_api = require('./routes/user_profile_apis')
 var passport = require('passport'),
 	FacebookStrategy = require('passport-facebook').Strategy,
@@ -131,24 +132,34 @@ passport.use(new GoogleStrategy({
 app.get('/', ensureAuthenticated, function(req, resp){
 	var checkGoodreads = req.query.check_goodreads;
 	var cachedUser = myCache.get(req.session.passport.user);
-	neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
-		if(err)
-			console.log(err);
-		else
-			resp.render('account', {user: cachedUser, checkGoodreads: checkGoodreads, feed:feed});
-	})
+    handleAccountPage(checkGoodreads, cachedUser, req, resp);
 });
+
+function handleAccountPage(checkGoodreads, user, req, res) {
+    neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
+        if(err)
+            console.log(err);
+        else{
+             neo4jclient.getGroupsOfUser(req.session.passport.user, function(error, groups){
+                 if(error)
+                     console.log(err);
+                 else
+                    res.render('account', {user: user, checkGoodreads: checkGoodreads, feed:feed, groups: groups});
+             })
+                
+        }
+            
+           
+    })    
+    
+}
 
 app.get('/ping', routes.ping);
 app.get('/account', ensureAuthenticated, function(req, res){
 	var checkGoodreads = req.query.check_goodreads;
 	var cachedUser = myCache.get(req.session.passport.user);
-	neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
-		if(err)
-			console.log(err);
-		else
-			res.render('account', {user: cachedUser, checkGoodreads: checkGoodreads, feed:feed});
-	})
+    handleAccountPage(checkGoodreads, cachedUser, req, res);
+	
 });
 
 app.get("/reminders", ensureAuthenticated, function(req, res){
@@ -256,6 +267,7 @@ app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
 app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
+app.post("/api/groups", ensureAuthenticated, group_api.addGroup);
 
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);

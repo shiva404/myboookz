@@ -408,6 +408,77 @@ ol, ul {
     
 }
 
+.groups {
+    background-color: #fff;
+    background-clip: inherit;
+    border: 1px solid #e1e8ed;
+    border-radius: 5px;
+    line-height: inherit;
+    padding: 15px;
+}
+
+.module ul:last-child li:last-child .list-link, .module ul:last-child li.last-item .list-link, .module .list-link.last, .module .flex-module:last-child, .module .contrast-flex-module:last-child {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.module ul:first-child li:first-child .list-link, .module .flex-module:first-child, .module .contrast-flex-module:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.groups .flex-module {
+    background-color: inherit;
+    border: 0;
+    line-height: inherit;
+    padding: 0;
+}
+
+.groups .flex-module-header {
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.flex-module-header h3 {
+    display: inline;
+}
+
+h3 {
+    color: #66757f;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 22px;
+}
+
+.groups .groups-location {
+    color: #66757f;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.flex-module-inner, .flex-module-footer {
+    color: #8899a6;
+    font-size: 12px;
+}
+
+.groups .group-items {
+    margin-top: -4px;
+}
+
+.flex-module-inner ul, .flex-module-inner ol {
+    color: #292f33;
+}
+
+.groups .group-item {
+    font-size: 13px;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
 
 
 
