@@ -13,3 +13,13 @@ exports.addGroup = function (req, res) {
         }
     })
 };
+
+exports.showGroup = function(req, res) {
+    var groupId = req.params.groupId;
+    neo4jclient.getGroup(groupId, function(err, group){
+        if(err)
+            console.error("Error!! while getting message")
+        else
+            res.render('show_group', {group: group});
+    });
+}

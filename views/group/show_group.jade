@@ -4,7 +4,7 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
         div(class="AppContainer")
             div(class="ProfileCanopy-avatar")
                 div(class="ProfileAvatar")
-                    img(class="ProfileAvatar-image", src="#{ruser.profileImageUrl}")
+                    img(class="ProfileAvatar-image", src="https://cdn4.iconfinder.com/data/icons/free-3d-social-icons/png/512x512/MySpace.png")
     div(class="ProfileCanopy-navBar")
         div(class="AppContainer")
             div(class="row")
@@ -14,15 +14,14 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
                         div(class="ProfileNav", role="navigation")
                             ul(class="nav nav-tabs")
                                 li(class="ProfileNav-item ProfileNav-item--tweets is-active")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") Timeline
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                        span(class="ProfileNav-label") Available
                                 li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") About
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                        span(class="ProfileNav-label") Looking for
                                 li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") Friends      
-
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                        span(class="ProfileNav-label") Members
 div(class="AppContainer clearfix")
     div(class="AppContent-main u-cf margin60px", role="main")
         div(class="row clearfix")
@@ -32,11 +31,11 @@ div(class="AppContainer clearfix")
                         div(class="ProfileSidebar ProfileSidebar--withLeftAlignment")
                             div(class="ProfileHeaderCard")
                                 h1(class="ProfileHeaderCard-name")
-                                    a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{ruser.name}
+                                    a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{group.name}
             div(class="content-main")
-                - if(action === "timeline") {
-                include show_usr_timeline
-                - } else if(action === "followers") {
-
-                - }
+                - if(action === "available_books") {
+                include ./show_available_books
+                - } else if(action === "looking_books") {
+                include ./show_look_for_books
+                -}
             div(class="dashboard dashboard-right")

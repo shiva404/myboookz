@@ -478,6 +478,75 @@ h3 {
 }
 
 
+.u-bgUserColor, .u-bgUserColorHover:hover, .u-bgUserColorHover:focus {
+    background-color: #0084B4 !important;
+}
+.AdaptiveSearchTitle {
+    background-color: #55acee;
+    padding: 11px 0;
+}
+.AdaptiveSearchTitle-title {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1.3;
+    margin: 0 10%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+}
+
+.AdaptiveFiltersBar {
+    border-bottom: 1px solid #e1e8ed;
+    margin: 0 auto;
+    width: 1160px;
+}
+
+.AdaptiveFiltersBar-nav {
+    text-align: center;
+}
+.u-borderUserColor, .u-borderUserColorHover:hover, .u-borderUserColorHover:focus {
+    border-color: #0084B4 !important;
+}
+
+.AdaptiveFiltersBar-item {
+    border-bottom: 0 solid #55acee;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 46px;
+    transition: all .15s ease;
+}
+
+.u-textUserColor, .u-textUserColorHover:hover, .u-textUserColorHover:focus {
+    color: #0084B4 !important;
+}
+
+.AdaptiveFiltersBar-target--link {
+    text-decoration: none;
+}
+.AdaptiveFiltersBar-target {
+    color: #55acee;
+    display: block;
+    padding: 14px 0;
+}
+
+.AdaptiveFiltersBar-label {
+    border-right: 1px solid #ccd6dd;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.u-textUserColor, .u-textUserColorHover:hover, .u-textUserColorHover:focus {
+    color: #0084B4 !important;
+}
+
+
 
 
 

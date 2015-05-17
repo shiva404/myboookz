@@ -276,9 +276,9 @@ app.get("/search", ensureAuthenticated, function(req, res) {
 		if(err)
 			console.log(err);
 		else
-			res.render('search', {user: cachedUser, books: searchResult.books});
+			res.render('search', {user: cachedUser, books: searchResult.books, searchText: searchString});
 	})
-})
+});
 
 app.post("/process/borrowInit/accept", book_api.acceptBorrowed);
 
@@ -335,9 +335,8 @@ app.get("/reminders", ensureAuthenticated, function(req, res){
 });
 
 app.get("/books/:id", book_api.showBook);
-
 app.get("/users/:userId", ensureAuthenticated, user_profile_api.showUser);
-
+app.get("/groups/:groupId", ensureAuthenticated, group_api.showGroup);
 
 app.get('/logout', function(req, res){
 	req.logout();

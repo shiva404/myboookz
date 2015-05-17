@@ -129,10 +129,10 @@ exports.getGroupWithMembers = function(groupId, userId, cb) {
     })
 };
 
-exports.getGroup = function(groupId, userId, cb) {
+exports.getGroup = function(groupId, cb) {
     var args = getArguments();
     args.path = {groupId: groupId};
-    client.methods.getGroupWithMembers(args, function(data, response){
+    client.methods.getGroup(args, function(data, response){
         if(response.statusCode != 200){
             console.log("Error !!! while fetching group")
             cb(data, null);
