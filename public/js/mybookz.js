@@ -73,6 +73,17 @@ $(document).ready(function() {
         })
     });
     
+    $("#search-users-nav").on("click", function(event) {
+        event.preventDefault();
+        var searchText = $("#search-users-nav").attr("data-string");
+        var posting = $.get('api/search/users?q=' + searchText);
+        posting.done(function(data){
+            $('#search-result').replaceWith(data)
+        })
+    });
+    
+    
+    
     $(".fbLikePopUp").on("click", function(event){
         event.preventDefault();
     })

@@ -12,6 +12,20 @@ exports.addAddress = function (req, res) {
     })
 };
 
+exports.searchUsers = function(req, res) {
+    var userId = req.session.passport.user;
+    var searchString = req.query.q;
+    console.log(req.body.address);
+    neo4jclient.searchUsers(userId, searchString, function(error, users){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.render("user/search_result_users", {users:users.users})
+        }
+    })
+}
+
 exports.updateAddress = function (req, res) {
     var addressId = req.params.id;
     var userId = req.session.passport.user;

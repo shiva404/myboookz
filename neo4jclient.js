@@ -73,6 +73,55 @@ client.registerMethod("getGroupWithMembers", baseUrl + "/groups/${groupId}", "GE
 client.registerMethod("addMemberToGroup", baseUrl + "/groups/${groupId}/users/${userId}", "GET"); //?createdBy=xyz
 client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "GET");
 
+//search
+client.registerMethod("searchBooks", baseUrl + "/books/search", "GET") //?q=xyz
+client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET") //?q=xyz
+client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
+
+exports.searchBooks = function(searchString, cb) {
+    var args = getArguments();
+    args.parameters = {q: searchString}
+
+    client.methods.searchBooks(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while getting books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.searchFriends = function(userId, searchString, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {q: searchString}
+    client.methods.searchFriends(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while getting books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.searchUsers = function(userId, searchString, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {q: searchString}
+    
+    client.methods.searchUsers(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while getting users")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+
 exports.getGroupsOfUser = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
@@ -86,6 +135,7 @@ exports.getGroupsOfUser = function(userId, cb) {
         }
     })
 };
+
 exports.addMemberToGroup = function(groupId, userId, currentUserId, cb) {
     var args = getArguments();
     args.path = {userId: userId, groupId: groupId};

@@ -1,0 +1,14 @@
+div(class="Grid-cell u-mb10")
+    div(class="js-stream-item")
+        div(class="ProfileCard js-actionable-user")
+            a(class="ProfileCard-bg js-nav", href="#")
+            div(class="ProfileCard-content")
+                a(class="ProfileCard-avatarLink js-nav js-tooltip", href="#")
+                    img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{book.imageUrl}")
+                div(class="ProfileCard-userFields")
+                    div(class="ProfileNameTruncated")
+                        div(class="u-textTruncate u-inlineBlock")
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="#") #{book.name}
+                    div(class="ProfileCard-screenname u-dir")
+                        a(href="#", class="ProfileCard-screennameLink u-linkComplex js-nav")
+                            span by - #{book.authorName}
