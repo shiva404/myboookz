@@ -22,20 +22,20 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
                                 li(class="ProfileNav-item ProfileNav-item--tweets")
                                     a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
                                         span(class="ProfileNav-label") Members
-div(class="AppContainer clearfix")
-    div(class="AppContent-main u-cf margin60px", role="main")
-        div(class="row clearfix")
-            div(class="dashboard dashboard-left Grid-cell")
-                div(class="Grid Grid--withGutter")
-                    div(class="Grid-cell")
-                        div(class="ProfileSidebar ProfileSidebar--withLeftAlignment")
-                            div(class="ProfileHeaderCard")
-                                h1(class="ProfileHeaderCard-name")
-                                    a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{group.name}
-            div(class="content-main")
-                - if(action === "available_books") {
-                include ./show_available_books
-                - } else if(action === "looking_books") {
-                include ./show_look_for_books
-                -}
-            div(class="dashboard dashboard-right")
+div(class="page-container clearfix")
+    div(class="dashboard dashboard-left margin80px")
+        div(class="Grid Grid--withGutter")
+            div(class="Grid-cell")
+                div(class="ProfileSidebar ProfileSidebar--withLeftAlignment")
+                    div(class="ProfileHeaderCard")
+                        h1(class="ProfileHeaderCard-name")
+                            a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{group.name}
+    div(class="content-main margin80px")
+        - if(action === "available") {
+        include ./show_available_books
+        - } else if(action === "wishlist") {
+        include ./show_look_for_books
+        - } else if(action === "members") {
+        include  ./show_memebers
+        - }
+    div(class="dashboard dashboard-right margin80px")

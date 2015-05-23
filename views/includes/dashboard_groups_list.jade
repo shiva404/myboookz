@@ -9,6 +9,7 @@ div(class="groups module")
                     |(+)Add
             div(class="flex-module-inner")
                 div(class="group-items")
+                    - console.log("Groups" + JSON.stringify(groups))
                     - var n = groups.size
                     - if(n > 0) {
                     ul(class="group-items", id="group-items-dashboard")

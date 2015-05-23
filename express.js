@@ -12,6 +12,8 @@ var passport = require('passport'),
 	GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var NodeCache = require( "node-cache"),
 	myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
+var async = require('async')
+
 
 url = require('url');
 
@@ -136,21 +138,32 @@ app.get('/', ensureAuthenticated, function(req, resp){
 });
 
 function handleAccountPage(checkGoodreads, user, req, res) {
-    neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
-        if(err)
-            console.log(err);
-        else{
-             neo4jclient.getGroupsOfUser(req.session.passport.user, function(error, groups){
-                 if(error)
-                     console.log(err);
-                 else
-                    res.render('account', {user: user, checkGoodreads: checkGoodreads, feed:feed, groups: groups});
-             })
-                
-        }
+    async.parallel({
+            groups: function (callback) {
+                neo4jclient.getGroupsOfUser(req.session.passport.user, function(error, groups){
+                    callback(error, groups);
+                });
+            },
+            feed: function(callback) {
+                neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
+                    callback(err, feed);
+                });
+            }
+        },
+        function(err, results) {
+            if(results.feed.size <= 0){
+               neo4jclient.getRandomUsers(10, function(err, users){
+                    if(!err) {
+                        res.render('account', {user: user, checkGoodreads: checkGoodreads, users:users.users, groups: results.groups});
+                    }
+               })
+            } else {
+                res.render('account', {user: user, checkGoodreads: checkGoodreads, feed:results.feed, groups: results.groups});
+            }
             
-           
-    })    
+        });
+    
+    
     
 }
 

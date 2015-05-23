@@ -9,13 +9,17 @@ block content
             div(class="content-main")
                 include ./includes/goodreads_import
                 include ./includes/add_group_modal
-                - console.log(checkGoodreads + "authStatus =" + user.goodreadsAuthStatus);
                 - if(checkGoodreads && ((user.goodreadsAuthStatus === "NONE") || (user.goodreadsAuthStatus === "YES"))) {
                     script
                         $('#goodreadsimportmodal').modal('show');
                 -}
                 div(class="feed")
-                    include ./includes/feed_timeline.jade
+                    - if(feed && feed.size > 0) {
+                    include ./includes/feed_timeline
+                    -} else {
+                    h3 Make new friends and see what they are reading
+                    include ./user/random_users_display
+                     - }
             div(class="dashboard dashboard-right")
                 button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
                     |Import from good reads

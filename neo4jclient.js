@@ -72,19 +72,65 @@ client.registerMethod("getGroup", baseUrl + "/groups/${groupId}", "GET")
 client.registerMethod("getGroupWithMembers", baseUrl + "/groups/${groupId}", "GET"); //?includeMembers=true
 client.registerMethod("addMemberToGroup", baseUrl + "/groups/${groupId}/users/${userId}", "GET"); //?createdBy=xyz
 client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "GET");
+client.registerMethod("getGroupMembers", baseUrl + "/groups/${groupId}/users", "GET");
+client.registerMethod("getGroupAvailableBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=available
+client.registerMethod("getGroupWishListBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=lookingfor
 
 //search
 client.registerMethod("searchBooks", baseUrl + "/books/search", "GET") //?q=xyz
 client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET") //?q=xyz
 client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
 
-exports.searchBooks = function(searchString, cb) {
-    var args = getArguments();
-    args.parameters = {q: searchString}
+//funky
+client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
 
-    client.methods.searchBooks(args, function (data, response) {
+exports.getGroupAvailableBooks = function(groupId, cb) {
+    var args = getArguments();
+    args.path = {groupId: groupId};
+    args.parameters = {filter:"available"}
+    client.methods.getGroupAvailableBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.getGroupWishListBooks = function(groupId, cb) {
+    var args = getArguments();
+    args.path = {groupId: groupId};
+    args.parameters = {filter:"lookingfor"}
+    client.methods.getGroupWishListBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group wishlist books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.getGroupMembers = function(groupId, cb) {
+    var args = getArguments();
+    args.path = {groupId: groupId};
+    client.methods.getGroupMembers(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group users")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.getRandomUsers = function(size, cb){
+    var args = getArguments();
+    args.parameters = {size:size};
+    client.methods.getRandomUsers(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting books")
+            console.log("Error !!! while getting random users")
             cb(data, null);
         } else {
             cb(null, data);
@@ -97,6 +143,19 @@ exports.searchFriends = function(userId, searchString, cb) {
     args.path = {userId: userId};
     args.parameters = {q: searchString}
     client.methods.searchFriends(args, function (data, response) {
+        if (response.statusCode != 200) {
+            console.log("Error !!! while getting books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+exports.searchBooks = function(searchString, cb) {
+    var args = getArguments();
+    args.parameters = {q: searchString}
+
+    client.methods.searchBooks(args, function (data, response) {
         if (response.statusCode != 200) {
             console.log("Error !!! while getting books")
             cb(data, null);

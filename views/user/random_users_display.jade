@@ -5,12 +5,11 @@ div(id="users", class="box-border")
             - var i = 0
             - while(i < n){
                 - var temp_user = users[i]
-                - if(i > 0 && i%3 == 0) {
+                - if(i > 0 && i%2 == 0) {
                     div(class="row clearfix")
                 - }
-                    div(class="col-md-4 column")
+                    div(class="col-md-6 column")
                         include user_unit
                 - i++
             - }
             - console.log("DOne")
-                

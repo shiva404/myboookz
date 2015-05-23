@@ -16,10 +16,25 @@ exports.addGroup = function (req, res) {
 
 exports.showGroup = function(req, res) {
     var groupId = req.params.groupId;
+    var action = req.query.action;
     neo4jclient.getGroup(groupId, function(err, group){
         if(err)
             console.error("Error!! while getting message")
-        else
-            res.render('show_group', {group: group});
+        else{
+             if(action == null || action === "availableBooks") {
+                neo4jclient.getGroupAvailableBooks(groupId, function(error, books){
+                    res.render('show_group', {group: group, books:books.books, action:"available"});
+                })
+            } else if(action == null || action === "wishlistBooks") {
+                neo4jclient.getGroupWishListBooks(groupId, function(error, books){
+                    res.render('show_group', {group: group, books:books.books, action:"wishlist"});
+                })
+            } else {
+                neo4jclient.getGroupMembers(groupId, function(error, memebers){
+                    res.render('show_group', {group: group, users:memebers.users, action:"members"});
+                })
+            }
+            
+        }
     });
-}
+};

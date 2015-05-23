@@ -4,8 +4,9 @@ div(class="Grid-cell u-mb10")
             a(class="ProfileCard-bg js-nav", href="#")
             div(class="ProfileCard-content")
                 a(class="ProfileCard-avatarLink js-nav js-tooltip", href="#")
-                    img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{user.profileImageUrl}", style="width:100px; height:100px;")
+                    img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{temp_user.profileImageUrl}", style="width:100px; height:100px;")
+                button(class="btn btn-primary pull-right") Follow
                 div(class="ProfileCard-userFields")
                     div(class="ProfileNameTruncated")
                         div(class="u-textTruncate u-inlineBlock")
-                            a(class="ProfileNameTruncated-link u-textInheritColor", href="#") #{user.name}
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="#") #{temp_user.name}
