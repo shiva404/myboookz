@@ -32,7 +32,7 @@ client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${
 client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");    //done
 
 client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST"); //mark as book as owned
-client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "PUT");
+client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "POST");       //{userId}/books/{bookId}/wish
 client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
 client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned         //done
 client.registerMethod("getAvailableBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=available
@@ -83,6 +83,20 @@ client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friend
 
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
+
+exports.addBookToWishListForUser = function(userId, bookId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, bookId: bookId};
+    args.parameters = {filter:"available"}
+    client.methods.addBookToWishListForUser(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
 
 exports.getGroupAvailableBooks = function(groupId, cb) {
     var args = getArguments();

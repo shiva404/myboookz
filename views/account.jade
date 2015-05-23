@@ -13,13 +13,14 @@ block content
                     script
                         $('#goodreadsimportmodal').modal('show');
                 -}
-                div(class="feed")
-                    - if(feed && feed.size > 0) {
+                - if(feed && feed.size > 0) {
+                    div(class="feed")
                     include ./includes/feed_timeline
-                    -} else {
+                -} else {
                     h3 Make new friends and see what they are reading
                     include ./user/random_users_display
                      - }
             div(class="dashboard dashboard-right")
                 button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
-                    |Import from good reads
+                    | Import from good reads
+          
