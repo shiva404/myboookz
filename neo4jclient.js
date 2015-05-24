@@ -31,7 +31,9 @@ client.registerMethod("listReminders", baseUrl + "/users/${userId}/reminders", "
 client.registerMethod("updateReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "PUT");       //done
 client.registerMethod("deleteReminder", baseUrl + "/users/${userId}/reminders/${reminderId}", "DELETE");    //done
 
-client.registerMethod("addBookToUser", baseUrl + "/users/${userId}/books/${bookId}/own", "POST"); //mark as book as owned
+client.registerMethod("addBookToUserAsOwn", baseUrl + "/users/${userId}/books/${bookId}/own", "POST"); //mark as book as owned
+client.registerMethod("addBookToUserAsRead", baseUrl + "/users/${userId}/books/${bookId}/read", "POST"); //mark as book as owned
+client.registerMethod("addBookToUserAsReadAndOwn", baseUrl + "/users/${userId}/books/${bookId}/read", "POST"); //mark as book as owned
 client.registerMethod("addBookToWishListForUser", baseUrl + "/users/${userId}/books/${bookId}/wish", "POST");       //{userId}/books/{bookId}/wish
 client.registerMethod("changeBookStatusOfOwnedBook", baseUrl + "/users/${userId}/books/${bookId}/OWN", "PUT");
 client.registerMethod("getOwnedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=owned         //done
@@ -49,23 +51,18 @@ client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${follo
 
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
 client.registerMethod("search", baseUrl + "/books/search", "GET");
-
 //timeline and activity log
 client.registerMethod("getUserTimeLineFeed", baseUrl + "/users/${userId}/timeline/feed", "GET");
 client.registerMethod("getUserActityFeed", baseUrl + "/users/${userId}/timeline/events", "GET");
-
 //Book
 //client.registerMethod("createBook", baseUrl + "/books", "POST");  --> Don't use this api
 client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
 client.registerMethod("getBookByGoodreadsId", baseUrl + "/books/goodreadsId/${goodreadsId}", "GET");
 client.registerMethod("getBookByIsbn", baseUrl + "/books/isbn/${isbn}", "GET");
 client.registerMethod("getBookRelatedToUser", baseUrl + "/books/${bookId}/users/${userId}", "GET");
-
 client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST"); // -POST borrow request object
-
 client.registerMethod("updateStatusToAgreed", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=agreed&borrowerId=xyz&sharephone=? - Which will lock the book for the exchange
 client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=success&borrowerId=xyz
-
 //Groups
 client.registerMethod("addGroup", baseUrl + "/groups", "POST");
 client.registerMethod("getGroup", baseUrl + "/groups/${groupId}", "GET")
@@ -75,19 +72,47 @@ client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "G
 client.registerMethod("getGroupMembers", baseUrl + "/groups/${groupId}/users", "GET");
 client.registerMethod("getGroupAvailableBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=available
 client.registerMethod("getGroupWishListBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=lookingfor
-
 //search
 client.registerMethod("searchBooks", baseUrl + "/books/search", "GET") //?q=xyz
 client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET") //?q=xyz
 client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
-
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
+
+exports.addBookToUserAsOwn = function(userId, bookId, idType, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, bookId: bookId};
+    args.parameters = {idType:idType}
+    client.methods.addBookToUserAsOwn(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.addBookToUserAsRead = function(userId, bookId, idType, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, bookId: bookId};
+    args.parameters = {idType:idType}
+    client.methods.addBookToUserAsRead(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while fetching group books")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+
 
 exports.addBookToWishListForUser = function(userId, bookId, idType, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId};
-    args.parameters = {filter:"available", idType:idType}
+    args.parameters = {idType:idType}
     client.methods.addBookToWishListForUser(args, function(data, response){
         if(response.statusCode != 200){
             console.log("Error !!! while fetching group books")

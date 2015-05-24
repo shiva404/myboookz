@@ -2,20 +2,49 @@ var exports = module.exports = {};
 var neo4jclient = require("../neo4jclient.js");
 var moment = require('moment');
 
-exports.addBookAsWishList = function(req, res) {
+exports.addBookToUser = function(req, res) {
     var bookId = req.params.id;
     var userId = req.session.passport.user;
     var idType = req.query.idType;
-    
-    neo4jclient.addBookToWishListForUser(userId, bookId, idType, function(error, data){
-        if(error) {
-            res.errorCode = 500;
-            res.json(error)
-        } else {
-            res.send("Ok")
-        }
-    })
-}
+    var listingType = req.query.listingType;
+    if(listingType === "wishlist") {
+        neo4jclient.addBookToWishListForUser(userId, bookId, idType, function(error, data){
+            if(error) {
+                res.errorCode = 500;
+                res.json(error)
+            } else {
+                res.send("Ok")
+            }
+        })
+    } else if(listingType === "own") {
+        neo4jclient.addBookToUserAsOwn(userId, bookId, idType, function(error, data){
+            if(error) {
+                res.errorCode = 500;
+                res.json(error)
+            } else {
+                res.send("Ok")
+            }
+        })
+    }else if(listingType === "read") {
+        neo4jclient.addBookToUserAsRead(userId, bookId, idType, function(error, data){
+            if(error) {
+                res.errorCode = 500;
+                res.json(error)
+            } else {
+                res.send("Ok")
+            }
+        })
+    } else if(listingType === "readAndOwn") {
+        neo4jclient.addBookToUserAsOwn(userId, bookId, idType, function(error, data){
+            if(error) {
+                res.errorCode = 500;
+                res.json(error)
+            } else {
+                res.send("Ok")
+            }
+        })
+    }
+};
 
 exports.showBook = function (req, res) {
     var bookId = req.params.id;

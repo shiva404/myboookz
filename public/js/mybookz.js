@@ -25,14 +25,48 @@ $(document).ready(function() {
     })
 
     $('.addwishlist-btn').click(function(event){
+        event.preventDefault();
         var idType = $(this).attr("id-type");
         var targetId = $(this).attr("data-target");
-        console.log("IdType: targetId" + idType + targetId)
-        var posting = $.post('/api/books/' + targetId + '/wishlist?idType=' + idType,"application/json");
+        var posting = $.post('/api/books/' + targetId + '?listingType=wishlist&idType=' + idType,"application/json");
         posting.done(function(data){
+            //TODO: disable button or change ui screen
             $(this).active = false;
         })
     })
+    
+    $('.js-read-and-own').click(function(event){
+        event.preventDefault();
+        var idType = $(this).attr("id-type");
+        var targetId = $(this).attr("data-target");
+        var posting = $.post('/api/books/' + targetId + '?listingType=readAndOwn&idType=' + idType,"application/json");
+        posting.done(function(data){
+            //TODO: disable button or change ui screen
+            $(this).active = false;
+        })
+    });
+    
+    $('.js-read').click(function(event){
+        event.preventDefault();
+        var idType = $(this).attr("id-type");
+        var targetId = $(this).attr("data-target");
+        var posting = $.post('/api/books/' + targetId + '?listingType=read&idType=' + idType,"application/json");
+        posting.done(function(data){
+            //TODO: disable button or change ui screen
+            $(this).active = false;
+        })
+    });
+
+    $('.js-own').click(function(event){
+        event.preventDefault();
+        var idType = $(this).attr("id-type");
+        var targetId = $(this).attr("data-target");
+        var posting = $.post('/api/books/' + targetId + '?listingType=own&idType=' + idType,"application/json");
+        posting.done(function(data){
+            //TODO: disable button or change ui screen
+            $(this).active = false;
+        })
+    });
 
     $('.scrollClick').click(function(e){
         e.preventDefault();
