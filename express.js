@@ -231,13 +231,13 @@ app.get('/auth/fb/callback',
 		res.redirect('/account?check_goodreads=true');
 });
 
-app.get('/test', ensureAuthenticated ,function (req, res) {
+app.get('/mybooks', ensureAuthenticated ,function (req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
 	neo4jclient.getReadBooks(req.session.passport.user, function(err, books){
 		if(err)
 			console.log(err);
 		else
-			res.render('my_books_with_tabs', {user: cachedUser, books: books.books});
+			res.render('my_books', {user: cachedUser, books: books.books});
 	})
 });
 
@@ -278,6 +278,7 @@ app.post("/api/address", ensureAuthenticated, user_api.addAddress);
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
 app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
 app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
+app.get("/api/borrowedBooks", ensureAuthenticated, user_api.getBorrowedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 app.post("/api/groups", ensureAuthenticated, group_api.addGroup);

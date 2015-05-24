@@ -59,11 +59,22 @@ exports.getOwnedBooks = function(req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.json(data)
+            res.render('book/owned_book_details', {books: data.ownedBooks})
         }
     }) 
 }
 
+exports.getBorrowedBooks = function(req, res) {
+    var userId = req.session.passport.user;
+    neo4jclient.getBorrowedBooks(userId, function(error, data){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.render('book/borrowed_book_details', {books: data.borrowedBooks})
+        }
+    }) 
+}
 
 exports.getWishListBooks = function(req, res) {
     var userId = req.session.passport.user;
@@ -72,7 +83,7 @@ exports.getWishListBooks = function(req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.render('user/my_wishlist_books', {books: data})
+            res.render('book/wishlist_book_details', {books: data.wishListBooks})
         }
     }) 
 }

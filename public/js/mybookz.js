@@ -107,12 +107,21 @@ $(document).ready(function() {
             $('#my-books-tab-wishlist-content-div').replaceWith(data)
         })
     });
+    
+    $("#my-books-tab-borrowed").on("click", function(event) {
+        event.preventDefault();
+        var posting = $.get('api/borrowedBooks');
+        posting.done(function(data){
+            console.log(data)
+            $('#my-books-tab-borrowed-content-div').replaceWith(data)
+        })
+    });
 
     $("#my-books-tab-owned").on("click", function(event) {
         event.preventDefault();
         var posting = $.get('api/ownedBooks');
         posting.done(function(data){
-            $("#")
+            $("#my-books-tab-owned-content-div").replaceWith(data);
         })
     });
     
