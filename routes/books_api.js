@@ -2,6 +2,21 @@ var exports = module.exports = {};
 var neo4jclient = require("../neo4jclient.js");
 var moment = require('moment');
 
+exports.addBookAsWishList = function(req, res) {
+    var bookId = req.params.id;
+    var userId = req.session.passport.user;
+    var idType = req.query.idType;
+    
+    neo4jclient.addBookToWishListForUser(userId, bookId, idType, function(error, data){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.send("Ok")
+        }
+    })
+}
+
 exports.showBook = function (req, res) {
     var bookId = req.params.id;
     var userId = req.session.passport.user;

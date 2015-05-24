@@ -34,7 +34,6 @@ exports.showGroup = function(req, res) {
                     res.render('show_group', {group: group, users:memebers.users, action:"members"});
                 })
             }
-            
         }
     });
 };

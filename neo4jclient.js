@@ -84,10 +84,10 @@ client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friend
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
 
-exports.addBookToWishListForUser = function(userId, bookId, cb) {
+exports.addBookToWishListForUser = function(userId, bookId, idType, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId};
-    args.parameters = {filter:"available"}
+    args.parameters = {filter:"available", idType:idType}
     client.methods.addBookToWishListForUser(args, function(data, response){
         if(response.statusCode != 200){
             console.log("Error !!! while fetching group books")

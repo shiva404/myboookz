@@ -1,0 +1,43 @@
+div(class="Grid-cell u-mb10")
+    div(class="js-stream-item")
+        div(class="ProfileCard js-actionable-user")
+            a(class="ProfileCard-bg js-nav", href="#")
+            div(class="ProfileCard-content")
+                div(class="row clearfix")
+                    div(class="col-md-5 column")
+                        a(class="ProfileCard-avatarLink js-nav js-tooltip", href="#")
+                            img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{book.imageUrl}")
+                    div(class="col-md-7 column")
+                        div(class="row clearfix")
+                            div(class="col-md-12")
+                                - if(book.id){
+                                button(class="addwishlist-btn btn btn-default pull-right", data-target="#{book.id}", id-type="id")
+                                    span(class="glyphicon glyphicon-heart")
+                                    span Wishlist
+                                -} else {
+                                button(class="addwishlist-btn btn btn-default pull-right", data-target="#{book.goodreadsId}", id-type="grId")
+                                    span(class="glyphicon glyphicon-heart")
+                                    span Wishlist
+                                - }
+                            div(class="col-md-12")
+                                div(class="btn-group pull-right")
+                                    button(type="button", class="btn btn-default dropdown-toggle pull-right", data-toggle="dropdown", aria-expanded="false")
+                                        | Read
+                                        span(class="caret")
+                                    ul(class="dropdown-menu", role="menu")
+                                        li
+                                            a(href="#") Read, and I own
+                                        li
+                                            a(href="#") I own, not read yet
+                                        li(class="divider")
+                                        li
+                                            a(href="#") Want to Borrow
+
+                div(class="ProfileCard-userFields")
+                    div(class="ProfileNameTruncated")
+                        div(class="u-textTruncate u-inlineBlock")
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="#") #{book.name}
+
+                    div(class="ProfileCard-screenname u-dir")
+                        a(href="#", class="ProfileCard-screennameLink u-linkComplex js-nav")
+                            span by - #{book.authorName}

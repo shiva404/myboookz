@@ -15,13 +15,22 @@ $(document).ready(function() {
         posting.done(function(data){
             $('#add-group-modal').modal('hide');
         })
-        
     });
     
     $('#grim-modalbtnrmd-later').click(function(){
         var posting = $.post('/api/goodreads/sync?status=YES',"application/json");
         posting.done(function(data){
             $('#goodreadsimportmodal').modal('hide');
+        })
+    })
+
+    $('.addwishlist-btn').click(function(event){
+        var idType = $(this).attr("id-type");
+        var targetId = $(this).attr("data-target");
+        console.log("IdType: targetId" + idType + targetId)
+        var posting = $.post('/api/books/' + targetId + '/wishlist?idType=' + idType,"application/json");
+        posting.done(function(data){
+            $(this).active = false;
         })
     })
 
@@ -81,7 +90,6 @@ $(document).ready(function() {
             $('#search-result').replaceWith(data)
         })
     });
-    
     
     
     $(".fbLikePopUp").on("click", function(event){

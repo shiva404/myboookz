@@ -282,6 +282,7 @@ app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 app.post("/api/groups", ensureAuthenticated, group_api.addGroup);
 app.get("/api/search/users", ensureAuthenticated, user_api.searchUsers);
+app.post("/api/books/:id/wishlist", ensureAuthenticated, book_api.addBookAsWishList);
 
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
