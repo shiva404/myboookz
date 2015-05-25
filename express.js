@@ -284,6 +284,8 @@ app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_a
 app.post("/api/groups", ensureAuthenticated, group_api.addGroup);
 app.get("/api/search/users", ensureAuthenticated, user_api.searchUsers);
 app.post("/api/books/:id", ensureAuthenticated, book_api.addBookToUser);
+app.post("api/user/:id/friend", ensureAuthenticated, user_api.friendReq);
+
 
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);

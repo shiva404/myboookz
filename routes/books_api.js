@@ -75,7 +75,6 @@ exports.initiateBorrowBookReq = function (req, res) {
     })
 };
 
-
 exports.acceptBorrowed = function (req, res) {
     var shareContact = req.body.shareContact;
     var comment = req.body.comment;

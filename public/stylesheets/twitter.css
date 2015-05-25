@@ -8,6 +8,11 @@
     width: 590px;
     border-radius: 6px;
 }
+.content-main-full {
+    float: left;
+    width: 880px;
+    border-radius: 6px;
+}
 
 
 #page-container{
@@ -19,7 +24,6 @@
 div {
     display: block;
 }
-
 
 .module {
     background-clip: padding-box;
@@ -417,7 +421,6 @@ ol, ul {
 
 .margin80px {
     margin-top: 80px;
-    
 }
 
 .groups {

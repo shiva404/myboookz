@@ -14,23 +14,23 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
                         div(class="ProfileNav", role="navigation")
                             ul(class="nav nav-tabs")
                                 li(class="ProfileNav-item ProfileNav-item--tweets is-active")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="/groups/#{group.id}?action=available")
                                         span(class="ProfileNav-label") Available
                                 li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="/groups/#{group.id}?action=wishlist")
                                         span(class="ProfileNav-label") Looking for
                                 li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="/groups/#{group.id}?action=members")
                                         span(class="ProfileNav-label") Members
-div(class="page-container clearfix")
-    div(class="dashboard dashboard-left margin80px")
+div(class="page-container clearfix margin80px")
+    div(class="dashboard dashboard-left")
         div(class="Grid Grid--withGutter")
             div(class="Grid-cell")
                 div(class="ProfileSidebar ProfileSidebar--withLeftAlignment")
                     div(class="ProfileHeaderCard")
                         h1(class="ProfileHeaderCard-name")
                             a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{group.name}
-    div(class="content-main margin80px")
+    div(class="content-main-full")
         - if(action === "available") {
         include ./show_available_books
         - } else if(action === "wishlist") {
@@ -38,4 +38,3 @@ div(class="page-container clearfix")
         - } else if(action === "members") {
         include  ./show_memebers
         - }
-    div(class="dashboard dashboard-right margin80px")

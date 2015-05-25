@@ -24,7 +24,7 @@ exports.searchUsers = function(req, res) {
             res.render("user/search_result_users", {users:users.users})
         }
     })
-}
+};
 
 exports.updateAddress = function (req, res) {
     var addressId = req.params.id;
@@ -62,7 +62,7 @@ exports.getOwnedBooks = function(req, res) {
             res.render('book/owned_book_details', {books: data.ownedBooks})
         }
     }) 
-}
+};
 
 exports.getBorrowedBooks = function(req, res) {
     var userId = req.session.passport.user;
@@ -74,7 +74,20 @@ exports.getBorrowedBooks = function(req, res) {
             res.render('book/borrowed_book_details', {books: data.borrowedBooks})
         }
     }) 
-}
+};
+
+exports.friendReq = function (req, res) {
+    var userId = req.params.id;
+    var currentUserId = req.session.passport.user;
+    neo4jclient.addFriend(currentUserId, userId, function(error, book){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.send("Ok")
+        }
+    })
+};
 
 exports.getWishListBooks = function(req, res) {
     var userId = req.session.passport.user;
@@ -86,4 +99,4 @@ exports.getWishListBooks = function(req, res) {
             res.render('book/wishlist_book_details', {books: data.wishListBooks})
         }
     }) 
-}
+};

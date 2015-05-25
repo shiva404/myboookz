@@ -47,7 +47,9 @@ client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/follower
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
 
 client.registerMethod("followUser", baseUrl + "/users/${userId}/follow/${followUserId}", "POST");
+client.registerMethod("addFriend", baseUrl + "/users/${currentUserId}/friend/${friendUserId}", "POST");
 client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${followUserId}", "DELETE");
+
 
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
 client.registerMethod("search", baseUrl + "/books/search", "GET");
@@ -78,6 +80,19 @@ client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET")
 client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
+
+exports.addFriend = function(currentUserId, friendId, cb) {
+    var args = getArguments();
+    args.path = {currentUserId: currentUserId, friendUserId: friendId};
+    client.methods.addFriend(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while adding friend")
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
 
 exports.addBookToUserAsOwn = function(userId, bookId, idType, cb) {
     var args = getArguments();

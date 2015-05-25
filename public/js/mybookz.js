@@ -68,6 +68,26 @@ $(document).ready(function() {
         })
     });
 
+    $('.js-add-friend').click(function(){ 
+        alert("Clicked")
+        event.preventDefault();
+        var targetId = $(this).attr("data-target");
+        var posting = $.post('api/user/' + targetId + '/friend');
+        posting.done(function(data){
+            console.log(data + "posted")
+        })
+    });
+    
+    $('.js-add-friend').click(function(event){
+        alert("Clicked")
+        event.preventDefault();
+        var targetId = $(this).attr("data-target");
+        var posting = $.post('api/user/' + targetId + '/friend');
+        posting.done(function(data){
+            console.log(data + "posted")
+        })
+    });
+
     $('.scrollClick').click(function(e){
         e.preventDefault();
         scrollToElement( $(this).attr('scroll-to-id'), 600 );
@@ -107,6 +127,7 @@ $(document).ready(function() {
             $('#my-books-tab-wishlist-content-div').replaceWith(data)
         })
     });
+    
     
     $("#my-books-tab-borrowed").on("click", function(event) {
         event.preventDefault();

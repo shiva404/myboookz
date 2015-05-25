@@ -21,11 +21,11 @@ exports.showGroup = function(req, res) {
         if(err)
             console.error("Error!! while getting message")
         else{
-             if(action == null || action === "availableBooks") {
+             if(action == null || action === "available") {
                 neo4jclient.getGroupAvailableBooks(groupId, function(error, books){
                     res.render('show_group', {group: group, books:books.books, action:"available"});
                 })
-            } else if(action == null || action === "wishlistBooks") {
+            } else if(action == null || action === "wishlist") {
                 neo4jclient.getGroupWishListBooks(groupId, function(error, books){
                     res.render('show_group', {group: group, books:books.books, action:"wishlist"});
                 })
