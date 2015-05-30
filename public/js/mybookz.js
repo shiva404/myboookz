@@ -24,6 +24,26 @@ $(document).ready(function() {
         })
     })
 
+    $('#search-members-group-button').click(function(event){
+        event.preventDefault();
+        const groupId = $(this).attr("data-target");
+        searchMembersGroup(groupId);
+    })
+
+     $("#add-members-group-form").on("submit", function(event) {
+        event.preventDefault();
+        const groupId = $(this).attr("data-target");
+        searchMembersGroup(groupId);
+    });
+
+    var searchMembersGroup = function(groupId){
+        const searchString = $('#search-members-group-text').val();
+        var posting = $.post('/api/friends/search/group?q=' + searchString + "&groupId=" + groupId, "application/json");
+        posting.done(function(data){
+             $("#group-search-users-data-div").html(data);
+        })
+    };
+
     $('.addwishlist-btn').click(function(event){
         event.preventDefault();
         var idType = $(this).attr("id-type");
@@ -68,29 +88,9 @@ $(document).ready(function() {
         })
     });
 
-    $('.js-add-friend').click(function(){ 
-        alert("Clicked")
-        event.preventDefault();
-        var targetId = $(this).attr("data-target");
-        var posting = $.post('api/user/' + targetId + '/friend');
-        posting.done(function(data){
-            console.log(data + "posted")
-        })
-    });
-    
-    $('.js-add-friend').click(function(event){
-        alert("Clicked")
-        event.preventDefault();
-        var targetId = $(this).attr("data-target");
-        var posting = $.post('api/user/' + targetId + '/friend');
-        posting.done(function(data){
-            console.log(data + "posted")
-        })
-    });
-
     $('.scrollClick').click(function(e){
         e.preventDefault();
-        scrollToElement( $(this).attr('scroll-to-id'), 600 );
+        scrollToElement($(this).attr('scroll-to-id'), 600 );
     });
 
     var scrollToElement = function(el, ms){

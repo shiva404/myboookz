@@ -4,10 +4,22 @@ div(class="Grid-cell u-mb10")
             a(class="ProfileCard-bg js-nav", href="#")
             div(class="ProfileCard-content")
                 div(class="row clearfix")
-                    div(class="col-md-5 column")
-                        a(class="ProfileCard-avatarLink js-nav js-tooltip", href="#")
-                            img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{book.imageUrl}")
+                    - if(book.id){
+                        div(class="col-md-5 column")
+                            a(class="ProfileCard-avatarLink js-nav js-tooltip", href="/books/#{book.id}")
+                                img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{book.imageUrl}")
+                    - } else {
+                        div(class="col-md-5 column")
+                            a(class="ProfileCard-avatarLink js-nav js-tooltip", href="/books/#{book.goodreadsId}/grId")
+                                img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{book.imageUrl}")
+                    - }
                     div(class="col-md-7 column")
+                        - if(book.bookType) {
+                         div(class="row clearfix")
+                            div(class="col-md-12")
+                                div("book-data")
+                                    i(class="glyphicon glyphicon-ok pull-right") #{book.bookType}        
+                        - } else {
                         div(class="row clearfix")
                             div(class="col-md-12")
                                 - if(book.id){
@@ -46,10 +58,16 @@ div(class="Grid-cell u-mb10")
                                         li
                                             a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to Sell
                                     - }
+                        - }
+                        
                 div(class="ProfileCard-userFields")
                     div(class="ProfileNameTruncated")
                         div(class="u-textTruncate u-inlineBlock")
-                            a(class="ProfileNameTruncated-link u-textInheritColor", href="#") #{book.name}
+                            - if(book.id){
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="/books/#{book.id}") #{book.name}
+                            - } else {
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="/books/#{book.goodreadsId}/grId") #{book.name}
+                            - }
 
                     div(class="ProfileCard-screenname u-dir")
                         a(href="#", class="ProfileCard-screennameLink u-linkComplex js-nav")

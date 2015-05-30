@@ -15,13 +15,41 @@ exports.addAddress = function (req, res) {
 exports.searchUsers = function(req, res) {
     var userId = req.session.passport.user;
     var searchString = req.query.q;
-    console.log(req.body.address);
     neo4jclient.searchUsers(userId, searchString, function(error, users){
         if(error) {
             res.errorCode = 500;
             res.json(error)
         } else {
             res.render("user/search_result_users", {users:users.users})
+        }
+    })
+};
+
+exports.searchFriends = function(req, res) {
+    var userId = req.session.passport.user;
+    var searchString = req.query.q;
+
+    neo4jclient.searchFriends(userId, searchString, function(error, users){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.render("user/search_result_users", {users:users.users})
+        }
+    })
+};
+
+
+exports.searchMembersForGroup = function(req, res) {
+    var userId = req.session.passport.user;
+    var searchString = req.query.q;
+    var groupId = req.query.groupId;
+    neo4jclient.searchFriends(userId, searchString, function(error, users){
+        if(error) {
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+            res.render("user/search_result_users", {users:users.users, user_unit_action:"member", groupId: groupId})
         }
     })
 };

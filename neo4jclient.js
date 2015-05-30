@@ -45,6 +45,7 @@ client.registerMethod("getWishListBooks", baseUrl + "/users/${userId}/books", "G
 
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
+client.registerMethod("getFriends", baseUrl + "/users/${userId}/friends", "GET");
 
 client.registerMethod("followUser", baseUrl + "/users/${userId}/follow/${followUserId}", "POST");
 client.registerMethod("addFriend", baseUrl + "/users/${currentUserId}/friend/${friendUserId}", "POST");
@@ -62,6 +63,7 @@ client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
 client.registerMethod("getBookByGoodreadsId", baseUrl + "/books/goodreadsId/${goodreadsId}", "GET");
 client.registerMethod("getBookByIsbn", baseUrl + "/books/isbn/${isbn}", "GET");
 client.registerMethod("getBookRelatedToUser", baseUrl + "/books/${bookId}/users/${userId}", "GET");
+client.registerMethod("getBookByGrIdRelatedToUser", baseUrl + "/books/goodreadsId/${bookId}/users/${userId}", "GET");
 client.registerMethod("borrowBook", baseUrl + "/books/${bookId}/borrow", "POST"); // -POST borrow request object
 client.registerMethod("updateStatusToAgreed", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=agreed&borrowerId=xyz&sharephone=? - Which will lock the book for the exchange
 client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/users/${userId}/borrow", "PUT"); // ?status=success&borrowerId=xyz
@@ -69,7 +71,7 @@ client.registerMethod("updateStatusToSuccess", baseUrl + "/books/${bookId}/users
 client.registerMethod("addGroup", baseUrl + "/groups", "POST");
 client.registerMethod("getGroup", baseUrl + "/groups/${groupId}", "GET")
 client.registerMethod("getGroupWithMembers", baseUrl + "/groups/${groupId}", "GET"); //?includeMembers=true
-client.registerMethod("addMemberToGroup", baseUrl + "/groups/${groupId}/users/${userId}", "GET"); //?createdBy=xyz
+client.registerMethod("addMemberToGroup", baseUrl + "/groups/${groupId}/users/${userId}", "POST"); //?createdBy=xyz
 client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "GET");
 client.registerMethod("getGroupMembers", baseUrl + "/groups/${groupId}/users", "GET");
 client.registerMethod("getGroupAvailableBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=available
@@ -80,6 +82,20 @@ client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET")
 client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
+
+exports.getFriends = function(userId, currentUserId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {currentUserId: currentUserId};
+    client.methods.getFriends(args, function(data, response){
+        if(response.statusCode != 200){
+            console.log("Error !!! while getting friends");
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
 
 exports.addFriend = function(currentUserId, friendId, cb) {
     var args = getArguments();
@@ -252,7 +268,7 @@ exports.getGroupsOfUser = function(userId, cb) {
 exports.addMemberToGroup = function(groupId, userId, currentUserId, cb) {
     var args = getArguments();
     args.path = {userId: userId, groupId: groupId};
-    args.parameters = {createdBy: currentUserId}
+    args.parameters = {createdBy: currentUserId, role:"READ"}
 
     client.methods.addMemberToGroup(args, function (data, response) {
         if (response.statusCode != 200) {
@@ -350,9 +366,9 @@ exports.addAddress = function(address, userId, cb) {
     });
 };
 
-exports.bookSearch = function(searchString, cb) {
+exports.bookSearch = function(searchString, userId, cb) {
     var args = getArguments();
-    args.parameters = {q: searchString}
+    args.parameters = {q: searchString, userId: userId}
     client.methods.search(args, function(books, response){
         if(response.statusCode != 200){
             cb(books, null);
@@ -374,8 +390,7 @@ exports.updateStatusToAgreed = function(borrowerId, ownerId, bookId, sharephone,
             cb(null, data);
         }
     });
-    
-}
+};
 
 exports.initiateBorrowBookReq = function(borrowerId, ownerId, bookId, cb) {
     var args = getArguments();
@@ -612,6 +627,18 @@ exports.getBookRelatedToUser = function(bookId, userId, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId}
     client.methods.getBookRelatedToUser(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
+exports.getBookByGrIdRelatedToUser = function(bookId, userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId, bookId: bookId}
+    client.methods.getBookByGrIdRelatedToUser(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
         } else {

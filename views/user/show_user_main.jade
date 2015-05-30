@@ -5,26 +5,9 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
             div(class="ProfileCanopy-avatar")
                 div(class="ProfileAvatar")
                     img(class="ProfileAvatar-image", src="#{ruser.profileImageUrl}")
-    div(class="ProfileCanopy-navBar")
-        div(class="AppContainer")
-            div(class="row")
-                div(class="col-md-2 column")
-                div(class="col-md-10 column")
-                    div(class="ProfileCanopy-nav")
-                        div(class="ProfileNav", role="navigation")
-                            ul(class="nav nav-tabs")
-                                li(class="ProfileNav-item ProfileNav-item--tweets is-active")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") Timeline
-                                li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") About
-                                li(class="ProfileNav-item ProfileNav-item--tweets")
-                                    a(class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav", href="#") 
-                                        span(class="ProfileNav-label") Friends      
-
-div(class="AppContainer clearfix")
-    div(class="AppContent-main u-cf margin60px", role="main")
+    include ./profile_nav_bar
+div(class="AppContainer clearfix margin80px")
+    div(class="AppContent-main u-cf ", role="main")
         div(class="row clearfix")
             div(class="dashboard dashboard-left Grid-cell")
                 div(class="Grid Grid--withGutter")
@@ -33,10 +16,8 @@ div(class="AppContainer clearfix")
                             div(class="ProfileHeaderCard")
                                 h1(class="ProfileHeaderCard-name")
                                     a(class="ProfileHeaderCard-nameLink u-textInheritColor js-nav") #{ruser.name}
-            div(class="content-main")
+            div(class="content-main-full")
                 - if(action === "timeline") {
-                include show_usr_timeline
+                include ./show_user_timeline
                 - } else if(action === "followers") {
-
                 - }
-            div(class="dashboard dashboard-right")

@@ -14,6 +14,19 @@ exports.addGroup = function (req, res) {
     })
 };
 
+exports.addMemberToGroup = exports.showGroup = function(req, res) {
+    var groupId = req.params.groupId;
+    var memberId = req.params.userId;
+    var createdBy = req.session.passport.user;
+    neo4jclient.addMemberToGroup(groupId, memberId, createdBy, function(err, data){
+        if(err)
+            console.error("Error!! while getting message")
+        else{
+            res.send("ok")
+        }
+    })
+}
+
 exports.showGroup = function(req, res) {
     var groupId = req.params.groupId;
     var action = req.query.action;

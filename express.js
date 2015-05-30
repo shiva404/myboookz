@@ -30,6 +30,7 @@ function compile(str, path) {
 		.use(nib())
 }
 
+//noinspection JSValidateTypes
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
@@ -39,8 +40,11 @@ app.configure(function() {
 			, compile: compile
 		}
 	));
+
 	app.use(express.logger());
-	app.use(express.cookieParser('password123'));
+    app.use(express.errorHandler());
+    app.locals.pretty = true;
+    app.use(express.cookieParser('password123'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: 'my_precious' }));
@@ -280,22 +284,35 @@ app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
 app.get("/api/ownedBooks", ensureAuthenticated, user_api.getOwnedBooks);
 app.get("/api/borrowedBooks", ensureAuthenticated, user_api.getBorrowedBooks);
 app.get("/api/wishlist", ensureAuthenticated, user_api.getWishListBooks);
+app.post("/api/friends/search", ensureAuthenticated, user_api.searchFriends)
+
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 app.post("/api/groups", ensureAuthenticated, group_api.addGroup);
 app.get("/api/search/users", ensureAuthenticated, user_api.searchUsers);
 app.post("/api/books/:id", ensureAuthenticated, book_api.addBookToUser);
-app.post("api/user/:id/friend", ensureAuthenticated, user_api.friendReq);
-
+app.post("/api/users/:id/friend", ensureAuthenticated, user_api.friendReq);
+app.post("/api/friends/search/group", ensureAuthenticated, user_api.searchMembersForGroup);
+app.post("/api/group/:groupId/user/:userId", ensureAuthenticated, group_api.addMemberToGroup);
 
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
 	var searchString = req.query.q;
-	neo4jclient.bookSearch(searchString, function(err, searchResult){
+	neo4jclient.bookSearch(searchString, req.session.passport.user, function(err, searchResult){
 		if(err)
 			console.log(err);
 		else
 			res.render('search', {user: cachedUser, books: searchResult.books, searchText: searchString});
 	})
+});
+
+app.get("/friends", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getFriends(req.session.passport.user, req.session.passport.user, function(err, friends){
+        if(err)
+            console.log(err);
+        else
+            res.render('my_friends', {user: cachedUser, users: friends.friends.friends});
+    })
 });
 
 app.post("/process/borrowInit/accept", book_api.acceptBorrowed);
@@ -353,6 +370,7 @@ app.get("/reminders", ensureAuthenticated, function(req, res){
 });
 
 app.get("/books/:id", book_api.showBook);
+app.get("/books/:id/grId", book_api.showBookByGrId)
 app.get("/users/:userId", ensureAuthenticated, user_profile_api.showUser);
 app.get("/groups/:groupId", ensureAuthenticated, group_api.showGroup);
 
