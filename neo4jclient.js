@@ -4,6 +4,10 @@ var Client = require('node-rest-client').Client;
 
 client = new Client();
 
+client.on('error',function(err){
+    
+});
+
 function getArguments() {
     return {
 //    data:{"name":"Jerald Reichert","email":"felipa.considine@gmail.com","lastModifiedDate":0,"addresses":[{"id":null,"addressType":"HOME","addressLine1":"653","addressLine2":"Suite 402","landmark":"landMark","city":"Lake town","state":"NY","country":"Ethiopia","zipCode":"20726-6718","createdDate":0,"lastModifiedTime":0}],"phone":"096.160.4570 x114","createdDate":0}, // data passed to REST method (only useful in POST, PUT or PATCH methods)
@@ -53,7 +57,6 @@ client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${follo
 
 
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
-client.registerMethod("search", baseUrl + "/books/search", "GET");
 //timeline and activity log
 client.registerMethod("getUserTimeLineFeed", baseUrl + "/users/${userId}/timeline/feed", "GET");
 client.registerMethod("getUserActityFeed", baseUrl + "/users/${userId}/timeline/events", "GET");
@@ -89,7 +92,6 @@ exports.getFriends = function(userId, currentUserId, cb) {
     args.parameters = {currentUserId: currentUserId};
     client.methods.getFriends(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while getting friends");
             cb(data, null);
         } else {
             cb(null, data);
@@ -102,7 +104,6 @@ exports.addFriend = function(currentUserId, friendId, cb) {
     args.path = {currentUserId: currentUserId, friendUserId: friendId};
     client.methods.addFriend(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while adding friend")
             cb(data, null);
         } else {
             cb(null, data);
@@ -116,7 +117,6 @@ exports.addBookToUserAsOwn = function(userId, bookId, idType, cb) {
     args.parameters = {idType:idType}
     client.methods.addBookToUserAsOwn(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -130,7 +130,6 @@ exports.addBookToUserAsRead = function(userId, bookId, idType, cb) {
     args.parameters = {idType:idType}
     client.methods.addBookToUserAsRead(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -146,7 +145,6 @@ exports.addBookToWishListForUser = function(userId, bookId, idType, cb) {
     args.parameters = {idType:idType}
     client.methods.addBookToWishListForUser(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -160,7 +158,6 @@ exports.getGroupAvailableBooks = function(groupId, cb) {
     args.parameters = {filter:"available"}
     client.methods.getGroupAvailableBooks(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -174,7 +171,6 @@ exports.getGroupWishListBooks = function(groupId, cb) {
     args.parameters = {filter:"lookingfor"}
     client.methods.getGroupWishListBooks(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group wishlist books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -187,7 +183,6 @@ exports.getGroupMembers = function(groupId, cb) {
     args.path = {groupId: groupId};
     client.methods.getGroupMembers(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group users")
             cb(data, null);
         } else {
             cb(null, data);
@@ -200,7 +195,6 @@ exports.getRandomUsers = function(size, cb){
     args.parameters = {size:size};
     client.methods.getRandomUsers(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting random users")
             cb(data, null);
         } else {
             cb(null, data);
@@ -214,7 +208,6 @@ exports.searchFriends = function(userId, searchString, cb) {
     args.parameters = {q: searchString}
     client.methods.searchFriends(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -227,7 +220,6 @@ exports.searchBooks = function(searchString, cb) {
 
     client.methods.searchBooks(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting books")
             cb(data, null);
         } else {
             cb(null, data);
@@ -242,7 +234,7 @@ exports.searchUsers = function(userId, searchString, cb) {
     
     client.methods.searchUsers(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting users")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -257,7 +249,7 @@ exports.getGroupsOfUser = function(userId, cb) {
 
     client.methods.getGroupsOfUser(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while getting groups of user")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -272,7 +264,7 @@ exports.addMemberToGroup = function(groupId, userId, currentUserId, cb) {
 
     client.methods.addMemberToGroup(args, function (data, response) {
         if (response.statusCode != 200) {
-            console.log("Error !!! while creating group")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -286,7 +278,7 @@ exports.addGroup = function(group, userId, cb) {
     args.data = group;
     client.methods.addGroup(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while creating group")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -300,7 +292,7 @@ exports.getGroupWithMembers = function(groupId, userId, cb) {
     args.path = {groupId: groupId};
     client.methods.getGroupWithMembers(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -313,7 +305,7 @@ exports.getGroup = function(groupId, cb) {
     args.path = {groupId: groupId};
     client.methods.getGroup(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching group")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -323,7 +315,7 @@ exports.getGroup = function(groupId, cb) {
 
 exports.followUser = function(currentUser, followUserId, cb) {
     var args = getArguments();
-    console.log("getting data")
+    
 
 };
 
@@ -332,7 +324,7 @@ exports.getUserTimeLineFeed = function(userId, cb) {
     args.path = {userId:userId};
     client.methods.getUserTimeLineFeed(args, function(data, response){
         if(response.statusCode != 200){
-            console.log("Error !!! while fetching feed")
+            
             cb(data, null);
         } else {
             cb(null, data);
@@ -354,7 +346,7 @@ exports.getUserActityFeed = function(userId, cb) {
 
 exports.addAddress = function(address, userId, cb) {
     var args = getArguments();
-    console.log("Neo4jClient -" + JSON.stringify(address)  + "UserId:" + userId);
+    
     args.data = address;
     args.path = {userId: userId};
     client.methods.addAddress(args, function(data, response){
@@ -369,7 +361,7 @@ exports.addAddress = function(address, userId, cb) {
 exports.bookSearch = function(searchString, userId, cb) {
     var args = getArguments();
     args.parameters = {q: searchString, userId: userId}
-    client.methods.search(args, function(books, response){
+    client.methods.searchBooks(args, function(books, response){
         if(response.statusCode != 200){
             cb(books, null);
         } else {
@@ -390,6 +382,7 @@ exports.updateStatusToAgreed = function(borrowerId, ownerId, bookId, sharephone,
             cb(null, data);
         }
     });
+    
 };
 
 exports.initiateBorrowBookReq = function(borrowerId, ownerId, bookId, cb) {
@@ -432,7 +425,7 @@ exports.deleteAddress = function(addressId, userId, cb) {
 
 exports.addReminderForTargetUser = function(targetUserId, reminder, createdBy, reminderType,cb) {
     var args = getArguments();
-    console.log("Neo4jClient -" + JSON.stringify(reminder)  + "UserId:" + userId);
+    
     args.data = reminder;
     args.path = {userId: targetUserId};
     args.parameters = {createdBy:createdBy, reminderType: reminderType}
@@ -523,9 +516,9 @@ exports.updateFields = function(fields, userId, cb) {
     var args = getArguments();
     args.path = {id: userId};
     args.data = fields;
-    console.log("calling to save the fields with args:" + JSON.stringify(args));
+    
     client.methods.updateFields(args, function(data, response){
-        console.log(data);
+        
         if(response.statusCode != 200){
             cb(data, null);
         } else {

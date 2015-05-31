@@ -25,6 +25,13 @@ div {
     display: block;
 }
 
+.slide-out-div {
+  padding: 20px;
+  width: 250px;
+  background: #ccc;
+  border: #29216d 1px solid;
+} 
+
 .module {
     background-clip: padding-box;
     border: 0;

@@ -13,7 +13,7 @@ exports.addBookToUser = function(req, res) {
                 res.errorCode = 500;
                 res.json(error)
             } else {
-                res.send("Ok")
+                res.render("book/book_type_info", {book:{bookType:"WISH"}})
             }
         })
     } else if(listingType === "own") {
@@ -22,7 +22,7 @@ exports.addBookToUser = function(req, res) {
                 res.errorCode = 500;
                 res.json(error)
             } else {
-                res.send("Ok")
+                res.render("book/book_type_info", {book:{bookType:"OWN"}})
             }
         })
     }else if(listingType === "read") {
@@ -31,7 +31,7 @@ exports.addBookToUser = function(req, res) {
                 res.errorCode = 500;
                 res.json(error)
             } else {
-                res.send("Ok")
+                res.render("book/book_type_info", {book:{bookType:"READ"}})
             }
         })
     } else if(listingType === "readAndOwn") {
@@ -40,7 +40,7 @@ exports.addBookToUser = function(req, res) {
                 res.errorCode = 500;
                 res.json(error)
             } else {
-                res.send("Ok")
+                res.render("book/book_type_info", {book:{bookType:"OWN"}})
             }
         })
     }

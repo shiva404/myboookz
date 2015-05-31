@@ -1,11 +1,19 @@
 var neo4jclient = require("../neo4jclient");
+
+var handleErrorAndShowErrorPage = function handleErrorAndShowErrorPage(error, res){
+    if(error.type === "server"){
+        res.render("error_page")
+    } else {
+        if()
+    }   
+}
+
 exports.addAddress = function (req, res) {
     var userId = req.session.passport.user;
     console.log(req.body.address);
     neo4jclient.addAddress(req.body.address, userId, function(error, data){
         if(error) {
-            res.errorCode = 500;
-            res.json(error)
+           handleErrorAndShowErrorPage(error, res);
         } else {
             res.json(data)
         }
@@ -17,8 +25,7 @@ exports.searchUsers = function(req, res) {
     var searchString = req.query.q;
     neo4jclient.searchUsers(userId, searchString, function(error, users){
         if(error) {
-            res.errorCode = 500;
-            res.json(error)
+            handleErrorAndShowErrorPage(error, res);
         } else {
             res.render("user/search_result_users", {users:users.users})
         }
@@ -38,7 +45,6 @@ exports.searchFriends = function(req, res) {
         }
     })
 };
-
 
 exports.searchMembersForGroup = function(req, res) {
     var userId = req.session.passport.user;
@@ -112,7 +118,7 @@ exports.friendReq = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.send("Ok")
+            res.render('user/user_rel_added', {})
         }
     })
 };

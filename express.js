@@ -14,6 +14,11 @@ var NodeCache = require( "node-cache"),
 	myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 var async = require('async')
 
+var d = require('domain').create()
+d.on('error', function(err){
+    // handle the error safely
+    console.log('error, but oh well', er.message);
+})
 
 url = require('url');
 
