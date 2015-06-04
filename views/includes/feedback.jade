@@ -1,8 +1,9 @@
 div(class="slide-out-div")
-        a(class="handle", href="http://link-for-non-js-users") Content
-        h3 Contact me
-        a(href="mailto:wpaoli@gmail.com") wpaoli@gmail.com
-        br
-        br    
-        p Thanks for checking out my jQuery plugin, I hope you find this useful.
-        p This can be a form to submit feedback, or contact info
+    a(class="handle", href="http://link-for-non-js-users.html") Content
+    h3 Tell us about this page!!
+    br
+    div(id="feedback-form-section")    
+        div(class="form-group")
+            label(for="comment") What are things missing and need things lil better
+            textarea(class="form-control", rows="4" id="feedback-comment")
+        button(type="Submit", class="btn btn-default", id="feedback-submit") Submit       

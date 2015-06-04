@@ -13,6 +13,7 @@ var passport = require('passport'),
 var NodeCache = require( "node-cache"),
 	myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 var async = require('async')
+var fs = require('fs');
 
 var d = require('domain').create()
 d.on('error', function(err){
@@ -161,7 +162,7 @@ function handleAccountPage(checkGoodreads, user, req, res) {
         },
         function(err, results) {
             if(results.feed.size <= 0){
-               neo4jclient.getRandomUsers(10, function(err, users){
+               neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
                     if(!err) {
                         res.render('account', {user: user, checkGoodreads: checkGoodreads, users:users.users, groups: results.groups});
                     }
@@ -171,9 +172,6 @@ function handleAccountPage(checkGoodreads, user, req, res) {
             }
             
         });
-    
-    
-    
 }
 
 app.get('/ping', routes.ping);
@@ -193,9 +191,6 @@ app.get("/reminders", ensureAuthenticated, function(req, res){
 			res.render("reminders", {remindersPage:reminders, user: cachedUser})
 		}
 	})
-	
-
-	
 })
 
 app.get('/profile/edit', ensureAuthenticated, function(req, res){
@@ -211,8 +206,6 @@ app.post('/api/goodreads/sync', ensureAuthenticated, function(req, resp){
 		resp.send("Ok");
 	});    
 });
-
-
 
 app.get('/auth/goodreads', ensureAuthenticated, function(req, resp){
 	return gr.requestToken(function(callback) {
@@ -283,6 +276,16 @@ app.get('/profile', ensureAuthenticated, function(req, res){
 		})
 });
 
+app.get("/notifications", ensureAuthenticated, function(req, res){
+	var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getAllNotifications(req.session.passport.user, function(err, notifications){
+        if(err)
+            console.log(err);
+        else
+            res.render('my_notifications', {user: cachedUser, notifications: notifications});
+    })
+});
+
 app.post("/api/address", ensureAuthenticated, user_api.addAddress);
 app.put("/api/address/:id", ensureAuthenticated, user_api.updateAddress);
 app.delete("/api/address/:id", ensureAuthenticated, user_api.deleteAddress);
@@ -299,6 +302,12 @@ app.post("/api/users/:id/friend", ensureAuthenticated, user_api.friendReq);
 app.post("/api/friends/search/group", ensureAuthenticated, user_api.searchMembersForGroup);
 app.post("/api/group/:groupId/user/:userId", ensureAuthenticated, group_api.addMemberToGroup);
 
+app.post("/api/users/:friendId/friend/confirm", ensureAuthenticated, user_api.confirmFriendReq);
+app.delete("/api/users/:friendId/friend", ensureAuthenticated, user_api.deleteFriendReq);
+app.get("/api/users/friends/pending", ensureAuthenticated, user_api.getPendingFriends);
+app.get('/api/notifications', ensureAuthenticated, user_api.getFreshNotifications);
+
+
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
 	var searchString = req.query.q;
@@ -310,6 +319,8 @@ app.get("/search", ensureAuthenticated, function(req, res) {
 	})
 });
 
+
+
 app.get("/friends", ensureAuthenticated, function(req, res) {
     var cachedUser = myCache.get(req.session.passport.user);
     neo4jclient.getFriends(req.session.passport.user, req.session.passport.user, function(err, friends){
@@ -319,6 +330,17 @@ app.get("/friends", ensureAuthenticated, function(req, res) {
             res.render('my_friends', {user: cachedUser, users: friends.friends.friends});
     })
 });
+
+app.get("/pendingFriends", ensureAuthenticated, function(req, res) {
+    var cachedUser = myCache.get(req.session.passport.user);
+    neo4jclient.getPendingFriends(req.session.passport.user, function(err, friends){
+        if(err)
+            console.log(err);
+        else
+            res.render('my_friends', {user: cachedUser, users: friends.users, user_unit_action:"pending_frind_process"});
+    })
+});
+
 
 app.post("/process/borrowInit/accept", book_api.acceptBorrowed);
 
@@ -364,6 +386,16 @@ app.get("/wishlist", ensureAuthenticated, function(req, res) {
 	})
 });
 
+app.post("/feedback", ensureAuthenticated, function (req, res) {
+	var cachedUser = myCache.get(req.session.passport.user);
+	var feedback = req.body.feedback;
+	feedback.userId = req.session.passport.user + ':' + cachedUser.name
+    fs.appendFile('/app/logs/feedback.log', JSON.stringify(req.body.feedback) + '\n', function (err) {
+        console.log('Error while writing feedcack to file \n feedcack:' + req.body.feedback + "Error:" + err)
+    });
+    res.render("includes/feedback_success", {currentUser: cachedUser})
+});
+
 app.get("/reminders", ensureAuthenticated, function(req, res){
 	var cachedUser = myCache.get(req.session.passport.user);
 	neo4jclient.listRemindersForUser(req.session.passport.user, function(err, reminders){
@@ -386,7 +418,7 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) { return next(); }
-	res.render('index', { title: "Start Bootstrap"});
+	res.render('index', { title: "Start Bootstrap", feed_disable:true});
 }
 
 app.listen(3000);

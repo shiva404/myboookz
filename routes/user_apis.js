@@ -4,9 +4,35 @@ var handleErrorAndShowErrorPage = function handleErrorAndShowErrorPage(error, re
     if(error.type === "server"){
         res.render("error_page")
     } else {
-        if()
+
     }   
 }
+
+exports.getFreshNotifications = function(req, res) {
+var userId = req.session.passport.user;
+    console.log(req.body.address);
+    neo4jclient.getFreshNotifications(userId, function(error, notifications){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.render('includes/notifications', {notifications:notifications})
+        }
+    })
+}
+
+
+exports.getAllNotifications = function(req, res) {
+var userId = req.session.passport.user;
+    console.log(req.body.address);
+    neo4jclient.getAllNotifications(userId, function(error, notifications){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.render('includes/notifications', {notifications:notifications})
+        }
+    })
+}
+
 
 exports.addAddress = function (req, res) {
     var userId = req.session.passport.user;
@@ -16,6 +42,41 @@ exports.addAddress = function (req, res) {
            handleErrorAndShowErrorPage(error, res);
         } else {
             res.json(data)
+        }
+    })
+};
+
+exports.confirmFriendReq = function (req, res) {
+    var userId = req.session.passport.user;
+    var friendId = req.params.friendId;
+    neo4jclient.confirmFrindReq(userId,friendId, function(error, data){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.render('user/user_rel_added', {message:"Confirmed"})
+        }
+    })
+};
+
+exports.deleteFriendReq = function (req, res) {
+    var userId = req.session.passport.user;
+    var friendId = req.params.friendId;
+    neo4jclient.deleteFrindReq(userId,friendId, function(error, data){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.json(data)
+        }
+    })
+};
+
+exports.getPendingFriends = function (req, res) {
+    var userId = req.session.passport.user;
+    neo4jclient.getPendingFriends(userId, function(error, users){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.render("user/search_result_users", {users:users.users, user_unit_action:"pending_frind_process"})
         }
     })
 };
@@ -118,7 +179,7 @@ exports.friendReq = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.render('user/user_rel_added', {})
+            res.render('user/user_rel_added', {message:"Added"})
         }
     })
 };

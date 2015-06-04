@@ -10,8 +10,15 @@ div(class="Grid-cell u-mb10")
                         - if(temp_user.userRelation === 'FRIEND') {
 
                         - } else if(temp_user.userRelation === 'FRIEND_REQUEST_PENDING') {
-                            button(class="js-add-member btn btn-success pull-right")
-                                span Friend Req Sent    
+                            - if(user_unit_action && user_unit_action === 'pending_frind_process') {
+                                button(class="btn btn-primary pull-right", id="confirm-a-friend-#{temp_user.id}") Confirm
+                                script
+                                    $("#confirm-a-friend-#{temp_user.id}").click(function(){var posting = $.post('/api/users/#{temp_user.id}/friend/confirm','application/json'); posting.done(function(data){$('#user-actions-#{temp_user.id}').html(data)})})
+                            -} else {
+                                button(class="js-add-member btn btn-success pull-right")
+                                    span Friend Req Sent    
+                            - }
+                            
                         - }
                     - } else {
                         - if(user_unit_action && user_unit_action === 'member') {

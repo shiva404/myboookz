@@ -50,10 +50,13 @@ client.registerMethod("getWishListBooks", baseUrl + "/users/${userId}/books", "G
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
 client.registerMethod("getFriends", baseUrl + "/users/${userId}/friends", "GET");
+client.registerMethod("getPendingFriends", baseUrl + "/users/${userId}/friends/pending", "GET");
 
 client.registerMethod("followUser", baseUrl + "/users/${userId}/follow/${followUserId}", "POST");
 client.registerMethod("addFriend", baseUrl + "/users/${currentUserId}/friend/${friendUserId}", "POST");
 client.registerMethod("unFollowUser", baseUrl + "/users/${userId}/follow/${followUserId}", "DELETE");
+client.registerMethod("confirmFrindReq", baseUrl + "/users/${userId}/friend/${friendUserId}", "PUT"); //?status=agreed
+client.registerMethod("deleteFrindReq", baseUrl + "/users/${userId}/friend/${friendUserId}", "PUT"); //?status=cancel
 
 
 client.registerMethod("saveFavourites", baseUrl + "/users/${userId}/favourites", "PUT");
@@ -86,6 +89,50 @@ client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friend
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
 
+//notifications
+client.registerMethod("getFreshNotifications", baseUrl + "/users/${userId}/notifications", "GET") //?filter=fresh
+client.registerMethod("getAllNotifications", baseUrl + "/users/${userId}/notifications", "GET") //?filter=all
+client.registerMethod("removeFreshNotifications", baseUrl + "/users/${userId}/notifications", "DELETE")
+
+
+exports.removeFreshNotifications = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    client.methods.removeFreshNotifications(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
+exports.getAllNotifications = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {filter: "all"};
+    client.methods.getFreshNotifications(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
+exports.getFreshNotifications = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {filter: "fresh"};
+    client.methods.getFreshNotifications(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
 exports.getFriends = function(userId, currentUserId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
@@ -98,6 +145,45 @@ exports.getFriends = function(userId, currentUserId, cb) {
         }
     })
 }
+
+exports.getPendingFriends = function(userId, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    client.methods.getPendingFriends(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+}
+
+
+exports.confirmFrindReq = function(currentUserId, friendId, cb) {
+    var args = getArguments();
+    args.path = {userId: currentUserId, friendUserId: friendId};
+    args.parameters = {status:"agreed"}
+    client.methods.confirmFrindReq(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.deleteFrindReq = function(currentUserId, friendId, cb) {
+    var args = getArguments();
+    args.path = {userId: currentUserId, friendUserId: friendId};
+    args.parameters = {status:"cancel"}
+    client.methods.deleteFrindReq(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
 
 exports.addFriend = function(currentUserId, friendId, cb) {
     var args = getArguments();
@@ -190,9 +276,9 @@ exports.getGroupMembers = function(groupId, cb) {
     })
 };
 
-exports.getRandomUsers = function(size, cb){
+exports.getRandomUsers = function(size, userId, cb){
     var args = getArguments();
-    args.parameters = {size:size};
+    args.parameters = {size:size, currentUserId:userId};
     client.methods.getRandomUsers(args, function (data, response) {
         if (response.statusCode != 200) {
             cb(data, null);

@@ -676,6 +676,67 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
 }
 
+.dropdown-menu .dropdown-caret {
+  left: auto;
+  right: 30px;
+}
+
+.dropdown-menu .dropdown-caret {
+  position: absolute;
+  top: -10px;
+  width: 18px;
+  height: 10px;
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown-caret .caret-outer {
+  border-bottom: 10px solid #8899a6;
+  border-bottom-color: rgba(0,0,0,0.1);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  height: auto;
+  left: 0;
+  top: 0;
+  width: auto;
+}
+
+
+.dropdown-caret .caret-outer {
+  border-bottom: 10px solid #8899a6;
+  border-bottom-color: rgba(0,0,0,0.1);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  height: auto;
+  left: 0;
+  top: 0;
+  width: auto;
+}
+
+.dropdown-caret .caret-inner {
+  top: 1px;
+  left: 1px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #fff;
+  border-bottom-color: rgba(255,255,255,0.98);
+}
+
+.dropdown-caret .caret-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  margin-left: -1px;
+}
+
+
+.dropdown-menu {
+  right: 0;
+  margin: 9px -7px 0 0;
+}
+
+
 
 
 
