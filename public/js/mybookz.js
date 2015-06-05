@@ -19,6 +19,13 @@ $(document).ready(function() {
         })    
     })
 
+    $('#notifications-clear-all').click(function(event){
+        var posting = $.delete('/api/notifications');
+         posting.done(function(data){
+            $('#notification-body-div').html('');
+        })  
+    })
+
     $('#notification-dropdown').click(function(event){
         var posting = $.get('/api/notifications');
         posting.done(function(data){

@@ -20,7 +20,6 @@ var userId = req.session.passport.user;
     })
 }
 
-
 exports.getAllNotifications = function(req, res) {
 var userId = req.session.passport.user;
     console.log(req.body.address);
@@ -32,6 +31,19 @@ var userId = req.session.passport.user;
         }
     })
 }
+
+exports.clearFreshNotifications = function(req, res) {
+var userId = req.session.passport.user;
+    console.log(req.body.address);
+    neo4jclient.removeFreshNotifications(userId, function(error, notifications){
+        if(error) {
+           handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.send("cleared")
+        }
+    })
+}
+
 
 
 exports.addAddress = function (req, res) {
