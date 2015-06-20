@@ -46,6 +46,8 @@ client.registerMethod("getLentBooks", baseUrl + "/users/${userId}/books", "GET")
 client.registerMethod("getBorrowedBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=borrowed
 client.registerMethod("getReadBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=read
 client.registerMethod("getWishListBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=wishList
+client.registerMethod("getAllBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=all
+
 
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
@@ -82,6 +84,7 @@ client.registerMethod("getGroupsOfUser", baseUrl + "/users/${userId}/groups", "G
 client.registerMethod("getGroupMembers", baseUrl + "/groups/${groupId}/users", "GET");
 client.registerMethod("getGroupAvailableBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=available
 client.registerMethod("getGroupWishListBooks", baseUrl + "/groups/${groupId}/books", "GET"); //?filter=lookingfor
+client.registerMethod("searchToAddGroupMembers", baseUrl + "/groups/${groupId}/search/users", "GET") //?q=searchString
 //search
 client.registerMethod("searchBooks", baseUrl + "/books/search", "GET") //?q=xyz
 client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET") //?q=xyz
@@ -93,7 +96,6 @@ client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?siz
 client.registerMethod("getFreshNotifications", baseUrl + "/users/${userId}/notifications", "GET") //?filter=fresh
 client.registerMethod("getAllNotifications", baseUrl + "/users/${userId}/notifications", "GET") //?filter=all
 client.registerMethod("removeFreshNotifications", baseUrl + "/users/${userId}/notifications", "DELETE")
-
 
 exports.removeFreshNotifications = function(userId, cb) {
     var args = getArguments();
@@ -264,9 +266,10 @@ exports.getGroupWishListBooks = function(groupId, cb) {
     })
 };
 
-exports.getGroupMembers = function(groupId, cb) {
+exports.getGroupMembers = function(groupId, loggedInUser, cb) {
     var args = getArguments();
     args.path = {groupId: groupId};
+    args.parameters = {loggedInUser: loggedInUser}
     client.methods.getGroupMembers(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -328,7 +331,6 @@ exports.searchUsers = function(userId, searchString, cb) {
     })
 };
 
-
 exports.getGroupsOfUser = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
@@ -379,6 +381,19 @@ exports.getGroupWithMembers = function(groupId, userId, cb) {
     client.methods.getGroupWithMembers(args, function(data, response){
         if(response.statusCode != 200){
             
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.searchToAddGroupMembers = function(groupId, searchString, loggedInUser, cb) {
+    var args = getArguments();
+    args.parameters = {q:searchString, loggedInUser:loggedInUser};
+    args.path = {groupId: groupId};
+    client.methods.searchToAddGroupMembers(args, function(data, response){
+        if(response.statusCode != 200){
             cb(data, null);
         } else {
             cb(null, data);
@@ -680,6 +695,19 @@ exports.getReadBooks = function(id, cb) {
     var args = getArguments();
     args.path = {userId: id};
     args.parameters = {"filter": "read"};
+    client.methods.getReadBooks(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
+exports.getAllBooks = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "all"};
     client.methods.getReadBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
