@@ -161,12 +161,15 @@ function handleAccountPage(checkGoodreads, user, req, res) {
             }
         },
         function(err, results) {
-            if(results.feed.size <= 0){
-               neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
+            console.log("Checking feed size" + results.feed)
+            if(results.feed.events.length <= 0){
+                console.log("Feed data not found so getting random users")
+                neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
                     if(!err) {
+                        console.log("Processing random users")
                         res.render('account', {user: user, checkGoodreads: checkGoodreads, users:users.users, groups: results.groups});
                     }
-               })
+                })
             } else {
                 res.render('account', {user: user, checkGoodreads: checkGoodreads, feed:results.feed, groups: results.groups});
             }
@@ -378,7 +381,7 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) { return next(); }
-	res.render('index', { title: "Start Bootstrap", feed_disable:true});
+	res.render('index', { title: "Book4Borrow", feed_disable:true});
 }
 
 app.listen(3000);

@@ -12,11 +12,19 @@
 .book-image{
     width: 75px;
     height: 100px;
-    
 }
 
 .center {
    text-align:center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0;
+  vertical-align: middle;
 }
 
 .sidebar {
@@ -29,8 +37,20 @@
     border-right: 1px solid #eee;
 }
 
+.home-content{   
+    padding: 120px 0;    
+}
+body {
+  margin: 0;
+  background: #2ba3d4;
+}
+
 .nav-sidebar {
     width: 100%;
+}
+
+.feed-items {
+    
 }
 
 .mainImage {

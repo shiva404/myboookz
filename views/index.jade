@@ -2,7 +2,7 @@ extends layout
 block content
     div(class="container")
         div(class="row clearfix")
-            div(class="col-md-12 column")
+            div(class="col-md-12 column home-content")
                 div(class="row clearfix")
                     div(class="col-md-6 column")
                         div(class="jumbotron")
@@ -13,7 +13,16 @@ block content
 
                     div(class="col-md-6 column")
                         div(class="jumbotron")
-                            a(href="/auth/google", id='fb_login_btn')
-                                img(src='/images/sign-in-with-google.png')
-                            a(href="/auth/facebook", id='fb_login_btn') 
-                                img(src='/images/fb_login_2x-lrg.png')       
+                            div(class="row clearfix")
+                                div(class="column col-md-12")
+                                    a(href="/auth/google", id='fb_login_btn')
+                                        button(class="btn btn-google-plus btn-lg")
+                                            i(class="fa fa-google-plus")
+                                            | | Connect with Google
+                                div(class="column col-md-12")
+                                    div(role="separator" class="divider")
+                                div(class="column col-md-12")
+                                    a(href="/auth/facebook")
+                                        button(class="btn btn-lg btn-facebook")
+                                            i(class="fa fa-facebook")
+                                            | | Connect with Facebook
