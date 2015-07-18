@@ -8,7 +8,7 @@ div(class="engagement-card")
                 h3 #{grRecommendations[n].friendName}
             br
             - if(!isFriendExists) {
-                button(class="btn-primary btn fbLikePopUp", data-friend-grId="#{grRecommendations[n].friendGoodreadsId}", data-toggle="modal", data-target=".bs-fbpage-modal-lg")
+                button(class="btn-primary btn fbLikePopUp", data-friend-grId="#{grRecommendations[n].friendGoodreadsId}", data-toggle="modal", data-target="#inviteUserToFbModal")
                     |Ask for borrowing
             - } else {
                 button(class="btn-primary btn",  data-friend-id="#{grRecommendations[n].friendId}", data-toggle="modal", data-target="#borrow-book-#{grRecommendations[n].friendId}")

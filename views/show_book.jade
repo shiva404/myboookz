@@ -7,7 +7,8 @@ block content
                 div(class="row clearfix book-data")
                     div(class="col-md-3 column")
                         div(class="mainImage")
-                            img(src="#{book.imageUrl}")
+                            - var imageUrl = book.imageUrl == null ? "/images/book.png" : book.imageUrl 
+                            img(src="#{imageUrl}")
                     div(class="col-md-9 column")
                         div(class="row clearfix")
                             div(class="col-md-12 column")

@@ -48,6 +48,7 @@ exports.addBookToUser = function(req, res) {
 
 exports.showBook = function (req, res) {
     var bookId = req.params.id;
+    console.log("BookId=" + bookId)
     var userId = req.session.passport.user;
     neo4jclient.getBookRelatedToUser(bookId, userId, function(error, book){
         if(error) {
@@ -56,6 +57,7 @@ exports.showBook = function (req, res) {
         } else {
             var borrowedDateFromNow = moment(1429551207130).fromNow();
             var borrowedDate = moment(1429551207130).format("MMM Do YYYY");
+            console.log("Rendering" + JSON.stringify(book))
             res.render('show_book', { book: book, borrowedDate: borrowedDate, borrowedDateFromNow: borrowedDateFromNow});
         }
     })

@@ -50,6 +50,7 @@ app.configure(function() {
 	app.use(express.logger());
     app.use(express.errorHandler());
     app.locals.pretty = true;
+    app.locals.moment = require('moment');
     app.use(express.cookieParser('password123'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
@@ -154,9 +155,19 @@ function handleAccountPage(checkGoodreads, user, req, res) {
                     callback(error, groups);
                 });
             },
+			wishlistBooksWithRec: function (callback){
+				neo4jclient.getWishListBooksRec(req.session.passport.user, function(error, wishlistBooksWithRec){
+					callback(error, wishlistBooksWithRec);
+				});
+			},
             feed: function(callback) {
                 neo4jclient.getUserTimeLineFeed(req.session.passport.user, function(err, feed){
                     callback(err, feed);
+                });
+            },
+            friendsRec: function(callback) {
+                neo4jclient.getFriendsRecommendations(req.session.passport.user, false, 10, function(err, friendsRec){
+                    callback(err, friendsRec);
                 });
             }
         },
@@ -167,11 +178,11 @@ function handleAccountPage(checkGoodreads, user, req, res) {
                 neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
                     if(!err) {
                         console.log("Processing random users")
-                        res.render('account', {user: user, checkGoodreads: checkGoodreads, users:users.users, groups: results.groups});
+                        res.render('account', {title: "Home-b4b", user: user, checkGoodreads: checkGoodreads, users:users.users, wishlistBooks: results.wishlistBooksWithRec, groups: results.groups, friendsRec: results.friendsRec});
                     }
                 })
             } else {
-                res.render('account', {user: user, checkGoodreads: checkGoodreads, feed:results.feed, groups: results.groups});
+                res.render('account', {title: "Home-b4b", user: user, checkGoodreads: checkGoodreads, feed:results.feed, wishlistBooks: results.wishlistBooksWithRec, groups: results.groups, friendsRec: results.friendsRec});
             }
             
         });
@@ -305,11 +316,14 @@ app.post("/api/users/:id/friend", ensureAuthenticated, user_api.friendReq);
 app.post("/api/friends/search/group", ensureAuthenticated, group_api.searchToAddGroupMembers);
 app.post("/api/group/:groupId/user/:userId", ensureAuthenticated, group_api.addMemberToGroup);
 
+app.get("/api/users/:userId/friends", ensureAuthenticated, user_api.showFriends);
+app.get("/api/users/:userId/books", ensureAuthenticated, user_api.showBooks);
+
 app.post("/api/users/:friendId/friend/confirm", ensureAuthenticated, user_api.confirmFriendReq);
 app.delete("/api/users/:friendId/friend", ensureAuthenticated, user_api.deleteFriendReq);
 app.get("/api/users/friends/pending", ensureAuthenticated, user_api.getPendingFriends);
 app.get('/api/notifications', ensureAuthenticated, user_api.getFreshNotifications);
-app.delete('/api/notifications', ensureAuthenticated, user_api.getFreshNotifications);
+app.delete('/api/notifications', ensureAuthenticated, user_api.removeFreshNotifications);
 
 app.get("/search", ensureAuthenticated, function(req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
@@ -369,9 +383,10 @@ app.get("/reminders", ensureAuthenticated, function(req, res){
 	})
 });
 
-app.get("/books/:id", book_api.showBook);
-app.get("/books/:id/grId", book_api.showBookByGrId)
+app.get("/books/:id", ensureAuthenticated, book_api.showBook)
+app.get("/books/:id/grId", ensureAuthenticated, book_api.showBookByGrId)
 app.get("/users/:userId", ensureAuthenticated, user_profile_api.showUser);
+app.get("/users/:userId/timeline", ensureAuthenticated, user_profile_api.showUser);
 app.get("/groups/:groupId", ensureAuthenticated, group_api.showGroup);
 
 app.get('/logout', function(req, res){

@@ -1,25 +1,30 @@
 li
     div(class="feed-item")
-        div(class="row clearfix")
-            div(class="column col-md-12")
-                - var targetString = null
-                - if(feedItem.target) {
-                    - targetString = feedItem.target.displayString
-                - } else {
-                    - targetString = ""
+        div(class="event")
+            div(class="content")
+                div(class="feed-item-header")
+                    a(href="#{feedItem.subject.url}")
+                        - if(feedItem.subject.imageUrl){
+                            img(src="#{feedItem.subject.imageUrl}", class="avatar js-action-profile-avatar")
+                        - } else {
+                            img(src="/images/default-user.png", class="avatar js-action-profile-avatar")
+                        - }
+                        
+                        strong(class="fullname")
+                            |#{feedItem.subject.displayString}         
+                - var timeFromNow = moment(feedItem.timeStamp).fromNow();              
+                small(class="time") - #{timeFromNow}
+                br
+                |#{feedItem.eventActionString}
+                - if(feedItem.target && feedItem.target.idType){
+                    - var idType = feedItem.target.idType
+                    - if(idType === "USER_ID") {
+                         a(href="#{feedItem.target.url}")
+                            strong(class="fullname") 
+                                |&nbsp;#{feedItem.target.displayString}
+                    - } else if(idType === "BOOK_ID"){
+                        - var book = {id:feedItem.target.id, name:feedItem.target.displayString}  
+                        include ../book/book_unit_display 
+                    - }
                 - }
-                div(class="feed-item")
-                    div(class="event")
-                        div(class="content")
-                            div(class="feed-item-header")
-                                a(href="#{feedItem.subject.url}")
-                                    img(src="#{feedItem.subject.imageUrl}", class="avatar js-action-profile-avatar")
-                                    strong(class="fullname")
-                                        |#{feedItem.subject.displayString}  
-                                small(class="time")
-                                |&nbsp;#{feedItem.eventString}
-                                -if(feedItem.target){
-                                a(href="#{feedItem.target.url}")
-                                    strong(class="fullname") 
-                                        |&nbsp;#{feedItem.target.displayString}
-                                -}
+               

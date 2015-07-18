@@ -4,7 +4,7 @@ div(id="users", class="box-border")
             - var n = users.length
             - var i = 0
             - while(i < n){
-                - var temp_user = users[i]
+                - var user_unit = users[i]
                 - if(i > 0 && i%3 == 0) {
                     div(class="row clearfix")
                 - }
@@ -12,5 +12,4 @@ div(id="users", class="box-border")
                         include user_unit
                 - i++
             - }
-            - console.log("DOne")
                 

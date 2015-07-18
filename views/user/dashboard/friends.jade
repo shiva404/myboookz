@@ -1,0 +1,27 @@
+div(class="groups module")
+    div(class="groups-inner")
+        div(class="flex-module trends-container")
+            div(class="flex-module-header")
+                h3
+                    span(class="groups-location")
+                        |Friends
+            div(class="flex-module-inner")
+                div(class="friends-items")
+                    - var user_friends = friends.friends.friends
+                    - var n = user_friends.length
+                    - var user_count = 0;
+                    - console.log("Friends -->" + JSON.stringify(user_friends.length))
+                    - if(n > 0) {
+                    div(class="friends-items", id="group-items-dashboard")
+                        div(class="row clearfix")       
+                            - while(user_count < n){
+                                - var friend = user_friends[user_count]
+                                - if(i > 0 && i%3 == 0) {
+                                    div(class="row clearfix")
+                                - }
+                                        - var profileImageUrl =  friend.profileImageUrl == null ? "/images/default-user.png" : friend.profileImageUrl
+                                        div(class="col-md-4 column")
+                                            img(class="Dashboard-user-image", src="#{profileImageUrl}")
+                                - user_count++
+                            - }
+                            - }

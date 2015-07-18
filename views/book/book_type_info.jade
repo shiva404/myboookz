@@ -1,3 +1,18 @@
-div(class="col-md-12")
-    div("book-data")
-        i(class="glyphicon glyphicon-ok pull-right") #{book.bookType}
+div("book-data")
+    div(class="column col-md-5 row")
+        div(class="book-type")
+            i(class="glyphicon glyphicon-ok") #{book.bookType}
+    -if(book.bookType === "WISH"){
+        - if(book.wishlistBookDetails) {
+            div(class="column col-md-7 row")
+                div(class="wishlist-books-rec-link pull-pull-right")
+                - var rec_count = 0;
+                - if(book.wishlistBookDetails.users)
+                    - rec_count += book.wishlistBookDetails.users.length
+                - if(book.wishlistBookDetails.groupsWithMembers)
+                    - rec_count += book.wishlistBookDetails.groupsWithMembers.length
+                - if(rec_count > 0)
+                    a(href="#", class="", data-toggle="modal", data-target="#book-wishlist-rec-#{book.id}") #{rec_count} recomendation
+                - }
+        include ../user/wishlist_rec_users_modal
+    - }

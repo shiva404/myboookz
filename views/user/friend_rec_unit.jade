@@ -1,0 +1,12 @@
+extends user_unit_common
+block user_actions
+    div(class="mutual-friends")
+        div(class="mutual-friends-count")
+            - const mutual_friends_count = friend_rec.size
+            - const mutual_friends_link = mutual_friends_count > 1 ? "mutual friends" : "mutual friend";
+            span #{mutual_friends_count} mutual friend
+    div(id="user-actions-#{user_unit.id}")
+        button(class="btn btn-primary js-add-friend", data-target="#{user_unit.id}", id="add-friend-#{user_unitid}")
+            span Add Friend
+        script
+            $("#add-friend-#{user_unit.id}").click(function(event){var posting = $.post('/api/users/#{user_unit.id}/friend'); posting.done(function(data){console.log(data);$('#user-actions-#{user_unit.id}').html(data)})});

@@ -25,7 +25,7 @@ const FRIEND_REQUEST_ACCEPTED_NOTIFICATION = "FRIEND_REQUEST_ACCEPTED";
 
 const AVAILABLE = "AVAILABLE";
 const PRIVATE = "PRIVATE";
-    //const
+//const
 const OWNS = OWNS_RELATION;
 const WISHLIST = WISHLIST_RELATION;
 const READ = READ_RELATION;
@@ -135,6 +135,7 @@ client.registerMethod("getBorrowedBooks", baseUrl + "/users/${userId}/books", "G
 client.registerMethod("getReadBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=read
 client.registerMethod("getWishListBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=wishList
 client.registerMethod("getAllBooks", baseUrl + "/users/${userId}/books", "GET"); // ?filter=all
+client.registerMethod("getWishListBooksRec", baseUrl + "/users/${userId}/books", "GET"); //filter=wish_rec
 
 client.registerMethod("getFollowersOfUser", baseUrl + "/users/${userId}/followers", "GET");
 client.registerMethod("getFollowing", baseUrl + "/users/${userId}/following", "GET");
@@ -157,7 +158,7 @@ client.registerMethod("getUserActityFeed", baseUrl + "/users/${userId}/timeline/
 client.registerMethod("getBookById", baseUrl + "/books/${bookId}", "GET");
 client.registerMethod("getBookByGoodreadsId", baseUrl + "/books/goodreadsId/${goodreadsId}", "GET");
 client.registerMethod("getBookByIsbn", baseUrl + "/books/isbn/${isbn}", "GET");
-client.registerMethod("getBookRelatedToUser", baseUrl + "/books/${bookId}/users/${userId}", "GET");
+client.registerMethod("getBookRelatedToUser", baseUrl + "/books/${bookId}", "GET");
 client.registerMethod("getBookByGrIdRelatedToUser", baseUrl + "/books/goodreadsId/${bookId}/users/${userId}", "GET");
 //Groups
 client.registerMethod("addGroup", baseUrl + "/groups", "POST");
@@ -181,6 +182,25 @@ client.registerMethod("getFreshNotifications", baseUrl + "/users/${userId}/notif
 client.registerMethod("getAllNotifications", baseUrl + "/users/${userId}/notifications", "GET") //?filter=all
 client.registerMethod("removeFreshNotifications", baseUrl + "/users/${userId}/notifications", "DELETE")
 
+//get friends rec
+client.registerMethod("getFriendsRec", baseUrl + "/users/${userId}/friends/rec", "GET") //?includeFriends=true&size=10
+
+
+exports.getFriendsRecommendations = function(userId, includeFriends, size, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    if(!size)
+        size = 10
+    args.parameters = {includeFriends: includeFriends, size: size}
+    client.methods.getFriendsRec(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })    
+}
+
 exports.removeFreshNotifications = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
@@ -197,7 +217,7 @@ exports.getAllNotifications = function(userId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
     args.parameters = {filter: "all"};
-    client.methods.getFreshNotifications(args, function(data, response){
+    client.methods.getAllNotifications(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
         } else {
@@ -222,7 +242,7 @@ exports.getFreshNotifications = function(userId, cb) {
 exports.getFriends = function(userId, currentUserId, cb) {
     var args = getArguments();
     args.path = {userId: userId};
-    args.parameters = {currentUserId: currentUserId};
+    args.parameters = {loggedInUser: currentUserId};
     client.methods.getFriends(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -243,7 +263,6 @@ exports.getPendingFriends = function(userId, cb) {
         }
     })
 }
-
 
 exports.confirmFrindReq = function(currentUserId, friendId, cb) {
     var args = getArguments();
@@ -509,7 +528,6 @@ exports.getUserTimeLineFeed = function(userId, cb) {
         if(response.statusCode != 200){
             cb(data, null);
         } else {
-            console.log("FeedData" + JSON.stringify(data));
             cb(null, data);
         }
     });
@@ -725,7 +743,7 @@ exports.getUserFromId = function(id, cb) {
 exports.getAvailableBooks = function(id, cb) {
     var args = getArguments();
     args.path = {userId: id};
-    args.parameters = {"filter": "owned"};
+    args.parameters = {"filter": AVAILABLE};
     client.methods.getAvailableBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -750,7 +768,7 @@ exports.getBookById = function (bookId, cb) {
 exports.getOwnedBooks = function(id, cb) {
     var args = getArguments();
     args.path = {userId: id};
-    args.parameters = {"filter": "owned"};
+    args.parameters = {"filter": "owns"};
     client.methods.getOwnedBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -786,6 +804,19 @@ exports.getReadBooks = function(id, cb) {
     });
 };
 
+exports.getWishListBooksRec = function(id, cb) {
+    var args = getArguments();
+    args.path = {userId: id};
+    args.parameters = {"filter": "wish_rec"};
+    client.methods.getWishListBooksRec(args, function(data, response){
+        if(response.statusCode != 200){
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    });
+};
+
 exports.getAllBooks = function(id, cb) {
     var args = getArguments();
     args.path = {userId: id};
@@ -813,12 +844,17 @@ exports.getWishListBooks = function(userId, cb) {
 };
 
 exports.getBookRelatedToUser = function(bookId, userId, cb) {
+    console.log("calling 0-----> getBookRelatedToUser"+ bookId)
     var args = getArguments();
-    args.path = {userId: userId, bookId: bookId}
+    args.path = {bookId:bookId}
+    if(userId)
+        args.parameters = {"loggedInUser":userId}
     client.methods.getBookRelatedToUser(args, function(data, response){
         if(response.statusCode != 200){
+            console.log("error "+ data)
             cb(data, null);
         } else {
+            console.log("went fine data "+ data)
             cb(null, data);
         }
     })

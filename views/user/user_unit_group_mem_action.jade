@@ -1,0 +1,19 @@
+extends user_unit_common
+block user_actions
+    div(id="user-actions-#{user_unit.id}")
+        div(id="user-actions-#{user_unit.id}")
+            - if(user_unit_unit_action === 'show_member'){
+                - if(!user_unit.userRelation) {
+                    button(class="btn btn-primary pull-right js-add-friend", data-target="#{user_unit.id}", id="add-friend-#{user_unit.id}")
+                        span Add Friend
+                script
+                    $("#add-friend-#{user_unit.id}").click(function(event){var posting = $.post('/api/users/#{user_unit.id}/friend'); posting.done(function(data){console.log(data);$('#user-actions-#{user_unit.id}').html(data)})});
+                - }
+            - } else if(user_unit_unit_action === 'add_member') {
+                - if(!user_unit.role) {
+                    button(class="js-add-member btn btn-primary pull-right", data-target="#{user_unit.id}", data-target-group="#{groupId}", id="add-member-group-#{user_unit.id}")
+                        span Add Member
+                    script
+                        $("#add-member-group-#{user_unit.id}").click(function(event){var posting = $.post('/api/group/#{groupId}/user/#{user_unit.id}'); posting.done(function(data){$('#user-actions-#{user_unit.id}').html(data)})})
+                -}
+            - }        

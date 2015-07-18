@@ -5,36 +5,59 @@ block content
         div(class="row clearfix")
             div(class="dashboard dashboard-left")
                 include includes/dashboard
-            div(class="content-main-full")
+            div(class="content-main-ext")
                 section
                     div(class="tabs tabs-style-topline")
                         nav
                             ul
                                 li(class="tab-current")
                                     a(href="#my-books-tab-read-content", id="my-books-tab-read", class="icon icon-home")
-                                        span Read Books(#{books.readBooks.length})
+                                        - if(books.readBooks){
+                                            span Read Books(#{books.readBooks.length})
+                                        - } else {
+                                            span Read Books(0)
+                                        - }
                                 li(class="")
                                     a(href="#my-books-tab-owned-content", id="my-books-tab-owned", class="icon icon-gift")
-                                        span Owned(#{books.ownedBooks.length})
+                                        - if(books.ownedBooks){
+                                            span Owned(#{books.ownedBooks.length})
+                                        - } else {
+                                            span Owned Books(0)
+                                        - }
                                 li(class="")
                                     a(href="#my-books-tab-borrowed-content", id="my-books-tab-borrowed", class="icon icon-upload")
-                                        span Borrowed(#{books.borrowedBooks.length})
+                                        - if(books.borrowedBooks){
+                                            span Borrowed(#{books.borrowedBooks.length})
+                                        - } else {
+                                            span Borrowed Books(0)
+                                        - }
                                 li
                                     a(href="#my-books-tab-wishlist-content", id="my-books-tab-wishlist", class="icon icon-coffee")
-                                        span Wishlist(#{books.wishlistBooks.length})
-                                
+                                        - if(books.wishlistBooks){
+                                            span Wishlist(#{books.wishlistBooks.length})
+                                        - } else {
+                                            span Wishlist Books(0)
+                                        - }
                         div(class="content-wrap")
                             section(id="my-books-tab-read-content", class="")
                                 div(id="my-books-tab-read-content-div")
-                                     include ./book/read_book_details
+                                    - if(books.readBooks) {
+                                        include ./book/read_book_details 
+                                    - }     
                             section(id="my-books-tab-owned-content", class="")
                                 div(id="my-books-tab-owned-content-div")
-                                    include ./book/owned_book_details
+                                    - if(books.ownedBooks) {
+                                        include ./book/owned_book_details
+                                    - } 
                             section(id="my-books-tab-borrowed-content", class="")
                                 div(id="my-books-tab-borrowed-content-div")
-                                    include ./book/borrowed_book_details
+                                    - if(books.borrowedBooks) {
+                                        include ./book/borrowed_book_details
+                                    - }
                             section(id="my-books-tab-wishlist-content", class="")
                                 div(id="my-books-tab-wishlist-content-div")
-                                    include ./book/wishlist_book_details
+                                    - if(books.wishlistBooks) {
+                                        include ./book/wishlist_book_details
+                                    - }  
                         script
                             include ./tab.js
