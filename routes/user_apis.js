@@ -177,7 +177,7 @@ exports.friendReq = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.render('user/user_rel_added', {message:"Added"})
+            res.render('user/user_rel_added', {message:"Sent friend req"})
         }
     })
 };

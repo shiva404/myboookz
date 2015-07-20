@@ -10,6 +10,7 @@ div(class="modal fade bs-book-wishlist-rec-lg", id="book-wishlist-rec-#{book.id}
                     strong  #{book.name}
             div(class="modal-body")
                 div(class="borrow-recs")
+                    -if(book.wishlistBookDetails.users){
                     div(class="borrow-recs-friends")
                         h3 friends
                         - var users = book.wishlistBookDetails.users
@@ -29,6 +30,8 @@ div(class="modal fade bs-book-wishlist-rec-lg", id="book-wishlist-rec-#{book.id}
                                                 include user_unit_borrow_action
                                             - i++
                                             - }
+                    -}
+                    - if(book.wishlistBookDetails.groupsWithMembers){                     
                     div(class="borrow-recs-Groups")
                         h3 Groups
                         - var groupsWithMembers = book.wishlistBookDetails.groupsWithMembers
@@ -57,6 +60,7 @@ div(class="modal fade bs-book-wishlist-rec-lg", id="book-wishlist-rec-#{book.id}
                                                     - }
                             - j++;
                         - }
+                    - }    
 
 
 

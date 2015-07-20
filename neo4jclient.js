@@ -305,7 +305,7 @@ exports.addFriend = function(currentUserId, friendId, cb) {
 exports.addBookToUserAsOwn = function(userId, bookId, idType, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId};
-    args.parameters = {ID_TYPE_QPARAM:idType, LISTING_TYPE_QPARAM:OWNS}
+    args.parameters = {idType:idType, listingType:OWNS}
     client.methods.addBookToUserAsOwn(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -318,7 +318,7 @@ exports.addBookToUserAsOwn = function(userId, bookId, idType, cb) {
 exports.addBookToUserAsRead = function(userId, bookId, idType, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId};
-    args.parameters = {ID_TYPE_QPARAM:idType, LISTING_TYPE_QPARAM:READ}
+    args.parameters = {idType:idType, listingType:READ}
     client.methods.addBookToUserAsRead(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -331,7 +331,7 @@ exports.addBookToUserAsRead = function(userId, bookId, idType, cb) {
 exports.addBookToWishListForUser = function(userId, bookId, idType, cb) {
     var args = getArguments();
     args.path = {userId: userId, bookId: bookId};
-    args.parameters = {ID_TYPE_QPARAM:idType, LISTING_TYPE_QPARAM:WISHLIST}
+    args.parameters = {idType:idType, listingType:WISHLIST}
     client.methods.addBookToWishListForUser(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);

@@ -1,0 +1,21 @@
+div(class="column col-md-12 row")
+    div(id="book-actions-#{book.id}")
+        div(class="btn-group")
+            button(type="button", class="btn btn-default")
+                i(class="glyphicon glyphicon-ok") 
+                |Read
+            button(type="button", class="btn dropdown-toggle", data-toggle="dropdown", data-section="book-actions-#{book.id}", aria-haspopup="true", aria-expanded="false")
+                span(class="caret")
+                span(class="sr-only") Toggle Dropdown
+            ul(class="dropdown-menu", role="menu")
+                li
+                    a(href="#", class="js-own", data-target="#{book.id}", id-type="id") Owns too
+                li(class="divider")
+                li
+                    a(href="#", class="js-read-remove", data-target="#{book.id}", id-type="id") Remove from read
+
+                li(class="divider")
+                li
+                    a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to donate
+                li
+                    a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to Sell

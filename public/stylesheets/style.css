@@ -25,7 +25,7 @@
 
 .notification-items{
     overflow: scroll; 
-    height: 400px;
+    max-height: 400px;
 }
 .dashboard-full{
     width: 100%;

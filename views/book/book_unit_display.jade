@@ -25,13 +25,12 @@ div(class="Grid-cell u-mb10")
                             include ./book_type_info
                         - } else {
                             - if(book.id){
-                            div(class="row clearfix hey")
+                            div(class="row clearfix")
                                 div(id="book-actions-#{book.id}")
                                     div(class="col-md-12")
                                         div(class="btn-group")
                                             button(type="button", class="addwishlist-btn btn btn-default", data-target="#{book.id}",data-section="book-actions-#{book.id}", id-type="id")
-                                                span(class="glyphicon glyphicon-heart")
-                                                span Wishlist
+                                                span Add wishlist
                                             button(type="button", class="btn dropdown-toggle", data-toggle="dropdown", data-section="book-actions-#{book.id}", aria-haspopup="true", aria-expanded="false")
                                                 span(class="caret")
                                                 span(class="sr-only") Toggle Dropdown
@@ -49,13 +48,12 @@ div(class="Grid-cell u-mb10")
                                                 li
                                                     a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to Sell
                             - } else {
-                            div(class="row clearfix hey")
+                            div(class="row clearfix")
                                 div(id="book-actions-#{book.goodreadsId}")
                                     div(class="col-md-12")
                                         div(class="btn-group")
                                             button(type="button", data-target="#{book.goodreadsId}" class="addwishlist-btn btn btn-default", data-section="book-actions-#{book.goodreadsId}", id-type="grId")
-                                                span(class="glyphicon glyphicon-heart")
-                                                span Wishlist
+                                                span Add wishlist
                                             button(type="button", class="btn dropdown-toggle", data-toggle="dropdown", data-section="book-actions-#{book.id}", aria-haspopup="true", aria-expanded="false")
                                                 span(class="caret")
                                                 span(class="sr-only")

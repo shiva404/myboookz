@@ -18,40 +18,13 @@ block content
                                         div(id="name-container", data-li-template="name")
                                             div(id="name", class="editable-item")
                                                 h1(class="field")
-                                                    button(class="edit-field edit-field-button")
-                                                        span(class="ally-text")
-                                                            | Edit name
-                                                        i(class="edit-field-icon")
                                                     span(class="n fn field-text")
                                                         span(class="full-name")
                                                             | #{user.name}
-                                        div(id="headline-container", data-li-template="headline")
-                                            div(id="headline", class="editable-item")
-                                                div(class="field")
-                                                    button(class="edit-field edit-field-button")
-                                                        span(class="ally-text")
-                                                            | Edit headline
-                                                        i(class="edit-field-icon")
-                                                    p(class="title field-text")
-                                                        | Software Engineer at Intuit
-                                        div(id="location-container", data-li-template="location")
-                                            div(id="location", class="editable-item")
-                                                div(class="field")
-                                                    button(class="edit-field edit-field-button")
-                                                        span(class="ally-text")
-                                                            | Edit location
-                                                        i(class="edit-field-icon")
-                                                    p(class="title field-text")
-                                                        | Home: #5, 2nd Main, Hulimavu, Bangalore - 560068
-                                        div(id="location-container", data-li-template="location")
-                                            div(id="location", class="editable-item")
-                                                div(class="field")
-                                                    button(class="edit-field edit-field-button")
-                                                        span(class="ally-text")
-                                                            | Edit location
-                                                        i(class="edit-field-icon")
-                                                    p(class="title field-text")
-                                                        | Work: Intuit, Building #8, Bellandur, Bangalore - 560103
+                                    div(class="add-work-info")
+                                        button(class="work-info-btn btn btn-default")
+                                            |Add work info(+)
+                                        
                 div(id="recommended-sections")
                     div(class="recommended-sections-container", data-li-template="recommended_sections")
                         p(div="recommended-sections-headline")

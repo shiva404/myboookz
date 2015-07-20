@@ -177,8 +177,7 @@ function handleAccountPage(checkGoodreads, user, req, res) {
                 console.log("Feed data not found so getting random users")
                 neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
                     if(!err) {
-                        console.log("Processing random users")
-                        res.render('account', {title: "Home-b4b", user: user, checkGoodreads: checkGoodreads, users:users.users, wishlistBooks: results.wishlistBooksWithRec, groups: results.groups, friendsRec: results.friendsRec});
+                        res.render('account', {title: "Home-b4b", user: user, checkGoodreads: checkGoodreads, randomUsers:users.users, wishlistBooks: results.wishlistBooksWithRec, groups: results.groups, friendsRec: results.friendsRec});
                     }
                 })
             } else {

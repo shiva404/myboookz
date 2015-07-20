@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="238 47.3 325 325" enable-background="new 238 47.3 325 325" xml:space="preserve">
+<g id="XMLID_1_">
+	<g>
+		<g id="XMLID_2_">
+			<g>
+				<rect x="464.7" y="326.6" width="55.6" height="6"/>
+				<path d="M464.7,320.3h-0.1h-11.9h-0.1H312.3c-16.5,0-30-13.5-30-30c0-8.2,3.4-15.8,8.8-21.2s12.9-8.8,21.2-8.8h186.5
+					c-6.8,0.8-13,3.9-17.7,8.6c-5.4,5.4-8.8,13-8.8,21.2c0,16.5,13.5,30,30,30v0.2H464.7z"/>
+				<polygon points="464.7,332.6 464.7,357 458.7,345 452.7,357 452.7,332.6 464.6,332.6 				"/>
+				<polygon points="464.7,326.6 464.7,332.6 464.6,332.6 452.7,332.6 452.7,326.6 464.6,326.6 				"/>
+				<polygon points="464.7,320.3 464.7,326.6 464.6,326.6 452.7,326.6 452.7,320.3 464.6,320.3 				"/>
+				<path d="M452.7,326.6v6h-0.1H312.8c-23.4,0-42.5-19.1-42.5-42.5c0-4.1,0.6-8.1,1.7-11.9c1.1-3.8,2.7-7.3,4.8-10.6L400,57
+					l5.5,3.2L282.6,270.3c-2,2.9-3.6,6.1-4.6,9.5c-1.1,3.4-1.7,7-1.7,10.8c0,19.8,16.2,36,36,36h140.3H452.7z"/>
+				<path d="M282.6,270.3c-1.9,2.9-3.5,6.1-4.6,9.5C279,276.4,280.6,273.2,282.6,270.3z"/>
+			</g>
+			<g>
+				<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M502.3,320.3h-37.6h-0.1h-11.9h-0.1H312.3c-16.5,0-30-13.5-30-30
+					c0-8.2,3.4-15.8,8.8-21.2s12.9-8.8,21.2-8.8h186.5h3.5"/>
+				<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M520.3,326.6h-55.6h-0.1h-11.9h-0.1H312.3c-19.8,0-36-16.2-36-36
+					c0-3.8,0.6-7.4,1.7-10.8c1.1-3.4,2.7-6.6,4.6-9.5"/>
+				<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M520.3,332.6h-55.6h-0.1h-11.9h-0.1H312.8
+					c-23.4,0-42.5-19.1-42.5-42.5c0-4.1,0.6-8.1,1.7-11.9c1.1-3.8,2.7-7.3,4.8-10.6"/>
+				<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M502.3,320.1c-16.5,0-30-13.5-30-30c0-8.2,3.4-15.8,8.8-21.2
+					c4.7-4.7,10.9-7.8,17.7-8.6c1.1-0.1,2.3-0.2,3.5-0.2"/>
+				<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="452.7,305 452.7,320.3 452.7,326.6 452.7,332.6 
+					452.7,357 				"/>
+				<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="464.7,305 464.7,320.3 464.7,326.6 464.7,332.6 
+					464.7,357 				"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="458.7" y1="345" x2="452.7" y2="357"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="458.7" y1="345" x2="464.7" y2="357"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="400" y1="57" x2="276.8" y2="267.6"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="405.5" y1="60.2" x2="282.6" y2="270.3"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="400" y1="57" x2="405.5" y2="60.2"/>
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="520.3" y1="332.6" x2="520.3" y2="326.6"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
