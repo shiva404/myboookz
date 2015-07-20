@@ -243,7 +243,7 @@ app.get('/auth/google',
 app.get('/auth/fb/callback',
 	passport.authenticate('facebook', {scope: "email", failureRedirect: '/' }),
 	function (req, res) {
-		res.redirect('/account?check_goodreads=true');
+		res.redirect(req.session.returnTo || '/account?check_goodreads=true');
 });
 
 app.get('/mybooks', ensureAuthenticated ,function (req, res) {
@@ -259,7 +259,7 @@ app.get('/mybooks', ensureAuthenticated ,function (req, res) {
 app.get('/auth/google/callback',
 	passport.authenticate('google',{ failureRedirect: '/' }),
 	function (req, res) {
-		res.redirect('/account?check_goodreads=true');
+		res.redirect(req.session.returnTo || '/account?check_goodreads=true');
 });
 
 app.get('/auth/goodreads/callback', ensureAuthenticated, function(req, res) {
@@ -394,7 +394,10 @@ app.get('/logout', function(req, res){
 });
 
 function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) { return next(); }
+	if (req.isAuthenticated()) { 
+        return next(); 
+    }
+    req.session.returnTo = req.path;
 	res.render('index', { title: "Book4Borrow", feed_disable:true});
 }
 
