@@ -7,6 +7,7 @@ div(class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large")
                     img(class="ProfileAvatar-image", src="#{ruser.profileImageUrl}")
             div(class="ProfileCanopy-username")
                 h2 #{ruser.name}
+    - var user_unit = ruser          
     include ./profile_nav_bar
 div(class="AppContainer clearfix margin80px")
     div(class="AppContent-main u-cf ", role="main")

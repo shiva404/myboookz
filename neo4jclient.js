@@ -266,7 +266,7 @@ exports.getPendingFriends = function(userId, cb) {
 
 exports.confirmFrindReq = function(currentUserId, friendId, cb) {
     var args = getArguments();
-    args.path = {userId: currentUserId, friendUserId: friendId};
+    args.path = {userId: friendId, friendUserId: currentUserId};
     args.parameters = {status:"agreed"}
     client.methods.confirmFrindReq(args, function(data, response){
         if(response.statusCode != 200){

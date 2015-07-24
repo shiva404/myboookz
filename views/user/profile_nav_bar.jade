@@ -1,14 +1,19 @@
 div(class="ProfileCanopy-navBar")
         div(class="AppContainer")
             div(class="ProfileCanopy-nav")
-                div(class="ProfileNav", role="navigation")
-                    ul(class="nav nav-tabs")
-                        li(class="ProfileNav-item ProfileNav-item--tweets is-active")
-                            a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/timeline")
-                                span(class="ProfileNav-label") Timeline
-                        li(class="ProfileNav-item ProfileNav-item--tweets")
-                            a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/friends")
-                                span(class="ProfileNav-label") Friends
-                        li(class="ProfileNav-item ProfileNav-item--tweets")
-                            a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/books")
-                                span(class="ProfileNav-label") Books
+                div(class="row clearfix")
+                    div(class="column col-md-10")
+                        div(class="ProfileNav", role="navigation")
+                            ul(class="nav nav-tabs")
+                                li(class="ProfileNav-item ProfileNav-item--tweets is-active")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/timeline")
+                                        span(class="ProfileNav-label") Timeline
+                                li(class="ProfileNav-item ProfileNav-item--tweets")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/friends")
+                                        span(class="ProfileNav-label") Friends
+                                li(class="ProfileNav-item ProfileNav-item--tweets")
+                                    a(class="ProfileNav-stat ProfileNav-stat--link u-textCenter js-tooltip js-nav", href="/users/#{ruser.id}/books")
+                                        span(class="ProfileNav-label") Books
+                     div(class="column col-md-2")                               
+                        div(class="user-rel")
+                            include ./actions/friend_dropdown

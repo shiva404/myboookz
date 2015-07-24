@@ -55,10 +55,8 @@ exports.showBook = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            var borrowedDateFromNow = moment(1429551207130).fromNow();
-            var borrowedDate = moment(1429551207130).format("MMM Do YYYY");
             console.log("Rendering" + JSON.stringify(book))
-            res.render('show_book', { book: book, borrowedDate: borrowedDate, borrowedDateFromNow: borrowedDateFromNow});
+            res.render('show_book', {title:book.name, book: book});
         }
     })
 };

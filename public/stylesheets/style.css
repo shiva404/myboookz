@@ -23,6 +23,27 @@
     width: 80px;
 }
 
+.book-profile{
+
+}
+
+.subtitle{
+    color: #848484;
+    font-size: 18px;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 25px;
+}
+
+.book-main-profile-image{
+    height: 160px;
+    width: 120px;  
+    margin-left: auto;
+    margin-right: auto;  
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
 .notification-items{
     overflow: scroll; 
     max-height: 400px;
@@ -159,6 +180,18 @@ body {
 #profile #top-card .entity {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.book-actions{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.book-actions .action-btn{
+    padding: 7px 0 6px;
+    line-height: 25px;
+    font-size: 18px;
+    width: 200px;
 }
 
 #profile .entity {
