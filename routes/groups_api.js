@@ -49,7 +49,7 @@ exports.searchToAddGroupMembers = function(req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.render("group/show_members", {users:users.groupMembers, group_member_unit_action:'add_member', groupId: groupId})
+            res.render("group/show_members", {groupMembers:users.groupMembers, user_unit_unit_action:'add_member', groupId: groupId})
         }
     })
 };
@@ -73,7 +73,7 @@ exports.showGroup = function(req, res) {
             } else {
                 neo4jclient.getGroupMembers(groupId, req.session.passport.user, function(error, groupMemebers){
             
-                    res.render('show_group', {title:group.name, group: group, groupMembers:groupMemebers.groupMembers, group_member_unit_action:"show_member", action:"members"});
+                    res.render('show_group', {title:group.name, group: group, groupMembers:groupMemebers.groupMembers, user_unit_unit_action:"show_member", action:"members"});
                 })
             }
         }

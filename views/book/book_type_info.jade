@@ -3,4 +3,6 @@ div("book-data")
         include ./actions/wishlistbook
     -} else if(book.bookType === "READ"){
         include ./actions/readbook
-    - }
+    - } else if(book.bookType==="OWNS") {
+        include ./actions/ownsbook
+    -}

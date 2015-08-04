@@ -13,12 +13,12 @@ div(class="AppContainer clearfix margin80px")
         div(class="row clearfix")
             div(class="col-md-3 column")
                 
-            div(class="col-md-8 column")      
+            div(class="col-md-8 column")
+                include ./add_members      
                 - if(action === "available") {
                 include ./show_available_books
                 - } else if(action === "wishlist") {
                 include ./show_look_for_books
                 - } else if(action === "members") {
-                include ./add_members
                 include ./show_members
                 - }

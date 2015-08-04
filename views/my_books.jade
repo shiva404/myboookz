@@ -11,11 +11,11 @@ block content
                         nav
                             ul
                                 li(class="tab-current")
-                                    a(href="#my-books-tab-read-content", id="my-books-tab-read", class="icon icon-home")
-                                        - if(books.readBooks){
-                                            span Read Books(#{books.readBooks.length})
+                                    a(href="#my-books-tab-wishlist-content", id="my-books-tab-wishlist", class="icon icon-coffee")
+                                        - if(books.wishlistBooks){
+                                            span Wishlist(#{books.wishlistBooks.length})
                                         - } else {
-                                            span Read Books(0)
+                                            span Wishlist Books(0)
                                         - }
                                 li(class="")
                                     a(href="#my-books-tab-owned-content", id="my-books-tab-owned", class="icon icon-gift")
@@ -23,7 +23,15 @@ block content
                                             span Owned(#{books.ownedBooks.length})
                                         - } else {
                                             span Owned Books(0)
+                                        - }        
+                                li
+                                    a(href="#my-books-tab-read-content", id="my-books-tab-read", class="icon icon-home")
+                                        - if(books.readBooks){
+                                            span Read Books(#{books.readBooks.length})
+                                        - } else {
+                                            span Read Books(0)
                                         - }
+                                
                                 li(class="")
                                     a(href="#my-books-tab-borrowed-content", id="my-books-tab-borrowed", class="icon icon-upload")
                                         - if(books.borrowedBooks){
@@ -31,33 +39,29 @@ block content
                                         - } else {
                                             span Borrowed Books(0)
                                         - }
-                                li
-                                    a(href="#my-books-tab-wishlist-content", id="my-books-tab-wishlist", class="icon icon-coffee")
-                                        - if(books.wishlistBooks){
-                                            span Wishlist(#{books.wishlistBooks.length})
-                                        - } else {
-                                            span Wishlist Books(0)
-                                        - }
+                                
                         div(class="content-wrap")
-                            section(id="my-books-tab-read-content", class="")
-                                div(id="my-books-tab-read-content-div")
-                                    - if(books.readBooks) {
-                                        include ./book/read_book_details 
-                                    - }     
-                            section(id="my-books-tab-owned-content", class="")
-                                div(id="my-books-tab-owned-content-div")
-                                    - if(books.ownedBooks) {
-                                        include ./book/owned_book_details
-                                    - } 
-                            section(id="my-books-tab-borrowed-content", class="")
-                                div(id="my-books-tab-borrowed-content-div")
-                                    - if(books.borrowedBooks) {
-                                        include ./book/borrowed_book_details
-                                    - }
                             section(id="my-books-tab-wishlist-content", class="")
                                 div(id="my-books-tab-wishlist-content-div")
                                     - if(books.wishlistBooks) {
                                         include ./book/wishlist_book_details
                                     - }  
+                            section(id="my-books-tab-owned-content", class="")
+                                div(id="my-books-tab-owned-content-div")
+                                    - if(books.ownedBooks) {
+                                        include ./book/owned_book_details
+                                    - }         
+                            section(id="my-books-tab-read-content", class="")
+                                div(id="my-books-tab-read-content-div")
+                                    - if(books.readBooks) {
+                                        include ./book/read_book_details 
+                                    - }     
+                            
+                            section(id="my-books-tab-borrowed-content", class="")
+                                div(id="my-books-tab-borrowed-content-div")
+                                    - if(books.borrowedBooks) {
+                                        include ./book/borrowed_book_details
+                                    - }
+                            
                         script
                             include ./tab.js

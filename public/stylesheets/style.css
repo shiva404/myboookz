@@ -86,6 +86,11 @@ img {
     border-right: 1px solid #eee;
 }
 
+.add-members-group {
+    margin-top: 10px;
+    margin-bottom: auto; 
+}
+
 .bottomline{
     border-bottom: 1px solid #ccc;
 }

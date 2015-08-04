@@ -599,6 +599,8 @@ h1, h2, h3, h4, h5, h6 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-align: left;
+    max-width: 275px;
+    min-width: 255px;
 }
 
 .ProfileCard-book{

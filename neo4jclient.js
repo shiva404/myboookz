@@ -781,10 +781,10 @@ exports.getBookById = function (bookId, cb) {
     });
 }
 
-exports.getOwnedBooks = function(id, cb) {
+exports.getOwnedBooks = function(id, loggedInUser, cb) {
     var args = getArguments();
     args.path = {userId: id};
-    args.parameters = {"filter": "owns"};
+    args.parameters = {"filter": "owns", loggedInUser:loggedInUser};
     client.methods.getOwnedBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);
@@ -833,10 +833,10 @@ exports.getWishListBooksRec = function(id, cb) {
     });
 };
 
-exports.getAllBooks = function(id, cb) {
+exports.getAllBooks = function(id, loggedInUser, cb) {
     var args = getArguments();
     args.path = {userId: id};
-    args.parameters = {"filter": "all"};
+    args.parameters = {"filter": "all", loggedInUser: loggedInUser};
     client.methods.getReadBooks(args, function(data, response){
         if(response.statusCode != 200){
             cb(data, null);

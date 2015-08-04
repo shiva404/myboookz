@@ -25,7 +25,7 @@ div(class="column col-md-12 row")
                     a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to donate
                 li
                     a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to Sell
-        - if(book.wishlistBookDetails) {
+    - if(book.wishlistBookDetails) {
         div(class="column col-md-12 row")
             div(class="wishlist-books-rec-link pull-pull-right")
             - var rec_count = 0;
@@ -33,7 +33,9 @@ div(class="column col-md-12 row")
                 - rec_count += book.wishlistBookDetails.users.length
             - if(book.wishlistBookDetails.groupsWithMembers)
                 - rec_count += book.wishlistBookDetails.groupsWithMembers.length
-            - if(rec_count > 0)
+            - if(rec_count > 0){
                 a(href="#", class="", data-toggle="modal", data-target="#book-wishlist-rec-#{book.id}") #{rec_count} recomendation
-            include ../../user/wishlist_rec_users_modal        
-        - }
+             - var rec_action = "wish"
+            include ../../user/modals/recommendations
+            -}   
+    - }

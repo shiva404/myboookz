@@ -173,7 +173,10 @@ function handleAccountPage(checkGoodreads, user, req, res) {
         },
         function(err, results) {
             console.log("Checking feed size" + results.feed)
-            if(results.feed.events.length <= 0){
+            if(err){
+            	res.render('error_page')	
+            }
+            else if(results.feed && results.feed.events.length <= 0){
                 console.log("Feed data not found so getting random users")
                 neo4jclient.getRandomUsers(10, req.session.passport.user, function(err, users){
                     if(!err) {
@@ -248,11 +251,11 @@ app.get('/auth/fb/callback',
 
 app.get('/mybooks', ensureAuthenticated ,function (req, res) {
 	var cachedUser = myCache.get(req.session.passport.user);
-	neo4jclient.getAllBooks(req.session.passport.user, function(err, books){
+	neo4jclient.getAllBooks(req.session.passport.user, req.session.passport.user, function(err, books){
 		if(err)
 			console.log(err);
 		else
-			res.render('my_books', {user: cachedUser, books: books});
+			res.render('my_books', {title:"My books", user: cachedUser, books: books});
 	})
 });
 
@@ -295,7 +298,7 @@ app.get("/notifications", ensureAuthenticated, function(req, res){
         if(err)
             console.log(err);
         else
-            res.render('my_notifications', {user: cachedUser, notifications: notifications});
+            res.render('my_notifications', {title:"Notifications", user: cachedUser, notifications: notifications});
     })
 });
 
