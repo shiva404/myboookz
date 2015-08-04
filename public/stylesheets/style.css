@@ -18,6 +18,18 @@
    text-align:center;
 }
 
+.home-page-sec-main{
+    background: #2ba3d4;
+}
+
+.home-logo{
+      margin: 10px 0 20px 0;
+}
+
+.home-page-sec-features {
+    background: #3dc0f1;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -42,7 +54,6 @@ img {
 }
 body {
   margin: 0;
-  background: #2ba3d4;
 }
 
 .nav-sidebar {
@@ -81,6 +92,10 @@ body {
     margin: auto;
 }
 
+.features-logo{
+    height: 256px;
+    width: 256px;   
+}
 
 .engagement-action-container {
     clear: both;
