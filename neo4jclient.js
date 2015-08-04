@@ -174,6 +174,7 @@ client.registerMethod("searchToAddGroupMembers", baseUrl + "/groups/${groupId}/s
 client.registerMethod("searchBooks", baseUrl + "/books/search", "GET") //?q=xyz
 client.registerMethod("searchUsers", baseUrl + "/users/${userId}/search", "GET") //?q=xyz
 client.registerMethod("searchFriends", baseUrl + "/users/${userId}/search/friends", "GET") //?q=xyz
+client.registerMethod("searchGroups", baseUrl + "/groups/${userId}/search", "GET") //?q=xyz
 //funky
 client.registerMethod("getRandomUsers", baseUrl + "/users/random", "GET") //?size=10
 
@@ -423,6 +424,21 @@ exports.searchUsers = function(userId, searchString, cb) {
     args.parameters = {q: searchString}
     
     client.methods.searchUsers(args, function (data, response) {
+        if (response.statusCode != 200) {
+            
+            cb(data, null);
+        } else {
+            cb(null, data);
+        }
+    })
+};
+
+exports.searchGroups = function(userId, searchString, cb) {
+    var args = getArguments();
+    args.path = {userId: userId};
+    args.parameters = {q: searchString}
+    
+    client.methods.searchGroups(args, function (data, response) {
         if (response.statusCode != 200) {
             
             cb(data, null);

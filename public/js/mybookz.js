@@ -51,7 +51,7 @@ $(document).ready(function() {
     })
     
     $('#add-group-save').click(function(){
-        var posting = $.post('/api/groups', {group: {name: $('#add-group-name').val()}},"application/json");
+        var posting = $.post('/api/groups', {group: {name: $('#add-group-name').val(), isPublic: $('#is-public-group').is(':checked')}},"application/json");
         posting.done(function(data){
             $('#add-group-modal').modal('hide');
         })
@@ -200,6 +200,15 @@ $(document).ready(function() {
         event.preventDefault();
         var searchText = $("#search-users-nav").attr("data-string");
         var posting = $.get('/api/search/users?q=' + searchText);
+        posting.done(function(data){
+            $('#search-result').replaceWith(data)
+        })
+    });
+
+    $("#search-groups-nav").on("click", function(event) {
+        event.preventDefault();
+        var searchText = $("#search-groups-nav").attr("data-string");
+        var posting = $.get('/api/search/groups?q=' + searchText);
         posting.done(function(data){
             $('#search-result').replaceWith(data)
         })
