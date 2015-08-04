@@ -1,0 +1,38 @@
+div(class="column col-md-12 row")
+    div(id="book-actions-#{book.id}")
+        div(class="btn-group")
+            button(type="button", class="btn btn-default")
+                i(class="glyphicon glyphicon-ok") 
+                |Owned
+            button(type="button", class="btn dropdown-toggle", data-toggle="dropdown", data-section="book-actions-#{book.id}", aria-haspopup="true", aria-expanded="false")
+                span(class="caret")
+                span(class="sr-only") Toggle Dropdown
+            ul(class="dropdown-menu", role="menu")
+                li
+                    a(href="#", class="js-read-and-own", data-target="#{book.id}", id-type="id") Mark as private
+                li
+                    a(href="#", class="js-read", data-target="#{book.id}", id-type="id") Someone borrowed
+                li
+                    a(href="#", class="js-own", data-target="#{book.id}", id-type="id") Lock book
+                li(class="divider")
+                li
+                    a(href="#", class="js-wish-remove", data-target="#{book.id}", id-type="id") Remove from owned   
+
+                li(class="divider")
+                li
+                    a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to donate
+                li
+                    a(href="#", class="js-donate", data-target="#{book.goodreadsId}", id-type="grId") Want to Sell
+        - if(book.ownedBookDetails) {
+        div(class="column col-md-12 row")
+            div(class="wishlist-books-rec-link pull-pull-right")
+            - var rec_count = 0;
+            - if(book.ownedBookDetails.lookingForUsers)
+                - rec_count += book.ownedBookDetails.lookingForUsers.length
+            - if(book.ownedBookDetails.groupsWithMembers)
+                - rec_count += book.ownedBookDetails.groupsWithMembers.length
+            - if(rec_count > 0)
+                a(href="#", class="", data-toggle="modal", data-target="#book-wishlist-rec-#{book.id}") #{rec_count} recomendation
+            - var rec_action = "owns"
+            include ../../user/modals/recommendations
+        - }
