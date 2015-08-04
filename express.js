@@ -309,6 +309,7 @@ app.post("/api/friends/search", ensureAuthenticated, user_api.searchFriends)
 
 app.post("/api/books/:id/owner/:ownerId/initBorrow", ensureAuthenticated, book_api.initiateBorrowBookReq);
 app.post("/api/groups", ensureAuthenticated, group_api.addGroup);
+app.get("/api/search/groups", ensureAuthenticated, group_api.searchGroups);
 app.get("/api/search/users", ensureAuthenticated, user_api.searchUsers);
 app.post("/api/books/:id", ensureAuthenticated, book_api.addBookToUser);
 app.post("/api/users/:id/friend", ensureAuthenticated, user_api.friendReq);

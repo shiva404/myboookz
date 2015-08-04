@@ -4,6 +4,7 @@ var moment = require('moment');
 
 exports.addGroup = function (req, res) {
     var userId = req.session.passport.user;
+
     neo4jclient.addGroup(req.body.group, userId, function(error, group){
         if(error) {
             res.errorCode = 500;
@@ -26,6 +27,18 @@ exports.addMemberToGroup  = function(req, res) {
         }
     })
 }
+
+exports.searchGroups = function(req, res) {
+    var userId = req.session.passport.user;
+    var searchString = req.query.q;
+    neo4jclient.searchGroups(userId, searchString, function(error, groups){
+        if(error) {
+            handleErrorAndShowErrorPage(error, res);
+        } else {
+            res.render("group/search_result_groups", {groups:groups.group})
+        }
+    })
+};
 
 exports.searchToAddGroupMembers = function(req, res) {
     var userId = req.session.passport.user;
