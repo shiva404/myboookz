@@ -5,7 +5,7 @@ block content
         div(class="row clearfix")
             div(class="dashboard dashboard-left")
                 include includes/dashboard
-            div(class="content-main")
+            div(class="content-main-ext")
                 include ./includes/goodreads_import
                 - console.log(checkGoodreads + "authStatus =" + user.goodreadsAuthStatus);
                 - if(checkGoodreads && ((user.goodreadsAuthStatus === "NONE") || (user.goodreadsAuthStatus === "YES"))) {
@@ -30,6 +30,3 @@ block content
                                     div(class="panel-body")
                                         |#{reminder.reminderMessage}
                         - }
-            div(class="dashboard dashboard-right")
-                button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
-                    |Import from good reads

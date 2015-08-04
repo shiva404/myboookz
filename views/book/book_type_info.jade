@@ -1,3 +1,6 @@
-div(class="col-md-12")
-    div("book-data")
-        i(class="glyphicon glyphicon-ok pull-right") #{book.bookType}
+div("book-data")
+    -if(book.bookType === "WISH"){
+        include ./actions/wishlistbook
+    -} else if(book.bookType === "READ"){
+        include ./actions/readbook
+    - }

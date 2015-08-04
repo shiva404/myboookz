@@ -6,11 +6,11 @@ div(class="row clearfix")
                     - var n = users.length
                     - var i = 0
                     - while(i < n){
-                        - var temp_user = users[i]
-                        - if(i > 0 && i%3 == 0) {
+                        - var user_unit = users[i]
+                        - if(i > 0 && i%2 == 0) {
                             div(class="row clearfix")
                         - }
-                            div(class="col-md-4 column")
+                            div(class="col-md-6 column")
                                 include ../user/user_unit
                         - i++
                     - }

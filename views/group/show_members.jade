@@ -8,14 +8,14 @@ div(class="row clearfix")
         div(id="users", class="box-border")
             div(class="users-list")
                 div(class="row clearfix")
-                    - var n = users.length
+                    - var n = groupMembers.length
                     - var i = 0
                     - while(i < n){
-                        - var group_member = users[i]
+                        - var user_unit = groupMembers[i]
                         - if(i > 0 && i%3 == 0) {
                             div(class="row clearfix")
                         - }
                             div(class="col-md-4 column")
-                                include ./group_member
+                                include ../user/user_unit_group_mem_action
                         - i++
                     - }

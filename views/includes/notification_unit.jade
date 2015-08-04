@@ -1,3 +1,5 @@
-li(class="notification-item center")
-    a(href="#{notification_item.target.url}")
-        |#{notification_item.target.displayString}
+a(href="#{notification_item.target.url}")
+    li(class="notification-item center")
+        div(class="notification")
+            strong #{notification_item.target.displayString}
+            | #{notification_item.actionString}

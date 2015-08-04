@@ -9,12 +9,15 @@ div(class="groups module")
                     |(+)Add
             div(class="flex-module-inner")
                 div(class="group-items")
-                    - console.log("Groups" + JSON.stringify(groups))
                     - var n = groups.size
                     - if(n > 0) {
                     ul(class="group-items", id="group-items-dashboard")
+                    br
                     - for(var i = 0; i < n ; i++) {
                         - var groupItem = groups.group[i];
+
                         include ./group_item
+                        br
+                        div(class="divider")
                     - }
                     - }

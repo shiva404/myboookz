@@ -18,16 +18,53 @@
    text-align:center;
 }
 
-.home-page-sec-main{
-    background: #2ba3d4;
+.book-profile-avatar{
+    height: 120px;
+    width: 80px;
 }
 
+.book-profile{
+
+}
+
+.subtitle{
+    color: #848484;
+    font-size: 18px;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 25px;
+}
+
+.book-main-profile-image{
+    height: 160px;
+    width: 120px;  
+    margin-left: auto;
+    margin-right: auto;  
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.notification-items{
+    overflow: scroll; 
+    max-height: 400px;
+}
+.dashboard-full{
+    width: 100%;
+}
+.home-page-sec-main{
+   /* background: #2ba3d4; */
+}
+
+.col-15 {
+    margin-left: -15px;
+    margin-right: -15px;
+}
 .home-logo{
       margin: 10px 0 20px 0;
 }
 
 .home-page-sec-features {
-    background: #3dc0f1;
+   /* background: #3dc0f1; */
 }
 
 img {
@@ -49,11 +86,19 @@ img {
     border-right: 1px solid #eee;
 }
 
+.bottomline{
+    border-bottom: 1px solid #ccc;
+}
+.friend-rec-button {
+    margin-top: 40px;
+}
+
 .home-content{   
     padding: 120px 0;    
 }
 body {
   margin: 0;
+  background: #E0E0E0;
 }
 
 .nav-sidebar {
@@ -135,6 +180,18 @@ body {
 #profile #top-card .entity {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.book-actions{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.book-actions .action-btn{
+    padding: 7px 0 6px;
+    line-height: 25px;
+    font-size: 18px;
+    width: 200px;
 }
 
 #profile .entity {

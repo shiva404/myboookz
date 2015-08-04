@@ -1,0 +1,5 @@
+extends user_unit_common
+block user_actions
+    div(id="user-actions-#{user_unit.id}")
+        button(class="btn btn-primary js-add-friend", data-target="#{user_unit.id}", id="add-friend-#{user_unitid}")
+            span Ask for borrow

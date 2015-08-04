@@ -1,39 +1,27 @@
-div(class="Grid-cell u-mb10")
-    div(class="js-stream-item")
-        div(class="ProfileCard js-actionable-user")
-            a(class="ProfileCard-bg js-nav", href="#")
-            div(class="ProfileCard-content")
-                a(class="ProfileCard-avatarLink js-nav js-tooltip", href="/users/#{temp_user.id}")
-                    img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{temp_user.profileImageUrl}", style="width:100px; height:100px;")
-                div(id="user-actions-#{temp_user.id}")
-                    - if(temp_user.userRelation){
-                        - if(temp_user.userRelation === 'FRIEND') {
-
-                        - } else if(temp_user.userRelation === 'FRIEND_REQUEST_PENDING') {
-                            - if(user_unit_action && user_unit_action === 'pending_frind_process') {
-                                button(class="btn btn-primary pull-right", id="confirm-a-friend-#{temp_user.id}") Confirm
-                                script
-                                    $("#confirm-a-friend-#{temp_user.id}").click(function(){var posting = $.post('/api/users/#{temp_user.id}/friend/confirm','application/json'); posting.done(function(data){$('#user-actions-#{temp_user.id}').html(data)})})
-                            -} else {
-                                button(class="js-add-member btn btn-success pull-right")
-                                    span Friend Req Sent    
-                            - }
-                            
-                        - }
-                    - } else {
-                        - if(user_unit_action && user_unit_action === 'member') {
-                            button(class="js-add-member btn btn-primary pull-right", data-target="#{temp_user.id}", data-target-group="#{groupId}", id="add-member-group-#{temp_user.id}")
-                                span Add Member
-                            script
-                                $("#add-member-group-#{temp_user.id}").click(function(event){var posting = $.post('/api/group/#{groupId}/user/#{temp_user.id}'); posting.done(function(data){$('#user-actions-#{temp_user.id}').html(data)})})
-                        - } else {
-                            button(class="btn btn-primary pull-right js-add-friend", data-target="#{temp_user.id}", id="add-friend-#{temp_user.id}")
-                                span Add Friend
-                            script
-                                $("#add-friend-#{temp_user.id}").click(function(event){var posting = $.post('/api/users/#{temp_user.id}/friend'); posting.done(function(data){console.log(data);$('#user-actions-#{temp_user.id}').html(data)})});
-                        - }
-                    - }
-                div(class="ProfileCard-userFields")
-                    div(class="ProfileNameTruncated")
-                        div(class="u-textTruncate u-inlineBlock")
-                            a(class="ProfileNameTruncated-link u-textInheritColor", href="/users/#{temp_user.id}") #{temp_user.name}
+extends user_unit_common
+block user_actions
+    div(id="user-actions-#{user_unit.id}")
+        - if(user_unit.userRelation){
+            - if(user_unit.userRelation === 'FRIEND') {
+                include ./actions/friend_dropdown
+            - } else if(user_unit.userRelation === 'FRIEND_REQ_APPROVAL_PENDING') {
+                button(class="btn btn-primary", id="confirm-a-friend-#{user_unit.id}") Confirm
+                script
+                    $("#confirm-a-friend-#{user_unit.id}").click(function(){var posting = $.post('/api/users/#{user_unit.id}/friend/confirm','application/json'); posting.done(function(data){$('#user-actions-#{user_unit.id}').html(data)})})
+            - } else if(user_unit.userRelation === 'FRIEND_REQ_SENT'){
+                button(class="btn btn-success") 
+                    span Sent Friend req.
+            - }
+        - } else {
+            - if(user_unit_action && user_unit_action === 'member') {
+                button(class="js-add-member btn btn-primary", data-target="#{user_unit.id}", data-target-group="#{groupId}", id="add-member-group-#{user_unit.id}")
+                    span Add Member
+                script
+                    $("#add-member-group-#{user_unit.id}").click(function(event){var posting = $.post('/api/group/#{groupId}/user/#{user_unit.id}'); posting.done(function(data){$('#user-actions-#{user_unit.id}').html(data)})})
+            - } else {
+                button(class="btn btn-primary js-add-friend", data-target="#{user_unit.id}", id="add-friend-#{user_unit.id}")
+                    span Add Friend
+                script
+                    $("#add-friend-#{user_unit.id}").click(function(event){var posting = $.post('/api/users/#{user_unit.id}/friend'); posting.done(function(data){console.log(data);$('#user-actions-#{user_unit.id}').html(data)})});
+            - }
+        - }

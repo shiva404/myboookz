@@ -1,0 +1,14 @@
+div(id="user-actions-#{user_unit.id}")
+    div(class="btn-group")
+        button(type="button", class="btn btn-default")
+            i(class="glyphicon glyphicon-ok") 
+            |Friend
+        button(type="button", class="btn dropdown-toggle", data-toggle="dropdown", data-section="user-actions-#{user_unit.id}", aria-haspopup="true", aria-expanded="false")
+            span(class="caret")
+            span(class="sr-only") Toggle Dropdown
+        ul(class="dropdown-menu", role="menu")
+            li
+                a(href="#", class="js-suggest-friends", data-target="#{user_unit.id}", id-type="id") Suggest friends
+            li(class="divider")
+            li
+                a(href="#", class="js-friend-remove", data-target="#{user_unit.id}") Unfriend

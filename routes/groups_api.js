@@ -58,8 +58,9 @@ exports.showGroup = function(req, res) {
                     res.render('show_group', {group: group, books:books.books, action:"wishlist"});
                 })
             } else {
-                neo4jclient.getGroupMembers(groupId, req.session.passport.user, function(error, memebers){
-                    res.render('show_group', {group: group, users:memebers.groupMembers, group_member_unit_action:"show_member", action:"members"});
+                neo4jclient.getGroupMembers(groupId, req.session.passport.user, function(error, groupMemebers){
+            
+                    res.render('show_group', {title:group.name, group: group, groupMembers:groupMemebers.groupMembers, group_member_unit_action:"show_member", action:"members"});
                 })
             }
         }

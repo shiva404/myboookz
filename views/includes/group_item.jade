@@ -1,3 +1,7 @@
 li(class="group-item")
     a(href="/groups/#{groupItem.id}?action=available")
-        |#{groupItem.name}
+        div(class="row clearfix")
+            div(class="col-md-2 column")
+                img(src="/images/group.png", style="width:20px;height:20px")   
+            div(class="column")    
+                strong #{groupItem.name}

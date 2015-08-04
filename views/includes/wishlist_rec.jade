@@ -1,0 +1,20 @@
+div(class="groups module")
+    div(class="groups-inner")
+        div(class="flex-module trends-container")
+            div(class="flex-module-header")
+                h3
+                    span(class="groups-location")
+                        |Borrow your next book
+            div(class="flex-module-inner")
+                div(id="users", class="box-border")
+                    div(class="row users-list")
+                        - var n = wishlistBooks.size
+                        - var i = 0;
+                        - while(i < n){
+                            - var book = wishlistBooks.books[i];
+                            div(class="bottomline")
+                            div(class="row clearfix")
+                                div(class="col-md-12 column")
+                                    include ../book/book_unit_display
+                            - i++
+                        - }

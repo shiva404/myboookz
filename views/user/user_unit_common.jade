@@ -1,0 +1,13 @@
+div(class="ProfileCard js-actionable-user")
+    div(class="ProfileCard-content")
+        div(class="row clearfix")
+            div(class="col-md-5 column")
+                a(class="ProfileCard-avatarLink js-nav js-tooltip", href="/users/#{user_unit.id}")
+                    img(class="ProfileCard-avatarImage js-action-profile-avatar", src="#{user_unit.profileImageUrl}", style="width:75px; height:75px;")
+            div(class="column")
+                div(class="ProfileCard-userFields")
+                    div(class="ProfileNameTruncated")
+                        div(class="name3lineMax")
+                            a(class="ProfileNameTruncated-link u-textInheritColor", href="/users/#{user_unit.id}")
+                                strong #{user_unit.name}
+                block user_actions

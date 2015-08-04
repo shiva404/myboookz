@@ -32,14 +32,14 @@ var userId = req.session.passport.user;
     })
 }
 
-exports.clearFreshNotifications = function(req, res) {
+exports.removeFreshNotifications = function(req, res) {
 var userId = req.session.passport.user;
     console.log(req.body.address);
     neo4jclient.removeFreshNotifications(userId, function(error, notifications){
         if(error) {
            handleErrorAndShowErrorPage(error, res);
         } else {
-            res.send("cleared")
+            res.render("user/clear_notification_resp")
         }
     })
 }
@@ -177,7 +177,7 @@ exports.friendReq = function (req, res) {
             res.errorCode = 500;
             res.json(error)
         } else {
-            res.render('user/user_rel_added', {message:"Added"})
+            res.render('user/user_rel_added', {message:"Sent friend req"})
         }
     })
 };
@@ -192,4 +192,31 @@ exports.getWishListBooks = function(req, res) {
             res.render('book/wishlist_book_details', {books: data.wishListBooks})
         }
     }) 
+};
+
+exports.showFriends = function(req, res) {
+    var loggedInUserId = req.session.passport.user;
+    var userId = req.params.userId;
+    neo4jclient.getFriends(userId, loggedInUserId, function(error, friends){
+        if(error){
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+
+        }
+
+    })
+};
+
+exports.showBooks = function(req, res) {
+    var loggedInUserId = req.session.passport.user;
+    var userId = req.params.userId;
+    neo4jclient.getAllBooks(userId, loggedInUserId, function(error, friends){
+        if(error){
+            res.errorCode = 500;
+            res.json(error)
+        } else {
+
+        }
+    })
 };

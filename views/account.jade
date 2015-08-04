@@ -19,7 +19,14 @@ block content
                 -} else {
                     h3 Make new friends and see what they are reading
                     include ./user/random_users_display
-                     - }
+                - }
             div(class="dashboard dashboard-right")
+                - if(friendsRec.size>0){
+                    include ./includes/new_friends_rec
+                - }
+                -if(wishlistBooks.size > 0) {
+                    include ./includes/wishlist_rec
+                - }
+                br
                 button(type="button", class="btn btn-primary", data-toggle="modal", data-target=".bs-goodreads-modal-lg")
                     | Import from good reads
